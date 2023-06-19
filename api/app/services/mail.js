@@ -5,14 +5,12 @@ const _map = require('lodash/map')
 const _forEach = require('lodash/forEach')
 
 const nodemailer = require('nodemailer')
+const nodemailerSendgrid = require('nodemailer-sendgrid');
 const path = require('path')
-var EmailTemplate = require('email-templates').EmailTemplate
+var EmailTemplate = require('email-templates')
 var templatesDir = path.resolve(__dirname, '../../templates')
 
-const MAIL_HOST = configMail.host
-const MAIL_PORT = configMail.port
-const MAIL_USERNAME = configMail.username
-const MAIL_PASSWORD = configMail.password
+const SENDGRID_API_KEY = configMail.sendgridAPIKey
 const MAIL_FROM_NAME = configMail.fromName
 const MAIL_FROM_ADDRESS = configMail.fromAddress
 
@@ -21,44 +19,42 @@ const User = require('../models/user')
 const utilities = require('../../app/utilities')
 
 // create reusable transporter object using the default SMTP transport
-let transporter = nodemailer.createTransport({
-  host: MAIL_HOST,
-  port: MAIL_PORT,
-  secure: false,
-  auth: {
-    user: MAIL_USERNAME,
-    pass: MAIL_PASSWORD
-  }
-})
+let transporter = nodemailer.createTransport(nodemailerSendgrid({
+  apiKey: SENDGRID_API_KEY
+}))
 
 module.exports = {
   sendMail: function (to, subject, template, data, from) {
     console.log('Sending mail...')
 
-    var emailTemplate = new EmailTemplate(path.join(templatesDir, template))
+    var templatePath = path.join(templatesDir, template)
+    
     if (!from)
       from = `"${MAIL_FROM_NAME}" <${MAIL_FROM_ADDRESS}>`;
 
-    emailTemplate.render(data, function (err, results) {
-      if (err) return console.error(err)
+    var emailTemplate = new EmailTemplate();
+    
 
-        // setup email data with unicode symbols
-      let mailOptions = {
-        from: from, // sender address
-        to: to, // list of receivers CSV
-        subject: subject,
-        html: results.html,
-        text: results.text
-      }
-
-      // send mail with defined transport object
-      transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          return console.log(error)
-        }
-        console.log('Message %s sent: %s', info.messageId, info.response)
-      })
+    emailTemplate.renderAll(templatePath, data).then(results => {
+         let mailOptions = {
+            from: from, // sender address
+            to: to, // list of receivers CSV
+            subject: subject,
+            html: results.html,
+            text: results.text
+          }
+      transporter.sendMail(mailOptions).then(([res]) => {
+        console.log('Message delivered with code %s %s', res.statusCode, res.statusMessage);
     })
+    .catch(err => {
+        console.log('Errors occurred, failed to deliver message');
+        if (err.response && err.response.body && err.response.body.errors) {
+            err.response.body.errors.forEach(error => console.log('%s: %s', error.field, error.message));
+        } else {
+            console.log(err);
+        }
+    });
+    }).catch(console.error);
   },
   sendUpdate: function (idea, update) {
     console.log('Sending updates...')

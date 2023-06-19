@@ -87,16 +87,24 @@ module.exports = function (app, passport) {
     const user = await User.findOne({
       'local.email': email
     })
-
     // User exists
     if (user) {
-
       if (user.validPassword(req.body.password)) {
-        passport.authenticate('local-login')(req, res, function () {
-          return res.json({
-            success: true
-          })
-        })
+        // passport.authenticate('local-login')(req, res, function () {
+        //   console.log("SUCCESS")
+        //   return res.json({
+        //     success: true
+        //   })
+        // })  
+        passport.authenticate('local-login', function(err, user, info) {   
+          req.logIn(user, function(err) {
+            if (err) return next(err);
+            return res.json({
+              success: true,
+            });
+          });
+          
+        })(req, res, next);      
       } else {
         errors.push({
           text: 'Email taken / Password incorrect',
@@ -240,11 +248,14 @@ module.exports = function (app, passport) {
 
 
   app.get('/logout', (req, res) => {
-    req.logout()
-    res.json({
-      status: 'unauthenticated',
-      user: undefined
-    })
+    req.logout(function(err) {
+      if (err) { return next(err); }
+      res.json({
+        status: 'unauthenticated',
+        user: undefined
+      })
+    });
+    
   })
 
   app.post('/auth/forgot',
@@ -305,7 +316,7 @@ module.exports = function (app, passport) {
     }
   )
 
-  app.get('/auth/status', (req, res) => {
+  app.get('/auth/status', (req, res) => {    
     if (req.isAuthenticated()) {
       User.findOne({
         _id: req.user._id
@@ -331,17 +342,17 @@ module.exports = function (app, passport) {
 
   // FACEBOOK ROUTES
 
-  app.get('/auth/facebook/login/:instance', function (req, res, next) {
-    passport.authenticate('facebook', {
-      callbackURL: `${PROD_API_URL}/auth/facebook/callback/${req.params.instance}`
-    })(req, res, next);
-  });
+  // app.get('/auth/facebook/login/:instance', function (req, res, next) {
+  //   passport.authenticate('facebook', {
+  //     callbackURL: `${PROD_API_URL}/auth/facebook/callback/${req.params.instance}`
+  //   })(req, res, next);
+  // });
 
-  app.get('/auth/facebook/callback/:instance', function (req, res, next) {
-    passport.authenticate('facebook', {
-      callbackURL: `${PROD_API_URL}/auth/facebook/callback/${req.params.instance}`,
-      successRedirect: `${utilities.redirectUri(req.params.instance)}/profile`,
-      failureRedirect: `${utilities.redirectUri(req.params.instance)}/auth`
-    })(req, res, next);
-  });
+  // app.get('/auth/facebook/callback/:instance', function (req, res, next) {
+  //   passport.authenticate('facebook', {
+  //     callbackURL: `${PROD_API_URL}/auth/facebook/callback/${req.params.instance}`,
+  //     successRedirect: `${utilities.redirectUri(req.params.instance)}/profile`,
+  //     failureRedirect: `${utilities.redirectUri(req.params.instance)}/auth`
+  //   })(req, res, next);
+  // });
 }

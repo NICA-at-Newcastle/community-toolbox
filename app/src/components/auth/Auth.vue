@@ -8,8 +8,8 @@
 
           .content-block--body
             h2 Get started
-            a#facebook-badge(v-bind:href="oAuthLink('facebook')" target="_self")
-              i.fab.fa-facebook
+            //- a#facebook-badge(v-bind:href="oAuthLink('facebook')" target="_self")
+            //-   i.fab.fa-facebook
 
             form
               splash-messages(v-bind:messages="splashmessages['join']")
