@@ -17,3 +17,6 @@ selenium-debug.log
 
 # Config
 .env
+
+# mac
+.DS_Store
