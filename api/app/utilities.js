@@ -1,8 +1,9 @@
 const DEV_URL = 'http://localhost:8888'
-const PROD_URL = 'https://*.ideaboard.co.uk'
+// TODO: test this
+const PROD_URL = `https://*.${process.env.DEPLOYMENT}`
 
 module.exports = {
-  redirectUri: function (instance) {
+  redirectUri: function (instance) {    
     switch (instance) {
       case 'default':
         return DEV_URL

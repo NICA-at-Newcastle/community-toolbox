@@ -35,6 +35,7 @@ const upload = multer({
           return multerS3.AUTO_CONTENT_TYPE(req, file, cb)
       }
     },
+    // NOTE: rights must be set within AWS
     // acl: 'public-read',
     cacheControl: 'max-age=31536000', // Cache for a year
     metadata: function (req, file, cb) {
@@ -89,9 +90,10 @@ module.exports = function (app, passport) {
     }
 
     console.log(`req.file.mimetype - ${req.file.mimetype}`);
+    console.log(`req.file.contentType - ${req.file.contentType}`);
 
     // Videos
-    if (req.file.mimetype.startsWith("video")) {
+    if (req.file.contentType.startsWith("video")) {
       aws.config.update({ region: ELASTIC_REGION });
       const transcoder = new aws.ElasticTranscoder({
         accessKeyId: configAWS.accessKeyId,
@@ -100,7 +102,7 @@ module.exports = function (app, passport) {
       });
       const inputKey = req.file.key;
       let key = inputKey.substr(0, inputKey.lastIndexOf("."));
-      key = key.replace("uploads/", "");
+      // key = key.replace("uploads/", "");
 
       console.log("Creating elastic transcoder job...");
 
@@ -121,7 +123,8 @@ module.exports = function (app, passport) {
             {
               Key: `${key}.mp4`,
               ThumbnailPattern: `${key}-{count}`,
-              PresetId: ELASTIC_PRESET,
+              // PresetId: ELASTIC_PRESET,
+              PresetId: "1351620000001-000010"
             },
             {
               Key: `${key}.webm`,

@@ -129,14 +129,15 @@ module.exports = function (app, passport) {
               Bucket: S3_BUCKET,
               Key: key,
               Body: body,
-              ACL: 'public-read'
+              // NOTE: rights must be set within AWS
+              // ACL: 'public-read'
             }, function (err, data) {
               if (err) console.error(err, err.stack)
               console.log(data)
               idea.banner = data.Location
               idea.save((err) => {
                 if (err) console.error(err)
-                mail.sendMail(req.user.local.email, 'Idea Created', 'idea-created', { user: req.user, idea: idea, url: utilities.redirectUri(req.instance) })
+                mail.sendMail(req.user.local.email, 'Idea Created', 'idea-created', { user: req.user, idea: idea, url: utilities.redirectUri(req.instance), instance: req.instance })
                 res.json({ idea })
               })
             })
@@ -162,7 +163,7 @@ module.exports = function (app, passport) {
 
         console.log(outcomeDocument)
 
-        mail.sendMail(req.user.local.email, 'Idea Created', 'idea-created', { user: req.user, idea: idea, url: utilities.redirectUri(req.instance) })
+        mail.sendMail(req.user.local.email, 'Idea Created', 'idea-created', { user: req.user, idea: idea, url: utilities.redirectUri(req.instance), instance: req.instance })
         res.json({ idea })
       }
     })
@@ -207,7 +208,7 @@ module.exports = function (app, passport) {
               { _id: req.body.idea_id, instance: req.instance },
               { $push: { _subscribers: subscriber } },
               (err, idea) => {
-                mail.sendMail(req.user.local.email, 'You Subscribed', 'subscribed', { user: req.user, idea: idea, url: utilities.redirectUri(req.instance) })
+                mail.sendMail(req.user.local.email, 'You Subscribed', 'subscribed', { user: req.user, idea: idea, url: utilities.redirectUri(req.instance), instance: req.instance })
                 callback(null, err, idea)
               })
           }

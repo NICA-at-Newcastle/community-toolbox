@@ -7,7 +7,7 @@ const Notification = require('../../app/models/notification')
 const mail = require('../services/mail')
 const utilities = require('../../app/utilities')
 
-const PROD_API_URL = 'https://api.ideaboard.co.uk'
+const PROD_API_URL = process.env.PROD_API_URL
 
 module.exports = function (app, passport) {
 
@@ -281,7 +281,8 @@ module.exports = function (app, passport) {
           mail.sendMail(user.local.email, 'Forgotten Password', 'forgot', {
             user: user,
             resetLink: resetLink,
-            url: utilities.redirectUri(req.instance)
+            url: utilities.redirectUri(req.instance),
+            instance: req.instance
           })
           res.json({
             status: 'success'
@@ -341,18 +342,19 @@ module.exports = function (app, passport) {
   })
 
   // FACEBOOK ROUTES
+  if(process.env.FB_AUTH_ENABLED === 'true') {
+    app.get('/auth/facebook/login/:instance', function (req, res, next) {
+      passport.authenticate('facebook', {
+        callbackURL: `${PROD_API_URL}/auth/facebook/callback/${req.params.instance}`
+      })(req, res, next);
+    });
 
-  // app.get('/auth/facebook/login/:instance', function (req, res, next) {
-  //   passport.authenticate('facebook', {
-  //     callbackURL: `${PROD_API_URL}/auth/facebook/callback/${req.params.instance}`
-  //   })(req, res, next);
-  // });
-
-  // app.get('/auth/facebook/callback/:instance', function (req, res, next) {
-  //   passport.authenticate('facebook', {
-  //     callbackURL: `${PROD_API_URL}/auth/facebook/callback/${req.params.instance}`,
-  //     successRedirect: `${utilities.redirectUri(req.params.instance)}/profile`,
-  //     failureRedirect: `${utilities.redirectUri(req.params.instance)}/auth`
-  //   })(req, res, next);
-  // });
+    app.get('/auth/facebook/callback/:instance', function (req, res, next) {
+      passport.authenticate('facebook', {
+        callbackURL: `${PROD_API_URL}/auth/facebook/callback/${req.params.instance}`,
+        successRedirect: `${utilities.redirectUri(req.params.instance)}/profile`,
+        failureRedirect: `${utilities.redirectUri(req.params.instance)}/auth`
+      })(req, res, next);
+    });
+  }
 }

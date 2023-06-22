@@ -7,6 +7,7 @@ const Permission = require('../app/models/permission')
 const Idea = require('../app/models/idea')
 const Category = require('../app/models/category')
 const User = require('../app/models/user')
+const bcrypt = require('bcrypt-nodejs')
 
 // Setup permissions
 setupPermissions()
@@ -52,6 +53,9 @@ function setupPermissions () {
   })
 }
 
+function generateHash(password) {
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null)
+}
 function setupAdmin(adminPermissions) {
 
   
@@ -63,7 +67,7 @@ function setupAdmin(adminPermissions) {
       'profile.name': _get(config.instances[instance], 'admin.name', process.env.ADMIN_NAME),
       'profile.bio': _get(config.instances[instance], 'admin.bio', process.env.ADMIN_BIO),
       'local.email': _get(config.instances[instance], 'admin.email', process.env.ADMIN_EMAIL),
-      'local.password': _get(config.instances[instance], 'admin.password', process.env.ADMIN_PASSWORD),
+      'local.password': _get(config.instances[instance], 'admin.password', generateHash(process.env.ADMIN_PASSWORD)),
       '_permissions': adminPermissions
     }
 

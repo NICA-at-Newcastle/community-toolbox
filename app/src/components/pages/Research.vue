@@ -5,7 +5,7 @@
       .content-block.pull-up.white-block
         .content-block--body
           vue-markdown(v-if="markdown") {{ markdown }}
-    site-footer
+    //- site-footer
 </template>
 
 <script>
@@ -31,6 +31,7 @@ export default {
     }
   },
   mounted () {
+    console.log(config.legal)
     const url = `${config.legal}/research.md`
     this.$http.get(url).then(response => {
       this.markdown = response.body

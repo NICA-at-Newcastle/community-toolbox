@@ -11,12 +11,14 @@ export default {
   },
   methods: {
     getLocation (location, type) {
-      location = location.replace(`${location.substr(0, location.lastIndexOf('/'))}`, `${config.cdn2}/encoded`)
+      // TODO: cdn2 needs to be set up
+      // location = location.replace(`${location.substr(0, location.lastIndexOf('/'))}`, `${config.cdn2}/encoded`)
       location = `${location.substr(0, location.lastIndexOf('.'))}.${type}`
       return location
     },
     getThumbnail (location) {
-      location = location.replace(`${location.substr(0, location.lastIndexOf('/'))}`, `${config.cdn2}/encoded`)
+      // TODO: cdn2 needs to be set up
+      // location = location.replace(`${location.substr(0, location.lastIndexOf('/'))}`, `${config.cdn2}/encoded`)
       location = `${location.substr(0, location.lastIndexOf('.'))}-00001.png`
       return location
     }

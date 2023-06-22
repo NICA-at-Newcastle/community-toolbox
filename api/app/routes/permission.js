@@ -66,7 +66,7 @@ module.exports = function (app, passport) {
 
       const notification = await notificationObj.save()
 
-      mail.sendMail(user.local.email, 'Permissions Updated', 'permissions', { user: req.user, recipient: user, url: utilities.redirectUri(req.instance) })
+      mail.sendMail(user.local.email, 'Permissions Updated', 'permissions', { user: req.user, recipient: user, url: utilities.redirectUri(req.instance), instance: req.instance })
       res.json({ msg: 'done' })
     })
 }

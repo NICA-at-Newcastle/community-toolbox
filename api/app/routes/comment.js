@@ -82,7 +82,7 @@ module.exports = function (app, passport) {
                                   if (err) console.error(err)
                                   if (comment._user._id !== reply._user) {
                                     console.log(`Sending mail to - ${user.local.email}`)
-                                    mail.sendMail(user.local.email, 'Comment Reply', 'comment-reply', { user: user, task: task, reply: reply, comment: comment, url: utilities.redirectUri(req.instance) })
+                                    mail.sendMail(user.local.email, 'Comment Reply', 'comment-reply', { user: user, task: task, reply: reply, comment: comment, url: utilities.redirectUri(req.instance), instance: req.instance })
                                   }
                                   res.json({ comment })
                                 })

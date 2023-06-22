@@ -9,7 +9,7 @@
       p Welcome back {{ user.profile.name }}, in order to comply with GDPR we need you to consent to the following before continuing to use this service:
       
       .text-right
-        p.consent-notice #[input(v-model="researchConsent" type="checkbox")] I understand this service is provided by Open Lab as a research project and agree to the #[router-link(v-bind:to="{ name: 'research' }") Research Policy]
+        p.consent-notice #[input(v-model="researchConsent" type="checkbox")] I understand this service is provided by {{ institution }} as a research project and agree to the #[router-link(v-bind:to="{ name: 'research' }") Research Policy]
         p.consent-notice #[input(v-model="privacyConsent" type="checkbox")] I accept the #[router-link(v-bind:to="{ name: 'privacy' }") Privacy Policy]
         p.consent-notice #[input(v-model="termsConsent" type="checkbox")] I accept the #[router-link(v-bind:to="{ name: 'terms' }") Terms of Use]
 
@@ -26,6 +26,7 @@ import API from '@/api'
 import SplashMessages from '@/components/shared/SplashMessages'
 
 import AuthMixin from '@/mixins/AuthMixin'
+import * as config from '@/api/config'
 
 export default {
   name: 'consent-modal',
@@ -41,7 +42,8 @@ export default {
       isConsenting: false,
       researchConsent: false,
       privacyConsent: false,
-      termsConsent: false
+      termsConsent: false,
+      institution: config.INSTITUTION || 'Open Lab',
     }
   },
   computed: {

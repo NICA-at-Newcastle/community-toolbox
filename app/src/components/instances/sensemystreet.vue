@@ -22,7 +22,7 @@ import Home from "@/mixins/Home";
 export default {
   name: "SenseMyStreet",
   metaInfo: {
-    title: "Open Lab",
+    title: "SenseMyStreet",
   },
   mixins: [Home],
 };

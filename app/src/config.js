@@ -1,13 +1,13 @@
 /* eslint-disable comma-dangle */
 /* eslint-disable quotes */
 export default {
-  domain: "ideaboard.co.uk",
+  domain: process.env.DEPLOYMENT,
   driftkey: "msffsx6pi5gb",
-  cdn1: "https://cdn.ideaboard.co.uk",
-  cdn2: "https://cdn2.ideaboard.co.uk",
-  legal:
-    "https://raw.githubusercontent.com/digitalinteraction/legal/master/ideaboard",
+  cdn1: `https://cdn.${process.env.DEPLOYMENT}`,
+  cdn2: `https://cdn2.${process.env.DEPLOYMENT}`,
+  legal: process.env.LEGAL,
   gakey: "UA-44963053-17",
+  // TODO: Google UA END of life - https://support.google.com/analytics/answer/11583528?hl=en
   instances: {
     default: "sensemystreet",
     master: {
@@ -32,6 +32,8 @@ export default {
     sensemystreet: {
       color: "#00AAB2",
       subdomain: "sensemystreet",
+      logoColor: "#ffff",
+      logoTitle: "SenseMyStreet",
     },
     myto: {
       color: "#0B9BD0",

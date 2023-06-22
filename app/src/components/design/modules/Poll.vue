@@ -1,12 +1,12 @@
 <template lang="pug">
 .design-task--poll
-  p.design-task--description(v-if="task.description") {{ task.description }}
+  p.design-task--description(v-if="task && task.description") {{ task.description }}
 
   //- splash-messages(v-if="!isAuthenticated" v-bind:messages="[{type:'success',text:'Please login to participate!'}]")
 
   .poll-wrapper
     transition-group(tag="ul" class="poll-responses" name="fade")
-      li.poll-response(v-for="(response, index) in orderedResponses" v-bind:key="index")
+      li.poll-response(v-for="(response, index) in orderedResponses" v-bind:key="response._id")
         .poll-response--title {{ response.response.text }}
         avatar.poll-response--user(v-bind:profile="response._user.profile")
         .poll-response--votes(@click="checkAuth" v-bind:class="{ positive: ((response._likes.length - response._dislikes.length) > 0), negative: ((response._likes.length - response._dislikes.length) < 0) }")

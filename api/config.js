@@ -1,8 +1,9 @@
 module.exports = {
-  domain: "ideaboard.co.uk",
+  domain: process.env.DEPLOYMENT,
   instances: {
-    default: "sensemystreet",
-    master: {},
+    default: "master",
+    master: {
+    },
     citylit: {
       subdomain: "citylit",
     },
@@ -16,7 +17,12 @@ module.exports = {
       subdomain: "openlab",
     },
     sensemystreet: {
-      subdomain: "sensemystreet",
+      subdomain: "ideaboard",
+      admin: {
+        name: "SenseMyStreet Admin",
+        bio: "Admin of this site. Please get in touch if you have any issues.",
+        email: "sensemystreet@gmail.com",
+      },
     },
     myto: {
       subdomain: "myto",

@@ -3,3 +3,5 @@ export const NODE_ENV = process.env.NODE_ENV
 export const ADMIN_NAME = process.env.ADMIN_NAME
 export const ADMIN_EMAIL = process.env.ADMIN_EMAIL
 export const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD
+export const FB_AUTH_ENABLED = process.env.FB_AUTH_ENABLED
+export const INSTITUTION = process.env.INSTITUTION

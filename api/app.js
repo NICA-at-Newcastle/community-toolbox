@@ -22,19 +22,25 @@ const configDB = require("./config/database.js");
 const seed = require("./config/seed.js");
 // const demo = require('./config/demo.js')
 
-
 async function init(req, res, next) {
   const app = express();
 
   require("./config/passport")(passport); // pass passport for configuration
-  
+
+  // extract domain regex
+  const parts = config.domain.split('.');
+  const firstPart = parts[0]
+  const secondPart = parts.slice(1)
+  const domainRegex = new RegExp(`/^https?:\/\/([\w\d]+\.)?${firstPart}\.${secondPart.join('.')}$/`);
+
   app.use(
     cors({
       credentials: true,
       origin: [
         "http://localhost:8888",
-        "https://ideaboard.co.uk",
-        /\.ideaboard\.co.uk$/,
+        "http://localhost",
+        config.domain,
+        domainRegex,
       ],
       methods: ["GET", "PUT", "POST", "DELETE", "OPTIONS"],
       headers: [
@@ -59,7 +65,7 @@ async function init(req, res, next) {
     next();
   });
   
-  mongoose.connect(configDB.url, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true  }); // connect to our database
+  mongoose.connect(configDB.url, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true, serverSelectionTimeoutMS: 5000 }); // connect to our database
   
   // set up our express application
   app.use(morgan("dev")); // log every request to the console
@@ -68,7 +74,9 @@ async function init(req, res, next) {
   app.use(cookieParser()); // read cookies (needed for auth)
 
   // Initialize client.
-  let redisClient = redis.createClient()
+  let redisClient = redis.createClient({
+    url: `${process.env.REDIS_URL || 'redis://redis:6379' }`
+  })
   await redisClient.connect().catch(console.error)
   // Initialize store.
   let redisStore = new RedisStore({

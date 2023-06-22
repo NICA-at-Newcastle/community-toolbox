@@ -7,14 +7,24 @@
         router-link.is-link(tag="li" to="/privacy") Privacy
         router-link.is-link(tag="li" to="/research") Research
         router-link.is-link(tag="li" to="/terms") Terms
-        li © Open Lab
+        li © {{ institution }}
       .clearfix
       #google_translate_element
 </template>
 
 <script>
+import * as config from '@/api/config'
+
 export default {
   name: 'site-footer',
+  data () {
+    return {
+      isAuthenticating: false,
+      userExists: false,
+      state: 'join',
+      institution: config.INSTITUTION || 'Open Lab',
+    }
+  },
   computed: {
     isHome () {
       return this.$route.name === 'home'

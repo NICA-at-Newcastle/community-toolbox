@@ -8,8 +8,8 @@
 
           .content-block--body
             h2 Get started
-            //- a#facebook-badge(v-bind:href="oAuthLink('facebook')" target="_self")
-            //-   i.fab.fa-facebook
+            a#facebook-badge(v-if="enabled" v-bind:href="oAuthLink('facebook')" target="_self")
+              i.fab.fa-facebook
 
             form
               splash-messages(v-bind:messages="splashmessages['join']")
@@ -26,7 +26,7 @@
               label Name
               input(v-model="user.name" v-bind:disabled="isAuthenticating" name="name" placeholder="Your name")
             .consent(v-if="!userExists")
-              p.consent-notice #[input(v-model="user.researchConsent" type="checkbox")] I understand this service is provided by Open Lab as a research project and agree to the #[router-link(v-bind:to="{ name: 'research' }") Research Policy]
+              p.consent-notice #[input(v-model="user.researchConsent" type="checkbox")] I understand this service is provided by {{ institution }} as a research project and agree to the #[router-link(v-bind:to="{ name: 'research' }") Research Policy]
               p.consent-notice #[input(v-model="user.privacyConsent" type="checkbox")] I accept the #[router-link(v-bind:to="{ name: 'privacy' }") Privacy Policy]
               p.consent-notice #[input(v-model="user.termsConsent" type="checkbox")] I accept the #[router-link(v-bind:to="{ name: 'terms' }") Terms of Use]
             .btn.btn-success.pull-right(v-bind:disabled="!userExists && !hasConsented" @click="join") {{ isAuthenticating ? 'Checking...' : 'Continue' }}
@@ -81,10 +81,11 @@ export default {
       isAuthenticating: false,
       userExists: false,
       state: 'join',
+      institution: config.INSTITUTION || 'Open Lab',
       user: {
-        name: config.ADMIN_NAME,
-        email: config.ADMIN_EMAIL,
-        password: config.ADMIN_PASSWORD,
+        name: config.ADMIN_NAME || '',
+        email: config.ADMIN_EMAIL || '',
+        password: config.ADMIN_PASSWORD || '',
         researchConsent: false,
         privacyConsent: false,
         termsConsent: false
@@ -102,6 +103,9 @@ export default {
     ]),
     hasConsented () {
       return this.user.researchConsent && this.user.privacyConsent && this.user.termsConsent
+    },
+    enabled (){
+      return (config.FB_AUTH_ENABLED === 'true')
     }
   },
   watch: {
@@ -119,6 +123,7 @@ export default {
   },
   methods: {
     checkEmail () {
+      if (!this.user.email) return
       if (this.user.email.length < 5) return
       API.auth.exists(
         { email: this.user.email },

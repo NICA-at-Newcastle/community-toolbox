@@ -13,6 +13,7 @@ module.exports = {
   },
   output: {
     path: config.build.assetsRoot,
+    // hashFunction: 'sha512',
     filename: '[name].js',
     publicPath: process.env.NODE_ENV === 'production'
       ? config.build.assetsPublicPath
@@ -30,15 +31,16 @@ module.exports = {
   },
   module: {
     rules: [
-      {
-        test: /\.(js|vue)$/,
-        loader: 'eslint-loader',
-        enforce: "pre",
-        include: [resolve('src'), resolve('test'), resolve('node_modules/vue-awesome')],
-        options: {
-          formatter: require('eslint-friendly-formatter')
-        }
-      },
+      // TODO: replace with eslint-plugin-vue
+      // {
+      //   test: /\.(js|vue)$/,
+      //   loader: 'eslint-loader',
+      //   enforce: "pre",
+      //   include: [resolve('src'), resolve('test'), resolve('node_modules/vue-awesome')],
+      //   options: {
+      //     formatter: require('eslint-friendly-formatter')
+      //   }
+      // },
       {
         test: /\.vue$/,
         loader: 'vue-loader',
@@ -72,5 +74,5 @@ module.exports = {
         }
       }
     ]
-  },
+  }
 }

@@ -1,52 +1,89 @@
 version: "3"
 
 networks:
+  web:
+    external: true
   backend:
     external: true
 
+volumes:
+  redis-data:
+  mongo-data:
+
+
 services:
+  app:
+    platform: linux/amd64
+    build:
+      context: ./app
+      args:
+        - API_ADDRESS
+        - DEPLOYMENT
+        - FB_AUTH_ENABLED
+        - INSTITUTION
+        - LEGAL
+    restart: always
+    expose:
+      - 80
+    # dev only
+    # ports:
+    #   - 80:80
+    networks:
+      - web
+    # Traefik labels
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.docker.network=web'
+      - 'traefik.http.routers.ideaboard-web.rule=Host(`${SUBDOMAIN}.${DEPLOYMENT}`)'
+      - 'traefik.http.routers.ideaboard-web.entrypoints=websecure'
+      - 'traefik.http.routers.ideaboard-web.tls=true'
+      - 'traefik.http.routers.ideaboard-web.tls.certresolver=myresolver'
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '1024k'
+        max-file: '10'
 
-  # app:
-  #   image: zzrot/alpine-caddy
-  #   ports:
-  #     - 80:80
-  #     - 443:443
-  #   environment:
-  #     - API_ADDRESS
-  #   volumes:
-  #     - ./Caddyfile:/etc/Caddyfile
-  #     - ./app/serve:/var/www/html
-  #     - ./.caddy:/root/.caddy
-  #   links:
-  #     - api
+  api:
+    build: ./api
+    restart: always
+    expose:
+      - 3000
+    # dev only
+    # ports:
+    #   - 3000:3000
+    volumes:
+      - ./api:/app
+    networks:
+      - backend
+      - web
+    environment:
+      - SUBDOMAIN
+    # Traefik labels
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=web"
+      - "traefik.http.services.api.loadbalancer.server.port=3000"
+      - "traefik.http.routers.api.rule=Host(`api.${DEPLOYMENT}`)"
+      - "traefik.http.routers.api.tls.certresolver=myresolver"
+      - "traefik.http.middlewares.api-ratelimit.ratelimit.average=10"
+      - "traefik.http.middlewares.api-ratelimit.ratelimit.burst=10"
+      - "traefik.http.middlewares.api-ratelimit.ratelimit.period=1"
+      - "traefik.http.routers.api.entrypoints=websecure"
+      - "traefik.http.routers.api.tls=true"
+      - "traefik.http.routers.api.middlewares=api-ratelimit@docker"
+    links:
+      - redis
+      - mongo
+    depends_on:
+      - redis
+      - mongo
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '1024k'
+        max-file: '10'
 
-  # api:
-  #   build: ./api
-  #   ports:
-  #     - 3000:3000
-  #   restart: always
-  #   volumes:
-  #     - ./api:/app
-  #   links:
-  #     - redis
-  #     - mongo
-  #   depends_on:
-  #     - redis
-
-  # mongo:
-  #   build: ./docker/mongo
-  #   restart: always
-  #   environment:
-  #     - MONGODB_ADMIN_USER
-  #     - MONGODB_ADMIN_PASS
-  #     - MONGODB_APPLICATION_DATABASE
-  #     - MONGODB_APPLICATION_USER
-  #     - MONGODB_APPLICATION_PASS
-  #   volumes_from:
-  #     - mongodata
-  #   ports:
-  #     - "27018:27017"
-  #   # command: mongod--auth
   mongo:
     image: mongo
     restart: always
@@ -57,64 +94,70 @@ services:
       MONGODB_APPLICATION_USER: ${MONGODB_APPLICATION_USER}
       MONGODB_APPLICATION_PASS: ${MONGODB_APPLICATION_PASS}
     volumes:
-      - ./db:/data/db:rw
-      - ./init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh:ro
-    ports:
-      - 27018:27017
+      - mongo-data:/data/db
+      - ./init/init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh:ro
+    expose:
+      - 27017
+    # dev only
+    # ports:
+    #   - 27017:27017
     networks:
       - backend
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '1024k'
+        max-file: '10'
 
-  mongo-express:
-    image: mongo-express
-    restart: always
-    ports:
-      - 8081:8081
-    environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGODB_ADMIN_USER}
-      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGODB_ADMIN_PASS}
-      ME_CONFIG_MONGODB_URL: mongodb://${MONGODB_ADMIN_USER}:${MONGODB_ADMIN_PASS}@mongo:27017/
-    depends_on:
-      - mongo
-    networks:
-      - backend
-    # mongoui:
-    #   image: twnel/mongo-express
-    #   environment:
-    #     - ME_CONFIG_BASICAUTH_USERNAME
-    #     - ME_CONFIG_BASICAUTH_PASSWORD
-    #     - ME_CONFIG_MONGODB_ENABLE_ADMIN
-    #     - ME_CONFIG_MONGODB_ADMINUSERNAMEç
-    #     - ME_CONFIG_MONGODB_ADMINPASSWORD
-    #   ports:
-    #     - "8081:8081"
-    #   links:
-    #     - mongo
+  # only accessible locally
+  # mongo-express:
+  #   image: mongo-express
+  #   restart: always
+  #   expose:
+  #     - 8081
+  #   ports:
+  #     - 127.0.0.1:8081:8081
+  #   environment:
+  #     ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGODB_ADMIN_USER}
+  #     ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGODB_ADMIN_PASS}
+  #     ME_CONFIG_MONGODB_URL: mongodb://${MONGODB_ADMIN_USER}:${MONGODB_ADMIN_PASS}@mongo:27017/
+  #     ME_CONFIG_MONGODB_ENABLE_ADMIN: ${ME_CONFIG_MONGODB_ENABLE_ADMIN}
+  #     ME_CONFIG_BASICAUTH_USERNAME: ${ME_CONFIG_BASICAUTH_USERNAME}
+  #     ME_CONFIG_BASICAUTH_PASSWORD: ${ME_CONFIG_BASICAUTH_PASSWORD}
+  #   depends_on:
+  #     - mongo
+  #   networks:
+  #     - backend
+  #   logging:
+  #     driver: 'json-file'
+  #     options:
+  #       max-size: '1024k'
+  #       max-file: '10'
 
-    # mongodata:
-    #   image: tianon/true
-    #   platform: linux/amd64
-    #   volumes:
-    #     - /data/db
-
-    # mongobackup:
-    #   build: ./utilities/backup
-    #   restart: always
-    #   links:
-    #     - mongo
-    #   ports:
-    #     - 27017
-    #   environment:
-    #     - MONGO_HOST
-    #     - MONGO_DB
-    #     - MONGO_PORT
-    #     - S3_BUCKET
-    #     - AWS_ACCESS_KEY_ID
-    #     - AWS_SECRET_ACCESS_KEY
-    #     #- DATE_FORMAT
-    #     #- FILE_PREFIX
-    #     - MONGODB_APPLICATION_USER
-    #     - MONGODB_APPLICATION_PASS
-    #     - BACKUP_TIME=18:02
+  # mongobackup:
+  #   build: ./utilities/backup
+  #   restart: always
+  #   links:
+  #     - mongo
+  #   ports:
+  #     - 27017
+  #   environment:
+  #     - MONGO_HOST
+  #     - MONGO_DB
+  #     - MONGO_PORT
+  #     - S3_BUCKET
+  #     - AWS_ACCESS_KEY_ID
+  #     - AWS_SECRET_ACCESS_KEY
+  #     #- DATE_FORMAT
+  #     #- FILE_PREFIX
+  #     - MONGODB_APPLICATION_USER
+  #     - MONGODB_APPLICATION_PASS
+  #     - BACKUP_TIME=18:02
+  #   logging:
+  #     driver: 'json-file'
+  #     options:
+  #       max-size: '1024k'
+  #       max-file: '10'
 
   redis:
     image: redis:4.0.5-alpine
@@ -122,10 +165,15 @@ services:
     command: [ "redis-server", "--appendonly", "yes" ]
     volumes:
       - redis-data:/data
-    ports:
-      - 6379:6379
+    expose:
+      - 6379
+    # dev only
+    # ports:
+    #   - 6379:6379
     networks:
       - backend
-
-volumes:
-  redis-data:
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '1024k'
+        max-file: '10'

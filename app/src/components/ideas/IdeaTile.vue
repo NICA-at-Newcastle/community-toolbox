@@ -11,7 +11,15 @@
 <script>
 export default {
   name: 'idea-tile',
-  props: ['idea']
+  props: {
+    idea: {
+      type: Object,
+      default: function () {
+        return {}
+      }
+      
+  }
+  }
 }
 </script>
 

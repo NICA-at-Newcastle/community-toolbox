@@ -51,7 +51,7 @@ module.exports = function (app, passport) {
 
         notification.save((err, invitation) => {
           if (err) console.error(err)
-          mail.sendMail(req.body.recipient, 'Invitation', 'invitation', { user: req.user, recipient: req.body.recipient, url: utilities.redirectUri(req.instance) })
+          mail.sendMail(req.body.recipient, 'Invitation', 'invitation', { user: req.user, recipient: req.body.recipient, url: utilities.redirectUri(req.instance), instance: req.instance })
           res.json({ msg: 'done' })
         })
       } else {

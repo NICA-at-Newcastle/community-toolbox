@@ -4,7 +4,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import VueResource from 'vue-resource'
 import vueLogger from 'vue-logger'
-// import Meta from 'vue-meta'
+import Meta from 'vue-meta'
 import VueAnalytics from 'vue-analytics'
 import VueSession from 'vue-session'
 import { sync } from 'vuex-router-sync'
@@ -23,12 +23,12 @@ Vue.config.productionTip = false
 
 Vue.use(Vuex)
 Vue.use(VueResource)
-// Vue.use(Meta)
+Vue.use(Meta)
 Vue.use(VueSession)
 
 Vue.use(vueLogger, {
   prefix: new Date(),
-  dev: true,
+  dev: (process.env.NODE_ENV === 'development'),
   shortname: true,
   levels: ['log', 'warn', 'debug', 'error', 'dir']
 })
@@ -77,6 +77,7 @@ window.addEventListener('consent-updated', function (e) {
 })
 
 Vue.filter('resize', function (input, height, width) {
+  // TODO: cdn1 needs setup
   width = (!width) ? height : width
   return `${input.replace(/(.)*ideaboard(.)*.com\//i, `${config.cdn1}/${height}x${width}/`)}`
 })
