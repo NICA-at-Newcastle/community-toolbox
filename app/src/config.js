@@ -52,7 +52,7 @@ export default {
           },
           description: {
             name: "Background",
-            placeholder: "Describe your proposal in more detail - what is the issue, what data you would like to have",
+            placeholder: "Describe your proposal in more detail",
           },
         },
       },
