@@ -53,7 +53,7 @@ module.exports = function (app, passport) {
 
       const isAdmin = _find(_get(req.user, '_permissions'), { type: 'admin', instance: req.instance })
       if (!isAdmin) return res.status(401)
-      
+
       Idea.findOneAndUpdate(
         { _id: req.body._id || req.body.id },
         { destroyed: new Date() },
@@ -101,7 +101,7 @@ module.exports = function (app, passport) {
           errors: errors
         })
       }
-      
+
       // Set instance
       data.idea.instance = req.instance
 
@@ -112,7 +112,7 @@ module.exports = function (app, passport) {
 
       // Create idea
       const idea = new Idea(data.idea)
-      
+
       // Set category
       if (typeof data.idea.category !== 'undefined') {
         idea._categories.push(data.idea.category)
@@ -137,7 +137,7 @@ module.exports = function (app, passport) {
               idea.banner = data.Location
               idea.save((err) => {
                 if (err) console.error(err)
-                mail.sendMail(req.user.local.email, 'Idea Created', 'idea-created', { user: req.user, idea: idea, url: utilities.redirectUri(req.instance), instance: req.instance })
+                mail.sendMail(req.user.local.email, 'Idea Created', 'idea-created', { user: req.user, idea: idea, url: utilities.redirectUri(req.subdomain), instance: req.instance })
                 res.json({ idea })
               })
             })
@@ -163,7 +163,7 @@ module.exports = function (app, passport) {
 
         console.log(outcomeDocument)
 
-        mail.sendMail(req.user.local.email, 'Idea Created', 'idea-created', { user: req.user, idea: idea, url: utilities.redirectUri(req.instance), instance: req.instance })
+        mail.sendMail(req.user.local.email, 'Idea Created', 'idea-created', { user: req.user, idea: idea, url: utilities.redirectUri(req.subdomain), instance: req.instance })
         res.json({ idea })
       }
     })
@@ -173,11 +173,11 @@ module.exports = function (app, passport) {
       if (!req.isAuthenticated()) return res.status(401)
 
       let idea = await Idea.findOne({ _id: req.body.id })
-      
+
       const isModerator = _find(_get(req.user, '_permissions'), { type: 'moderator', instance: req.instance })
       const canEdit = (isModerator || idea._user._id.toString() === req.user._id.toString())
       if (!canEdit) return res.status(401)
-      
+
       idea = await Idea.findOneAndUpdate({ _id: req.body._id, instance: req.instance }, req.body)
       console.log(idea)
       idea = await Idea.findOne({ _id: req.body._id })
@@ -208,7 +208,7 @@ module.exports = function (app, passport) {
               { _id: req.body.idea_id, instance: req.instance },
               { $push: { _subscribers: subscriber } },
               (err, idea) => {
-                mail.sendMail(req.user.local.email, 'You Subscribed', 'subscribed', { user: req.user, idea: idea, url: utilities.redirectUri(req.instance), instance: req.instance })
+                mail.sendMail(req.user.local.email, 'You Subscribed', 'subscribed', { user: req.user, idea: idea, url: utilities.redirectUri(req.subdomain), instance: req.instance })
                 callback(null, err, idea)
               })
           }

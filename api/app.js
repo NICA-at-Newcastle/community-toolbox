@@ -35,7 +35,7 @@ async function init(req, res, next) {
 
   // TODO: using different subdomain name from instance name
   const getInstance = (subdomain) => { return Object.keys(config.instances).reduce((a, i) => (config.instances[i].subdomain === subdomain) ? i : a, {}) }
-  
+
   app.use(
     cors({
       credentials: true,
@@ -43,7 +43,7 @@ async function init(req, res, next) {
         "http://localhost:8888",
         "http://localhost",
         // TODO: needs testing
-        `https://${process.env.SUBDOMAIN || 'ideaboard'}.${config.domain}`,       
+        `https://${process.env.SUBDOMAIN || 'ideaboard'}.${config.domain}`,
         // TODO: needs testing
         domainRegex,
 
@@ -54,7 +54,7 @@ async function init(req, res, next) {
       ],
     })
   );
-  
+
   // Instance middleware
   app.use(function (req, res, next) {
     const url = req.get("Referrer");
@@ -66,14 +66,16 @@ async function init(req, res, next) {
       instance = !subdomain ? "localhost" : subdomain;
     }
     // TODO: using different subdomain name from instance name
+    req.subdomain = instance;
     req.instance =
-      instance.indexOf("localhost") !== -1 ? config.instances.default : instance;
-  
+      instance.indexOf("localhost") !== -1 ? config.instances.default : getInstance(instance);
+
+
     next();
   });
-  
+
   mongoose.connect(configDB.url, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true, serverSelectionTimeoutMS: 5000 }); // connect to our database
-  
+
   // set up our express application
   app.use(morgan("dev")); // log every request to the console
   // app.use(express.json());
@@ -82,7 +84,7 @@ async function init(req, res, next) {
 
   // Initialize client.
   let redisClient = redis.createClient({
-    url: `${process.env.REDIS_URL || 'redis://redis:6379' }`
+    url: `${process.env.REDIS_URL || 'redis://redis:6379'}`
   })
   await redisClient.connect().catch(console.error)
   // Initialize store.
@@ -100,20 +102,20 @@ async function init(req, res, next) {
       // cookie: { secure: true }
     })
   );
-  
+
   // required for passport
   app.use(passport.initialize());
   app.use(passport.session()); // persistent login sessions
   app.use(flash()); // use connect-flash for flash messages stored in session
-  
+
   app.get("/health", (req, res) => {
     res.sendStatus(200);
   });
-  
+
   app.get("/", (req, res) => {
     res.send("Ideaboard API");
   });
-  
+
   require("./app/routes/auth.js")(app, passport);
   require("./app/routes/unsplash.js")(app, passport);
   require("./app/routes/upload.js")(app, passport);
@@ -133,7 +135,7 @@ async function init(req, res, next) {
   app.listen(port, () => {
     console.log(`Listening on port ${port}!`);
   });
-  
+
 }
 
 init();

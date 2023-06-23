@@ -15,7 +15,7 @@ module.exports = function (app, passport) {
     (req, res) => {
       // TODO: Check if admin
       const instance = (req.instance.indexOf('localhost') !== -1) ? 'default' : req.instance
-      
+
       async.series({
         permissions: function (callback) {
           Permission.find({ instance: instance }).exec(callback)
@@ -38,7 +38,7 @@ module.exports = function (app, passport) {
     async (req, res) => {
       if (!req.isAuthenticated()) return res.status(401)
 
-      let user = await User.findOne({ $and: [ { _id: req.body.userId }, { _id: { $ne: req.user._id } } ] })
+      let user = await User.findOne({ $and: [{ _id: req.body.userId }, { _id: { $ne: req.user._id } }] })
 
       user._permissions = []
 
@@ -66,7 +66,7 @@ module.exports = function (app, passport) {
 
       const notification = await notificationObj.save()
 
-      mail.sendMail(user.local.email, 'Permissions Updated', 'permissions', { user: req.user, recipient: user, url: utilities.redirectUri(req.instance), instance: req.instance })
+      mail.sendMail(user.local.email, 'Permissions Updated', 'permissions', { user: req.user, recipient: user, url: utilities.redirectUri(utilities.redirectUri), instance: req.instance })
       res.json({ msg: 'done' })
     })
 }

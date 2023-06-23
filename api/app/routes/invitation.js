@@ -14,7 +14,7 @@ module.exports = function (app, passport) {
   // Get invitations
   app.get('/invitations',
     (req, res) => {
-      Invitation.find({ }).exec((err, invitations) => {
+      Invitation.find({}).exec((err, invitations) => {
         if (err) { return console.error(err) }
         res.json({
           accepted: _take(_filter(invitations, { status: 'accepted' }), 5),
@@ -51,7 +51,7 @@ module.exports = function (app, passport) {
 
         notification.save((err, invitation) => {
           if (err) console.error(err)
-          mail.sendMail(req.body.recipient, 'Invitation', 'invitation', { user: req.user, recipient: req.body.recipient, url: utilities.redirectUri(req.instance), instance: req.instance })
+          mail.sendMail(req.body.recipient, 'Invitation', 'invitation', { user: req.user, recipient: req.body.recipient, url: utilities.redirectUri(utilities.redirectUri), instance: req.instance })
           res.json({ msg: 'done' })
         })
       } else {

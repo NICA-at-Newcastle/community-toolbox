@@ -96,15 +96,15 @@ module.exports = function (app, passport) {
         //     success: true
         //   })
         // })  
-        passport.authenticate('local-login', function(err, user, info) {   
-          req.logIn(user, function(err) {
+        passport.authenticate('local-login', function (err, user, info) {
+          req.logIn(user, function (err) {
             if (err) return next(err);
             return res.json({
               success: true,
             });
           });
-          
-        })(req, res, next);      
+
+        })(req, res, next);
       } else {
         errors.push({
           text: 'Email taken / Password incorrect',
@@ -248,14 +248,14 @@ module.exports = function (app, passport) {
 
 
   app.get('/logout', (req, res) => {
-    req.logout(function(err) {
+    req.logout(function (err) {
       if (err) { return next(err); }
       res.json({
         status: 'unauthenticated',
         user: undefined
       })
     });
-    
+
   })
 
   app.post('/auth/forgot',
@@ -263,7 +263,7 @@ module.exports = function (app, passport) {
       crypto.pseudoRandomBytes(16, function (err, raw) {
         if (err) console.error(err)
         const resetCode = raw.toString('hex')
-        let resetLink = `${utilities.redirectUri(req.instance)}/reset/${resetCode}`
+        let resetLink = `${utilities.redirectUri(req.subdomain)}/reset/${resetCode}`
         User.findOneAndUpdate({
           'local.email': req.body.email.toLowerCase()
         }, {
@@ -281,7 +281,7 @@ module.exports = function (app, passport) {
           mail.sendMail(user.local.email, 'Forgotten Password', 'forgot', {
             user: user,
             resetLink: resetLink,
-            url: utilities.redirectUri(req.instance),
+            url: utilities.redirectUri(req.subdomain),
             instance: req.instance
           })
           res.json({
@@ -317,7 +317,7 @@ module.exports = function (app, passport) {
     }
   )
 
-  app.get('/auth/status', (req, res) => {    
+  app.get('/auth/status', (req, res) => {
     if (req.isAuthenticated()) {
       User.findOne({
         _id: req.user._id
@@ -342,7 +342,7 @@ module.exports = function (app, passport) {
   })
 
   // FACEBOOK ROUTES
-  if(process.env.FB_AUTH_ENABLED === 'true') {
+  if (process.env.FB_AUTH_ENABLED === 'true') {
     app.get('/auth/facebook/login/:instance', function (req, res, next) {
       passport.authenticate('facebook', {
         callbackURL: `${PROD_API_URL}/auth/facebook/callback/${req.params.instance}`

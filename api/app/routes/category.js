@@ -30,9 +30,9 @@ module.exports = function (app, passport) {
   app.post('/category',
     (req, res) => {
       if (req.isAuthenticated()) {
-        
+
         let data = req.body
-        
+
         // Set instance
         data.category.instance = req.instance
 
@@ -41,7 +41,7 @@ module.exports = function (app, passport) {
 
         category.save((err) => {
           if (err) console.error(err)
-          // mail.sendMail(req.user.local.email, 'Category Created', 'category-created', { user: req.user, category: category, url: utilities.redirectUri(req.instance) })
+          // mail.sendMail(req.user.local.email, 'Category Created', 'category-created', { user: req.user, category: category, url: utilities.redirectUri(utilities.redirectUri) })
           res.json({ category })
         })
       } else {

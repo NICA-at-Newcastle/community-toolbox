@@ -90,7 +90,7 @@ module.exports = function (app, passport) {
             type: 'error'
           })
         }
-        
+
         if (errors.length > 0) {
           return res.json({
             errors: errors
@@ -108,7 +108,7 @@ module.exports = function (app, passport) {
           idea._subscribers.forEach(async (subscriber) => {
             const currentSubscriber = await User.findOne({ _id: subscriber._user._id })
             if (currentSubscriber._id !== req.user._id) {
-              mail.sendMail(currentSubscriber.local.email, 'Task Created', 'task-created', { user: currentSubscriber, task: task, url: utilities.redirectUri(req.instance), instance: req.instance })
+              mail.sendMail(currentSubscriber.local.email, 'Task Created', 'task-created', { user: currentSubscriber, task: task, url: utilities.redirectUri(utilities.redirectUri), instance: req.instance })
             }
           })
         } catch (error) {

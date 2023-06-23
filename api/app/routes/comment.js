@@ -50,7 +50,7 @@ module.exports = function (app, passport) {
               { $push: { _replies: comment } },
               (err, comment) => {
                 if (err) console.error(err)
-                
+
                 if (comment.type === 'task') {
                   // If task comment then push response to task
                   let response = {
@@ -82,7 +82,7 @@ module.exports = function (app, passport) {
                                   if (err) console.error(err)
                                   if (comment._user._id !== reply._user) {
                                     console.log(`Sending mail to - ${user.local.email}`)
-                                    mail.sendMail(user.local.email, 'Comment Reply', 'comment-reply', { user: user, task: task, reply: reply, comment: comment, url: utilities.redirectUri(req.instance), instance: req.instance })
+                                    mail.sendMail(user.local.email, 'Comment Reply', 'comment-reply', { user: user, task: task, reply: reply, comment: comment, url: utilities.redirectUri(req.subdomain), instance: req.instance })
                                   }
                                   res.json({ comment })
                                 })
@@ -154,16 +154,16 @@ module.exports = function (app, passport) {
       const isModerator = _find(_get(req.user, '_permissions'), { type: 'moderator', instance: req.instance })
       const canDestroy = (isModerator || (comment._user._id.toString() === req.user._id.toString()))
       console.log(canDestroy)
-      
+
       if (!canDestroy) return res.status(401)
-      
+
       Comment.findOneAndUpdate(
         { _id: req.body.id },
         { destroyed: new Date() },
         { upsert: true },
         (err, comment) => {
           if (err) console.error(err)
-          
+
           res.json({ comment: comment })
         })
     })
