@@ -34,6 +34,28 @@ export default {
       subdomain: "ideaboard",
       logoColor: "#ffff",
       logoTitle: "SenseMyStreet",
+      outcome: {
+        ideaDocument: { title: "Proposal submission" },
+        followIdea: { title: "Start follow on Proposal" },
+      },
+      createIdea: {
+        title: "Create a proposal",
+        subtitle: 'This is where it begins, start a Proposal, invite your community and begin having the discussion!',
+        inputFields: {
+          title: {
+            name: "Title",
+            placeholder: "Give your proposal a title",
+          },
+          tagline: {
+            name: "Tagline",
+            placeholder: "A snappy one-liner about your proposal",
+          },
+          description: {
+            name: "Background",
+            placeholder: "Describe your proposal in more detail - what is the issue, what data you would like to have",
+          },
+        },
+      },
     },
     myto: {
       color: "#0B9BD0",

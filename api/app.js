@@ -67,7 +67,7 @@ async function init(req, res, next) {
     }
     // TODO: using different subdomain name from instance name
     req.instance =
-      instance.indexOf("localhost") !== -1 ? config.instances.default : getInstance(instance);
+      instance.indexOf("localhost") !== -1 ? config.instances.default : instance;
   
     next();
   });
