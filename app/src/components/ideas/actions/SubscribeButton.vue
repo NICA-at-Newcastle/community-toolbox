@@ -9,9 +9,7 @@
         network.social--link(network="twitter")
           i.fab.fa-twitter(data-fa-transform="grow-5")
         network.social--link(network="facebook")
-          i.fab.fa-facebook(data-fa-transform="grow-5")
-        network.social--link(network="googleplus")
-          i.fab.fa-google-plus(data-fa-transform="grow-5")
+          i.fab.fa-facebook(data-fa-transform="grow-5")        
         network.social--link(network="linkedin")
           i.fab.fa-linkedin(data-fa-transform="grow-5")
         .clearfix
