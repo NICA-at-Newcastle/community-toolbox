@@ -45,6 +45,9 @@ import config from '@/config'
 
 Vue.use(Router)
 
+// TODO: using different subdomain name from instance name
+const getInstance = (subdomain) => { return Object.values(config.instances).reduce((a, i) => (i.subdomain === subdomain) ? i : a, {}) }
+
 const router = new Router({
   mode: 'history',
   scrollBehavior (to, from, savedPosition) {
@@ -55,8 +58,8 @@ const router = new Router({
       path: '/',
       name: 'home',
       component: function (resolve) {
-        const subdomain = window.location.hostname.split('.')[0]
-        const instance = ((subdomain === 'localhost') || (subdomain === config.domain.split('.')[0])) ? config.instances.default : subdomain.toLowerCase() // subdomain
+        const subdomain = (window.location.hostname.split('.')[0]).toLowerCase()
+        const instance = ((subdomain === 'localhost') || (subdomain === config.domain.split('.')[0])) ? config.instances.default : getInstance(subdomain) // subdomain
         try {
           require(`@/components/instances/${instance}.vue`)
           require([`@/components/instances/${instance}.vue`], resolve)
@@ -69,8 +72,8 @@ const router = new Router({
       path: '/learn',
       name: 'about',
       component: function (resolve) {
-        const subdomain = window.location.hostname.split('.')[0]
-        const instance = ((subdomain === 'localhost') || (subdomain === config.domain.split('.')[0])) ? config.instances.default : subdomain.toLowerCase() // subdomain
+        const subdomain = (window.location.hostname.split('.')[0]).toLowerCase()
+        const instance = ((subdomain === 'localhost') || (subdomain === config.domain.split('.')[0])) ? config.instances.default : getInstance(subdomain) // subdomain
         try {
           require(`@/components/instances/pages/About/${instance}.vue`)
           require([`@/components/instances/pages/About/${instance}.vue`], resolve)

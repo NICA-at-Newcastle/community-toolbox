@@ -31,7 +31,7 @@ export default {
     },
     sensemystreet: {
       color: "#00AAB2",
-      subdomain: "sensemystreet",
+      subdomain: "ideaboard",
       logoColor: "#ffff",
       logoTitle: "SenseMyStreet",
     },

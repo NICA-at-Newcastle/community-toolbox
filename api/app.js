@@ -33,14 +33,20 @@ async function init(req, res, next) {
   const secondPart = parts.slice(1)
   const domainRegex = new RegExp(`/^https?:\/\/([\w\d]+\.)?${firstPart}\.${secondPart.join('.')}$/`);
 
+  // TODO: using different subdomain name from instance name
+  const getInstance = (subdomain) => { return Object.values(config.instances).reduce((a, i) => (i.subdomain === subdomain) ? i : a, {}) }
+  
   app.use(
     cors({
       credentials: true,
       origin: [
         "http://localhost:8888",
         "http://localhost",
-        config.domain,
+        // TODO: needs testing
+        `https://${process.env.SUBDOMAIN || 'ideaboard'}.${config.domain}`,       
+        // TODO: needs testing
         domainRegex,
+
       ],
       methods: ["GET", "PUT", "POST", "DELETE", "OPTIONS"],
       headers: [
@@ -59,8 +65,9 @@ async function init(req, res, next) {
       const subdomain = domain.split(".")[0];
       instance = !subdomain ? "localhost" : subdomain;
     }
+    // TODO: using different subdomain name from instance name
     req.instance =
-      instance.indexOf("localhost") !== -1 ? config.instances.default : instance;
+      instance.indexOf("localhost") !== -1 ? config.instances.default : getInstance(instance);
   
     next();
   });

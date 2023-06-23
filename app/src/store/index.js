@@ -18,8 +18,8 @@ export default new Vuex.Store({
   },
   getters: {
     instance () {
-      const subdomain = window.location.hostname.split('.')[0]
-      return ((subdomain === 'localhost') || (subdomain === config.domain.split('.')[0])) ? config.instances.default : subdomain.toLowerCase() // subdomain
+      const subdomain = (window.location.hostname.split('.')[0])
+      return ((subdomain === 'localhost') || (subdomain === config.domain.split('.')[0])) ? config.instances.default : Object.values(config.instances).reduce((a, i) => (i.subdomain === subdomain) ? i : a, {}) // subdomain
     },
     instanceColor () {
       return config.instances[Store.getters.instance].color
