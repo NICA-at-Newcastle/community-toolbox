@@ -132,7 +132,7 @@ export default {
             embedTask.type,
             embedTask._id,
             (response) => {
-              console.log(response)
+              this.$log(response)
               const responses = response.data
               if (responses.length === 0) {
                 const message = 'No responses!'
@@ -148,7 +148,7 @@ export default {
               this.$refs.myQuillEditor.quill.setSelection(embedIndex, 0)
             },
             (error) => {
-              console.log(error)
+              this.$error(error)
             }
           )
           break
@@ -168,14 +168,14 @@ export default {
       API.document.fetchDocuments(
         this.idea._id,
         (response) => {
-          console.log(response)
+          this.$log(response)
           this.document = response.data
           if (this.document.text.length === 0) {
             this.editing = true
           }
         },
         (response) => {
-          console.log(response)
+          this.$log(response)
         }
       )
     },
@@ -189,7 +189,7 @@ export default {
           this.loadingTasks = false
         },
         (error) => {
-          this.$log(error)
+          this.$error(error)
           this.loadingTasks = false
         }
       )
@@ -204,11 +204,11 @@ export default {
       API.document.update(
         this.document,
         (response) => {
-          console.log(response)
+          this.$log(response)
           this.editing = false
         },
         (response) => {
-          console.log(response)
+          this.$log(response)
         }
       )
     }

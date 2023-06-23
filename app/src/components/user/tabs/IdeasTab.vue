@@ -24,7 +24,7 @@ export default {
     IdeaTile
   },
   mounted () {
-    console.log(this.currentUser)
+    this.$log(this.currentUser)
     API.user.ideas(
       this.currentUser._id,
       (response) => {

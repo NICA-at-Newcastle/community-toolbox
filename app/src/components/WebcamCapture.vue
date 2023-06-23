@@ -135,8 +135,8 @@ export default {
       navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then((camera) => {
         callback(camera)
       }).catch(function (error) {
-        console.log('Unable to capture your camera. Please check console logs.')
-        console.error(error)
+        this.$log('Unable to capture your camera. Please check console logs.')
+        this.$error(error)
       })
     },
     loadCameraStream () {
@@ -155,8 +155,8 @@ export default {
         this.splashmessages = []
       }).catch((error) => {
         this.splashmessages = [{ text: 'Could not access your camera, please check the connection', type: 'error' }]
-        console.log('Camera unavailable!')
-        console.error(error)
+        this.$log('Camera unavailable!')
+        this.$error(error)
       })
     }
   }

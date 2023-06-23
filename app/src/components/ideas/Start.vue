@@ -99,8 +99,8 @@ export default {
         if (!this.$session.exists()) this.$session.start()
         this.$log('Saving draft...')
         this.$session.set('draft-idea', JSON.stringify(nV))
-        console.log('Idea updated')
-        console.log(JSON.parse(this.$session.get('draft-idea')))
+        this.$log('Idea updated')
+        this.$log(JSON.parse(this.$session.get('draft-idea')))
       },
       deep: true
     }

@@ -139,7 +139,7 @@ export default {
       API.user.fetch(
         this.$route.params.id ? this.$route.params.id : this.user._id,
         (response) => {
-          console.log(response)
+          this.$log(response)
           this.currentUser = response.data
           this.$set(this.currentUser.profile, 'name', response.data.profile.name)
           this.$set(this.currentUser.profile, 'avatar', response.data.profile.avatar)
@@ -151,7 +151,7 @@ export default {
           }
         },
         (error) => {
-          console.error(error)
+          this.$error(error)
         }
       )
     }

@@ -19,16 +19,16 @@ export default {
     hasLiked () {
       if (!this.user) return false
       return _find(this.response._likes, (vote) => {
-        console.log(vote._user._id)
-        console.log(this.user._id)
+        this.$log(vote._user._id)
+        this.$log(this.user._id)
         return (vote._user._id === this.user._id)
       })
     },
     hasDisliked () {
       if (!this.user) return false
       return _find(this.response._dislikes, (vote) => {
-        console.log(vote._user._id)
-        console.log(this.user._id)
+        this.$log(vote._user._id)
+        this.$log(this.user._id)
         return (vote._user._id === this.user._id)
       })
     }

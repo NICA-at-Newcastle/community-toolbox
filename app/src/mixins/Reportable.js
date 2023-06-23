@@ -37,12 +37,12 @@ export default {
           try {
             this.contentChanged()
           } catch (error) {
-            console.log('contentChanged method not found')
-            console.error(error)
+            this.$log('contentChanged method not found')
+            this.$error(error)
           }
         },
         (error) => {
-          this.$log(error)
+          this.$error(error)
         }
       )
     },
@@ -53,7 +53,7 @@ export default {
           this.$log(response)
         },
         (error) => {
-          this.$log(error)
+          this.$error(error)
         }
       )
     }
