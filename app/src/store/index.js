@@ -40,7 +40,6 @@ export default new Vuex.Store({
       return config.instances[Store.getters.instance].outcome || { title: 'Outcome', ideaDocument: { title: 'Idea Document' }, followIdea: { title: 'Start follow on Idea' } }
     },
     instanceCreateIdea() {
-      console.log(JSON.stringify(config.instances[Store.getters.instance].createIdea))
       return config.instances[Store.getters.instance].createIdea || {
         title: 'Create an Idea',
         subtitle: 'This is where it begins, start an Idea, invite some friends and begin designing!',
