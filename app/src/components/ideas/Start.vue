@@ -23,7 +23,7 @@
             
             .input-wrapper
               label {{ instanceCreateIdea.inputFields.description.name }}
-              quill-editor(v-model="idea.description" ref="myQuillEditor" v-bind:options="editorOption")
+              quill-editor(v-model="idea.description" ref="myQuillEditor" v-bind:options="{...editorOption}")
             
             .input-wrapper
               label Banner Image

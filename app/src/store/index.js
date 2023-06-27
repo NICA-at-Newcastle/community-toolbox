@@ -17,29 +17,30 @@ export default new Vuex.Store({
     debug: false
   },
   getters: {
-    instance () {
+    instance() {
       const subdomain = (window.location.hostname.split('.')[0])
       return ((subdomain === 'localhost') || (subdomain === config.domain.split('.')[0])) ? config.instances.default : Object.keys(config.instances).reduce((a, i) => (config.instances[i].subdomain === subdomain) ? i : a, {}) // subdomain
     },
-    instanceColor () {
+    instanceColor() {
       return config.instances[Store.getters.instance].color
     },
-    instanceForeground () {
+    instanceForeground() {
       return { 'color': config.instances[Store.getters.instance].color }
     },
-    instanceBackground () {
+    instanceBackground() {
       return { 'background-color': config.instances[Store.getters.instance].color }
     },
-    instanceLogoTitle () {
+    instanceLogoTitle() {
       return config.instances[Store.getters.instance].logoTitle || 'Ideaboard'
     },
-    instanceLogoColor () {
+    instanceLogoColor() {
       return config.instances[Store.getters.instance].logoColor || 'white'
     },
-    instanceOutcome () {
-      return config.instances[Store.getters.instance].outcome || {title: 'Outcome', ideaDocument: {title: 'Idea Document'}, followIdea: {title: 'Start follow on Idea'}}
+    instanceOutcome() {
+      return config.instances[Store.getters.instance].outcome || { title: 'Outcome', ideaDocument: { title: 'Idea Document' }, followIdea: { title: 'Start follow on Idea' } }
     },
-    instanceCreateIdea () {
+    instanceCreateIdea() {
+      console.log(JSON.stringify(config.instances[Store.getters.instance].createIdea))
       return config.instances[Store.getters.instance].createIdea || {
         title: 'Create an Idea',
         subtitle: 'This is where it begins, start an Idea, invite some friends and begin designing!',

@@ -1,0 +1,160 @@
+version: "3"
+
+networks:
+  web:
+    external: true
+  backend:
+    external: true
+
+volumes:
+  redis-data:
+  mongo-data:
+
+
+services:
+  # for testing, run via npm locally
+  # app:
+  #   platform: linux/amd64
+  #   build:
+  #     context: ./app
+  #     args:
+  #       - API_ADDRESS
+  #       - DEPLOYMENT
+  #       - FB_AUTH_ENABLED
+  #       - INSTITUTION
+  #       - LEGAL
+  #       - GTAG
+  #   restart: always
+  #   expose:
+  #     - 80
+  #   # dev only
+  #   ports:
+  #     - 80:80
+  #   networks:
+  #     - web
+  #   logging:
+  #     driver: 'json-file'
+  #     options:
+  #       max-size: '1024k'
+  #       max-file: '10'
+
+  api:
+    build: ./api
+    restart: always
+    expose:
+      - 3000
+    # dev only
+    ports:
+      - 3000:3000
+    volumes:
+      - ./api:/app
+    networks:
+      - backend
+      - web
+    environment:
+      - SUBDOMAIN
+    links:
+      - redis
+      - mongo
+    depends_on:
+      - redis
+      - mongo
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '1024k'
+        max-file: '10'
+
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_ADMIN_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_ADMIN_PASS}
+      MONGO_INITDB_DATABASE: ${MONGODB_APPLICATION_DATABASE}
+      MONGODB_APPLICATION_USER: ${MONGODB_APPLICATION_USER}
+      MONGODB_APPLICATION_PASS: ${MONGODB_APPLICATION_PASS}
+    volumes:
+      - mongo-data:/data/db
+      - ./init/init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh:ro
+    expose:
+      - 27017
+    # dev only
+    ports:
+      - 27017:27017
+    networks:
+      - backend
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '1024k'
+        max-file: '10'
+
+  # only accessible locally
+  mongo-express:
+    image: mongo-express
+    restart: always
+    expose:
+      - 8081
+    ports:
+      - 127.0.0.1:8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGODB_ADMIN_USER}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGODB_ADMIN_PASS}
+      ME_CONFIG_MONGODB_URL: mongodb://${MONGODB_ADMIN_USER}:${MONGODB_ADMIN_PASS}@mongo:27017/
+      ME_CONFIG_MONGODB_ENABLE_ADMIN: ${ME_CONFIG_MONGODB_ENABLE_ADMIN}
+      ME_CONFIG_BASICAUTH_USERNAME: ${ME_CONFIG_BASICAUTH_USERNAME}
+      ME_CONFIG_BASICAUTH_PASSWORD: ${ME_CONFIG_BASICAUTH_PASSWORD}
+    depends_on:
+      - mongo
+    networks:
+      - backend
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '1024k'
+        max-file: '10'
+
+  # mongobackup:
+  #   build: ./utilities/backup
+  #   restart: always
+  #   links:
+  #     - mongo
+  #   ports:
+  #     - 27017
+  #   environment:
+  #     - MONGO_HOST
+  #     - MONGO_DB
+  #     - MONGO_PORT
+  #     - S3_BUCKET
+  #     - AWS_ACCESS_KEY_ID
+  #     - AWS_SECRET_ACCESS_KEY
+  #     #- DATE_FORMAT
+  #     #- FILE_PREFIX
+  #     - MONGODB_APPLICATION_USER
+  #     - MONGODB_APPLICATION_PASS
+  #     - BACKUP_TIME=18:02
+  #   logging:
+  #     driver: 'json-file'
+  #     options:
+  #       max-size: '1024k'
+  #       max-file: '10'
+
+  redis:
+    image: redis:4.0.5-alpine
+    restart: always
+    command: [ "redis-server", "--appendonly", "yes" ]
+    volumes:
+      - redis-data:/data
+    expose:
+      - 6379
+    # dev only
+    ports:
+      - 6379:6379
+    networks:
+      - backend
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '1024k'
+        max-file: '10'

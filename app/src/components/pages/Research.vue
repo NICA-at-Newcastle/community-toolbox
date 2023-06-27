@@ -19,7 +19,9 @@ export default {
   name: 'research',
   metaInfo: {
     title: 'Research Policy',
-    description: 'Read our research policy.'
+    meta: [
+      { name: 'description', content: 'Read our research policy.' } 
+    ]
   },
   components: {
     VueMarkdown,

@@ -22,6 +22,7 @@ services:
         - FB_AUTH_ENABLED
         - INSTITUTION
         - LEGAL
+        - GTAG
     restart: always
     expose:
       - 80

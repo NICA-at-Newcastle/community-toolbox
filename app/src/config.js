@@ -6,7 +6,7 @@ export default {
   cdn1: `https://cdn.${process.env.DEPLOYMENT}`,
   cdn2: `https://cdn2.${process.env.DEPLOYMENT}`,
   legal: process.env.LEGAL,
-  gakey: "UA-44963053-17",
+  gtag: `${process.env.GTAG}`,
   // TODO: Google UA END of life - https://support.google.com/analytics/answer/11583528?hl=en
   instances: {
     default: "sensemystreet",

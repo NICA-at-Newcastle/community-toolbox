@@ -24,7 +24,7 @@ const ELASTIC_PRESET = configAWS.elasticPreset;
 
 const upload = multer({
   storage: multerS3({
-    s3: s3,    
+    s3: s3,
     bucket: S3_BUCKET,
     contentType: (req, file, cb) => {
       switch (file.mimetype) {
@@ -44,6 +44,7 @@ const upload = multer({
     key: function (req, file, cb) {
       crypto.pseudoRandomBytes(16, (err, raw) => {
         if (err) console.error(err)
+        console.log(file)
         cb(null, S3_DIR + '/' + raw.toString('hex') + Date.now() + '.' + mime.getExtension(file.mimetype))
       })
     }
@@ -102,9 +103,10 @@ module.exports = function (app, passport) {
       });
       const inputKey = req.file.key;
       let key = inputKey.substr(0, inputKey.lastIndexOf("."));
-      // key = key.replace("uploads/", "");
+      key = key.replace("media/", "");
 
       console.log("Creating elastic transcoder job...");
+      console.log("Key: ", key)
 
       const jobResult = await transcoder.createJob(
         {
@@ -123,7 +125,7 @@ module.exports = function (app, passport) {
             {
               Key: `${key}.mp4`,
               ThumbnailPattern: `${key}-{count}`,
-              // PresetId: ELASTIC_PRESET,
+              PresetId: ELASTIC_PRESET,
               PresetId: "1351620000001-000010"
             },
             {

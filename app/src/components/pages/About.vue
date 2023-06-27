@@ -28,7 +28,9 @@ export default {
   name: 'about',
   metaInfo: {
     title: 'About',
-    description: 'Learn about Ideaboard and the service it provides.'
+    meta: [
+      { name: 'description', content: 'Learn about Ideaboard and the service it provides.' } 
+    ]
   },
   components: {
     PageHeader,

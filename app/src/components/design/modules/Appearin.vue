@@ -1,11 +1,12 @@
 <template lang="pug">
 .design-task--appearin
-  p.design-task--description(v-if="task.description") {{ task.description }}
+  p.design-task--description(v-if="task && task.description") {{ task.description }}
 
   splash-messages(v-if="!isAuthenticated" v-bind:messages="[{type:'success',text:'Please login to participate!'}]")
 
   .appearin-wrapper(v-if="isAuthenticated")
-    iframe(v-bind:src="`https://meet.jit.si/${$route.params.task_id}`" frameborder="0" width="100%" height="400" allow="microphone; camera")
+    #jaas-container(style={ width: '100%', height: '400px' })
+    //- iframe(v-bind:src="`https://meet.jit.si/${$route.params.task_id}`" frameborder="0" width="100%" height="400" allow="microphone; camera")
     //- iframe(v-bind:src="`https://appear.in/${$route.params.task_id}`" frameborder="0" width="100%" height="400")
   
 </template>
@@ -20,7 +21,14 @@ export default {
   mixins: [DesignTask],
   computed: {
     ...mapGetters(['isAuthenticated'])
-  }
+  },
+  mounted(){
+    const api = new JitsiMeetExternalAPI("8x8.vc", 
+    {
+    roomName: this.$route.params.task_id,
+    parentNode: document.querySelector('#jaas-container')
+    }); 
+  } 
 }
 </script>
 

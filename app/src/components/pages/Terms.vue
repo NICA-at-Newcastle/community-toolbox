@@ -18,7 +18,9 @@ export default {
   name: 'terms',
   metaInfo: {
     title: 'Terms of Use',
-    description: 'Read our terms of use.'
+    meta: [
+      { name: 'description', content: 'Read our terms of use.' } 
+    ]
   },
   components: {
     VueMarkdown,

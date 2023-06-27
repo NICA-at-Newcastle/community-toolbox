@@ -25,7 +25,9 @@ export default {
   name: 'explore',
   metaInfo: {
     title: 'Explore',
-    description: 'Explore the communities ideas'
+    meta: [
+      { name: 'description', content: 'Explore the communities ideas.' } 
+    ]    
   },
   components: {
     PageHeader,

@@ -18,7 +18,9 @@ export default {
   name: 'cookies',
   metaInfo: {
     title: 'Cookie Policy',
-    description: 'Read our cookies policy.'
+    meta: [
+      { name: 'description', content: 'Read our cookies policy.' } 
+    ]    
   },
   components: {
     VueMarkdown,

@@ -5,7 +5,8 @@ import Vuex from 'vuex'
 import VueResource from 'vue-resource'
 import vueLogger from 'vue-logger'
 import Meta from 'vue-meta'
-import VueAnalytics from 'vue-analytics'
+// import VueAnalytics from 'vue-analytics'
+import VueGtag from "vue-gtag"
 import VueSession from 'vue-session'
 import { sync } from 'vuex-router-sync'
 
@@ -50,14 +51,18 @@ let cookieConsent = () => {
 }
 
 let enableAnalytics = () => {
-  Vue.use(VueAnalytics, {
-    id: config.gakey,
-    router,
-    autoTracking: {
-      exception: true
-    },
-    anonymizeIp: true
-  })
+  // Vue.use(VueAnalytics, {
+  //   id: config.gakey,
+  //   router,
+  //   autoTracking: {
+  //     exception: true
+  //   },
+  //   anonymizeIp: true
+  // })
+  Vue.use(VueGtag, {
+    config: { id: config.gtag },
+    appName: 'Ideaboard'
+  }, router)
 }
 
 let disableAnalytics = () => {

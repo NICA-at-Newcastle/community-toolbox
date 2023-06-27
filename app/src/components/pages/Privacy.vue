@@ -18,7 +18,9 @@ export default {
   name: 'privacy',
   metaInfo: {
     title: 'Privacy Policy',
-    description: 'Read our privacy policy.'
+    meta: [
+      { name: 'description', content: 'Read our privacy policy.' } 
+    ]
   },
   components: {
     VueMarkdown,
