@@ -147,6 +147,8 @@ There are several steps to adding a new instance:
 
 - Add configuration for instance - `app/src/config.js`.
 
+- [Optional] - add seed configuration for instance - `api/config.js`.
+
 - Update the `Caddyfile` with the new subdomain (only when using Caddy)
 
 ## Contributing
