@@ -132,7 +132,7 @@ docker-compose -f docker-compose-caddy.yml up -d --build
 Make sure you have set up and deployed Traefik [reverse-proxy](https://github.com/aarepuu/reverse-proxy) first on your machine. Then run:
 
 ```
-docker-compose -f docker-compose.yml up -d --build
+docker-compose up -d --build
 ```
 
 >NOTE!: Traefik enables you to also run the app on a particular subdomain. For that you need to use the `SUBDOMAIN` variable in addition to the `DEPLOYMENT` variable in the `.env` file.
