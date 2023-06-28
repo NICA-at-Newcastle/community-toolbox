@@ -73,8 +73,8 @@ Once an idea has been designed it, users can perform a series of actions from th
 - Caddy server for automatic SSL and domain configuration.
   - Caddy - [caddyserver.com](https://caddyserver.com/)
 - Traefik reverse proxy for SSL and domain configuration.
- - Traefik - [traefik.io](https://traefik.io)
- - Reverse-proxy [reverse-proxy](https://github.com/aarepuu/reverse-proxy)
+  - Traefik - [traefik.io](https://traefik.io)
+  - Reverse-proxy [reverse-proxy](https://github.com/aarepuu/reverse-proxy)
 - AWS Elastic Transcoder for remote video encoding and thumbnail generation.
   - AWS Elastic Transcoder - [aws.amazon.com/elastictranscoder](https://aws.amazon.com/elastictranscoder)
 - AWS S3 for storage of media and other user-generated content.
