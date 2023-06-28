@@ -7,13 +7,19 @@
 ## Contributors
 | Name | Contribution | Contact |
 | --- | --- | --- |
-| `Edward Jenkins` | `Lead developer` | [edjenkins.co.uk](https://edjenkins.co.uk), [@edjenkins91](https://twitter.com/edjenkins91)|
+| `Edward Jenkins` | `Original Creator` | [edjenkins.co.uk](https://edjenkins.co.uk), [@edjenkins91](https://twitter.com/edjenkins91)|
+| `Aare Puussaar` | `Contributor` | [https://github.com/aarepuu](https://github.com/aarepuu), [@aarewoodisland](https://twitter.com/aarewoodisland)|
 
 ## Repository Structure
 
-**Caddyfile** - contains the configuration for Caddy Server (subdomains for various instances).
+**Caddyfile** - contains the configuration for Caddy Server (subdomains for various instances) for deploying with Caddy.
 
-**docker-compose.yml** - contains the docker configuration for the app, api, mongo, redis and other services.
+**docker-compose-caddy.yml** - contains the docker configuration for the app, api, mongo, redis and other services for Caddy deployment.
+
+**docker-compose-dev.yml** - contains the docker configuration for the app, api, mongo, redis and other services for local development deployment.
+
+**docker-compose-dev.yml** - contains the docker configuration for the app, api, mongo, redis and other services for Traefik deployment.
+
 
 ### /api
 Directory containing the back end for the system, this is a node application consisting of an [Express.js](https://expressjs.com) server.
@@ -21,8 +27,8 @@ Directory containing the back end for the system, this is a node application con
 ### /app
 A standalone [Vue.js](http://vuejs.org) frontend which integrates with the back end.
 
-### /docker
-Docker specific files for running [MongoDB](https://www.mongodb.com) in a container. Includes script which can be used to set the user password.
+### /init
+Docker initialisation files. Includes a [MongoDB](https://www.mongodb.com) script which can be used to set the user password.
 
 ### /utilities
 Contains a backup script for dumping the contents of the [MongoDB](https://www.mongodb.com) and uploading to an [AWS S3](https://aws.amazon.com/s3) bucket.
@@ -50,8 +56,9 @@ Once an idea has been designed it, users can perform a series of actions from th
 ## Deployments
 | Name | Description | Link |
 | --- | --- | --- |
-| `Main` | `The public version of the site which can be used to develop any idea.` | [ideaboard.co.uk](https://ideaboard.co.uk)|
-| `Myto` | `A collaborative design experiment working with experts to develop ideas around mitochondrial disease.` | [myto.ideaboard.co.uk](https://myto.ideaboard.co.uk)|
+~~| `Main` | `The public version of the site which can be used to develop any idea.` | [ideaboard.co.uk](https://ideaboard.co.uk)|~~
+~~| `Myto` | `A collaborative design experiment working with experts to develop ideas around mitochondrial disease.` | [myto.ideaboard.co.uk](https://myto.ideaboard.co.uk)|~~
+| `SenseMyStreet` | `Proposals and ideas generation system for SenseMyStreet community sensor commissioning toolkit` | [https://ideaboard.sensemystreet.co.uk](https://ideaboard.sensemystreet.co.uk)|
 
 
 ## Details
@@ -65,6 +72,9 @@ Once an idea has been designed it, users can perform a series of actions from th
   - Redis - [redis.io](https://redis.io/)
 - Caddy server for automatic SSL and domain configuration.
   - Caddy - [caddyserver.com](https://caddyserver.com/)
+- Traefik reverse proxy for SSL and domain configuration.
+ - Traefik - [traefik.io](https://traefik.io)
+ - Reverse-proxy [reverse-proxy](https://github.com/aarepuu/reverse-proxy)
 - AWS Elastic Transcoder for remote video encoding and thumbnail generation.
   - AWS Elastic Transcoder - [aws.amazon.com/elastictranscoder](https://aws.amazon.com/elastictranscoder)
 - AWS S3 for storage of media and other user-generated content.
@@ -88,7 +98,7 @@ cd api && npm install
 
 ### Spin up the docker stack. This will fire up the API, redis, mongo and some helper containers.
 ```
-docker-compose up -d
+docker-compose -f docker-compose-dev.yml up -d --build
 ```
 
 ## Monitor the containers
@@ -105,16 +115,39 @@ cd app
 npm run dev
 ```
 
+## Deployment
+
+Ideaboard can be deployed using either [Caddy Server](https://caddyserver.com/) or Traefik[reverse-proxy](https://github.com/aarepuu/reverse-proxy)
+
+### Using Caddy:
+
+Run:
+
+```
+docker-compose -f docker-compose-caddy.yml up -d --build
+```
+
+### Using Traefik:
+
+Make sure you have set up and deployed Traefik [reverse-proxy](https://github.com/aarepuu/reverse-proxy) first on your machine. Then run:
+
+```
+docker-compose -f docker-compose.yml up -d --build
+```
+
+>NOTE!: Traefik enables you to also run the app on a particular subdomain. For that you need to use the `SUBDOMAIN` variable in addition to the `DEPLOYMENT` variable in the `.env` file.
+
+
 ## Adding an instance
 Ideaboard supports multiple subdomains/instances. New instances can be added quite easily. The backend serves content based on the domain of each request for simplicity.
 
 There are several steps to adding a new instance:
 
-- Add a homepage component to the instances directory - /app/src/components/instances/example.vue.
+- Add a homepage component to the instances directory - `/app/src/components/instances/example.vue`.
 
-- Add configuration for instance - app/src/config.js.
+- Add configuration for instance - `app/src/config.js`.
 
-- Update the 'Caddyfile' with the new subdomain
+- Update the `Caddyfile` with the new subdomain (only when using Caddy)
 
 ## Contributing
 Please feel free to pull the code and add to it where you see fit. If you do anything interesting tweet me [@edjenkins91](https://twitter.com/edjenkins91)
