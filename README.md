@@ -8,7 +8,7 @@
 | Name | Contribution | Contact |
 | --- | --- | --- |
 | `Edward Jenkins` | `Original Creator` | [edjenkins.co.uk](https://edjenkins.co.uk), [@edjenkins91](https://twitter.com/edjenkins91)|
-| `Aare Puussaar` | `Contributor` | [https://github.com/aarepuu](https://github.com/aarepuu), [@aarewoodisland](https://twitter.com/aarewoodisland)|
+| `Aare Puussaar` | `Contributor` | [github.com/aarepuu](https://github.com/aarepuu), [@aarewoodisland](https://twitter.com/aarewoodisland)|
 
 ## Repository Structure
 
@@ -56,8 +56,8 @@ Once an idea has been designed it, users can perform a series of actions from th
 ## Deployments
 | Name | Description | Link |
 | --- | --- | --- |
-~~| `Main` | `The public version of the site which can be used to develop any idea.` | [ideaboard.co.uk](https://ideaboard.co.uk)|~~
-~~| `Myto` | `A collaborative design experiment working with experts to develop ideas around mitochondrial disease.` | [myto.ideaboard.co.uk](https://myto.ideaboard.co.uk)|~~
+| ~~`Main`~~ | ~~`The public version of the site which can be used to develop any idea.`~~ | ~~[ideaboard.co.uk](https://ideaboard.co.uk)~~|
+| ~~`Myto`~~ | ~~`A collaborative design experiment working with experts to develop ideas around mitochondrial disease.`~~ | ~~[myto.ideaboard.co.uk](https://myto.ideaboard.co.uk)~~|
 | `SenseMyStreet` | `Proposals and ideas generation system for SenseMyStreet community sensor commissioning toolkit` | [https://ideaboard.sensemystreet.co.uk](https://ideaboard.sensemystreet.co.uk)|
 
 
