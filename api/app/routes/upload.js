@@ -30,7 +30,6 @@ const upload = multer({
       switch (file.mimetype) {
         case 'image/svg+xml':
           return cb(null, 'image/svg+xml')
-
         default:
           return multerS3.AUTO_CONTENT_TYPE(req, file, cb)
       }
@@ -44,7 +43,6 @@ const upload = multer({
     key: function (req, file, cb) {
       crypto.pseudoRandomBytes(16, (err, raw) => {
         if (err) console.error(err)
-        console.log(file)
         cb(null, S3_DIR + '/' + raw.toString('hex') + Date.now() + '.' + mime.getExtension(file.mimetype))
       })
     }
@@ -103,10 +101,9 @@ module.exports = function (app, passport) {
       });
       const inputKey = req.file.key;
       let key = inputKey.substr(0, inputKey.lastIndexOf("."));
-      key = key.replace("media/", "");
+      key = key.replace(`${S3_DIR}/`, "");
 
       console.log("Creating elastic transcoder job...");
-      console.log("Key: ", key)
 
       const jobResult = await transcoder.createJob(
         {
