@@ -69,7 +69,7 @@ export default {
         // appearin: { name: 'Video Call', icon: 'fa-users', description: 'Have a live video chat with someone via Jitsi.' },
         whiteboard: { name: 'Whiteboard', icon: 'fa-paint-brush', description: 'Sketch ideas on an interactive whiteboard.' },
         // TODO: setup AWS video transcoder
-        // webcam: { name: 'Record Video', icon: 'fa-video', description: 'Record videos through your webcam and share them.' }
+        webcam: { name: 'Record Video', icon: 'fa-video', description: 'Record videos through your webcam and share them.' }
       },
       task: {
         title: '',

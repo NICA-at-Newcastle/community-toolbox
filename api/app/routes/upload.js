@@ -109,7 +109,8 @@ module.exports = function (app, passport) {
         {
           PipelineId: ELASTIC_PIPELINE,
           // InputKeyPrefix: '/uploads',
-          OutputKeyPrefix: "encoded/",
+          // OutputKeyPrefix: "encoded/",
+          OutputKeyPrefix: "media/",
           Input: {
             Key: inputKey,
             FrameRate: "auto",
