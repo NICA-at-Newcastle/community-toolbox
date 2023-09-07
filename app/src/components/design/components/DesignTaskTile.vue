@@ -99,7 +99,7 @@ export default {
         case "data":
           return "fa-database";
         case "sensor":
-          return "walkie-talkie";
+          return "fa-walkie-talkie";
         default:
           break;
       }
