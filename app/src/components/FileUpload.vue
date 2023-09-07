@@ -2,7 +2,7 @@
 .file-upload
   form(enctype="multipart/form-data" novalidate v-if="isInitial || isSaving")
     .dropbox
-      input(type="file" multiple v-bind:name="uploadFieldName" v-bind:disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length" accept=".rtf,.doc,.docx,.pdf,image/*,video/*" class="input-file")
+      input(type="file" multiple v-bind:name="uploadFieldName" v-bind:disabled="isSaving" @change="filesChange($event.target.name, $event.target.files); fileCount = $event.target.files.length" :accept="accept" class="input-file")
       p(v-if="isInitial")
         | Click to upload a file
       p(v-if="isSaving")
@@ -29,89 +29,93 @@
 </template>
 
 <script>
-import API from '@/api'
+import API from "@/api";
 
-const STATUS_INITIAL = 0
-const STATUS_SAVING = 1
-const STATUS_SUCCESS = 2
-const STATUS_FAILED = 3
+const STATUS_INITIAL = 0;
+const STATUS_SAVING = 1;
+const STATUS_SUCCESS = 2;
+const STATUS_FAILED = 3;
 
 export default {
-  name: 'file-upload',
-  props: ['uploadedFile'],
-  mounted () {
-    this.reset()
+  name: "file-upload",
+  props: ["uploadedFile", "uploadType"],
+  mounted() {
+    this.reset();
   },
-  data  () {
+  data() {
     return {
       uploadError: null,
       currentStatus: null,
-      uploadFieldName: 'upload'
-    }
+      uploadFieldName: "upload"
+    };
   },
   watch: {
-    uploadedFile (nV, oV) {
-      if (typeof nV === 'undefined') {
-        this.reset()
+    uploadedFile(nV, oV) {
+      if (typeof nV === "undefined") {
+        this.reset();
       }
     }
   },
   computed: {
-    isInitial () {
-      return this.currentStatus === STATUS_INITIAL
+    isInitial() {
+      return this.currentStatus === STATUS_INITIAL;
     },
-    isSaving () {
-      return this.currentStatus === STATUS_SAVING
+    isSaving() {
+      return this.currentStatus === STATUS_SAVING;
     },
-    isSuccess () {
-      return this.currentStatus === STATUS_SUCCESS
+    isSuccess() {
+      return this.currentStatus === STATUS_SUCCESS;
     },
-    isFailed () {
-      return this.currentStatus === STATUS_FAILED
+    isFailed() {
+      return this.currentStatus === STATUS_FAILED;
+    },
+    accept() {
+      return this.uploadType === "data"
+        ? ".csv,.tsv,.txt.,.xlsx"
+        : ".rtf,.doc,.docx,.pdf,image/*,video/*";
     }
   },
   methods: {
-    reset () {
+    reset() {
       // reset form to initial state
-      this.currentStatus = STATUS_INITIAL
-      this.uploadError = null
-      this.$emit('update:uploadedFile', undefined)
+      this.currentStatus = STATUS_INITIAL;
+      this.uploadError = null;
+      this.$emit("update:uploadedFile", undefined);
     },
-    save (formData) {
+    save(formData) {
       // upload data to the server
-      this.currentStatus = STATUS_SAVING
+      this.currentStatus = STATUS_SAVING;
 
-      API.upload.upload(formData,
-        (response) => {
-          this.$log(response)
-          this.currentStatus = STATUS_SUCCESS
-          this.$emit('update:uploadedFile', response.data.upload)
+      API.upload.upload(
+        formData,
+        response => {
+          this.$log(response);
+          this.currentStatus = STATUS_SUCCESS;
+          this.$emit("update:uploadedFile", response.data.upload);
         },
-        (error) => {
-          this.$log(error)
-          this.uploadError = error.response
-          this.currentStatus = STATUS_FAILED
+        error => {
+          this.$log(error);
+          this.uploadError = error.response;
+          this.currentStatus = STATUS_FAILED;
         }
-      )
+      );
     },
-    filesChange (fieldName, fileList) {
+    filesChange(fieldName, fileList) {
       // handle file changes
-      const formData = new FormData()
+      const formData = new FormData();
 
-      if (!fileList.length) return
+      if (!fileList.length) return;
 
       // append the files to FormData
-      Array
-        .from(Array(fileList.length).keys())
-        .map(x => {
-          formData.append(fieldName, fileList[x], fileList[x].name)
-        })
+      Array.from(Array(fileList.length).keys()).map(x => {
+        formData.append(fieldName, fileList[x], fileList[x].name);
+      });
 
       // save it
-      this.save(formData)
+      this.save(formData);
     }
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>
@@ -148,7 +152,7 @@ export default {
     height 100px
     position absolute
     cursor pointer
-  
+
   ul#upload-list
     cleanlist()
     margin-bottom 10px

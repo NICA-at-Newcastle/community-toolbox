@@ -18,88 +18,94 @@
 </template>
 
 <script>
-import _reverse from 'lodash/reverse'
-import _sortedUniqBy from 'lodash/sortedUniqBy'
+import _reverse from "lodash/reverse";
+import _sortedUniqBy from "lodash/sortedUniqBy";
 
-import Avatar from '@/components/user/Avatar'
-import API from '@/api'
+import Avatar from "@/components/user/Avatar";
+import API from "@/api";
 
 export default {
-  name: 'design-task-tile',
-  props: ['task', 'listLayout'],
+  name: "design-task-tile",
+  props: ["task", "listLayout"],
   components: {
     Avatar
   },
-  mounted () {
-    if (this.task.type === 'discussion') {
-      this.fetchDiscussionResponseCount()
+  mounted() {
+    if (this.task.type === "discussion") {
+      this.fetchDiscussionResponseCount();
     }
   },
-  data () {
+  data() {
     return {
       discussionCount: 0
-    }
+    };
   },
   computed: {
-    contributors () {
+    contributors() {
       try {
-        return _sortedUniqBy(_reverse(this.task._responses), (response) => {
-          return response._user._id
-        })
+        return _sortedUniqBy(_reverse(this.task._responses), response => {
+          return response._user._id;
+        });
       } catch (error) {
-        return []
+        return [];
       }
     },
-    responseCount () {
-      if (this.task.type === 'discussion') {
+    responseCount() {
+      if (this.task.type === "discussion") {
         // Fetch comments
-        return (this.task._responses.length === 0) ? this.discussionCount : this.task._responses.length
+        return this.task._responses.length === 0
+          ? this.discussionCount
+          : this.task._responses.length;
       } else {
-        return this.task._responses.length
+        return this.task._responses.length;
       }
     }
   },
   methods: {
-    fetchDiscussionResponseCount () {
+    fetchDiscussionResponseCount() {
       API.comment.fetch(
         {
           target: this.task._id,
-          type: 'task'
+          type: "task"
         },
-        (response) => {
-          this.$log(response)
-          this.discussionCount = response.data.length
+        response => {
+          this.$log(response);
+          this.discussionCount = response.data.length;
         },
-        (error) => {
-          this.$log(error)
+        error => {
+          this.$log(error);
         }
-      )
+      );
     },
-    loadTask () {
-      this.$emit('loadTask')
+    loadTask() {
+      this.$emit("loadTask");
     },
-    getTaskIcon (type) {
+    getTaskIcon(type) {
       switch (type) {
-        case 'poll':
-          return 'fa-list-ul'
-        case 'richtext':
-          return 'fa-font'
-        case 'discussion':
-          return 'fa-comments'
-        case 'media':
-          return 'fa-images'
-        case 'appearin':
-          return 'fa-users'
-        case 'webcam':
-          return 'fa-video'
-        case 'whiteboard':
-          return 'fa-paint-brush'
+        case "poll":
+          return "fa-list-ul";
+        case "richtext":
+          return "fa-font";
+        case "discussion":
+          return "fa-comments";
+        case "media":
+          return "fa-images";
+        case "appearin":
+          return "fa-users";
+        case "webcam":
+          return "fa-video";
+        case "whiteboard":
+          return "fa-paint-brush";
+        case "data":
+          return "fa-database";
+        case "sensor":
+          return "walkie-talkie";
         default:
-          break
+          break;
       }
     }
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>
@@ -198,8 +204,7 @@ export default {
       reset()
       font-size 0.8em
       padding 5px
-  
+
   &:hover
     cursor pointer
-
 </style>

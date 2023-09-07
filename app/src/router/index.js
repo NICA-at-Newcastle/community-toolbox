@@ -29,9 +29,11 @@ const AddDesignTask = () => import('@/components/design/AddTask')
 const Discussion = () => import('@/components/design/modules/Discussion')
 const Poll = () => import('@/components/design/modules/Poll')
 const Media = () => import('@/components/design/modules/Media')
+const Data = () => import('@/components/design/modules/Data')
 const RichText = () => import('@/components/design/modules/RichText')
 const Appearin = () => import('@/components/design/modules/Appearin')
 const Whiteboard = () => import('@/components/design/modules/Whiteboard')
+const Sensor = () => import('@/components/design/modules/Sensor')
 const Webcam = () => import('@/components/design/modules/Webcam')
 
 // Idea Outcome Tab
@@ -50,7 +52,7 @@ const getInstance = (subdomain) => { return Object.keys(config.instances).reduce
 
 const router = new Router({
   mode: 'history',
-  scrollBehavior (to, from, savedPosition) {
+  scrollBehavior(to, from, savedPosition) {
     return { x: 0, y: 0 }
   },
   routes: [
@@ -158,6 +160,16 @@ const router = new Router({
               name: 'media',
               path: 'media/:task_id',
               component: Media
+            },
+            {
+              name: 'data',
+              path: 'data/:task_id',
+              component: Data
+            },
+            {
+              name: 'sensor',
+              path: 'sensor/:task_id',
+              component: Sensor
             },
             {
               name: 'richtext',

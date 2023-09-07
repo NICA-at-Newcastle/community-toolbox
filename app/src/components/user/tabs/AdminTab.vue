@@ -5,29 +5,35 @@
   
   invitations(v-if="isAdmin")
 
+  manage-sensors(v-if="isAdmin")
+
   manage-permissions(v-if="isAdmin")
+
+  
 
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
 
-import YourPermissions from '@/components/user/admin/YourPermissions'
-import ManagePermissions from '@/components/user/admin/ManagePermissions'
-import Invitations from '@/components/user/admin/Invitations'
+import YourPermissions from "@/components/user/admin/YourPermissions";
+import ManageSensors from "@/components/user/admin/ManageSensors";
+import ManagePermissions from "@/components/user/admin/ManagePermissions";
+import Invitations from "@/components/user/admin/Invitations";
 
 export default {
-  name: 'admin-tab',
-  props: ['currentUser'],
+  name: "admin-tab",
+  props: ["currentUser"],
   components: {
     YourPermissions,
     ManagePermissions,
-    Invitations
+    Invitations,
+    ManageSensors
   },
   computed: {
-    ...mapGetters(['user', 'isAdmin'])
+    ...mapGetters(["user", "isAdmin"])
   }
-}
+};
 </script>
 
 <style lang="stylus">
@@ -37,8 +43,7 @@ export default {
 .tab-content--admin
   text-align left
   .tab--content
-    padding 25px  
+    padding 25px
     p
       reset()
-
 </style>

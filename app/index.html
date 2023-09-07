@@ -1,14 +1,24 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Ideaboard</title>
-    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css" />
-    <link href="https://unpkg.com/video.js/dist/video-js.css" rel="stylesheet">
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css"
+    />
+    <link
+      href="https://unpkg.com/video.js/dist/video-js.css"
+      rel="stylesheet"
+    />
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
-    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v6.4.0/js/all.js"
+    ></script>
     <!-- <script src='https://8x8.vc/vpaas-magic-cookie-1551fbe7e5364968ae293678e8596b7d/external_api.js' async></script> -->
 
     <style type="text/css">
@@ -22,31 +32,32 @@
     </style>
 
     <script>
-      window.addEventListener("load", function () {
+      window.addEventListener("load", function() {
         window.cookieconsent.initialise({
-          "palette": {
-            "popup": {
-              "background": "#f2f2f2"
+          palette: {
+            popup: {
+              background: "#f2f2f2"
             },
-            "button": {
-              "background": "#0099d0",
-              "text": "#ffffff"
+            button: {
+              background: "#0099d0",
+              text: "#ffffff"
             }
           },
-          "position": "bottom-right",
-          "type": "opt-in",
-          "revokable": true,
-          "content": {
-            "message": "This website uses cookies to track your session. We use Google Analytics and our own tools to understand how you use the site. This is for research purposes and to provide a better experience.",
-            "dismiss": "Deny cookies",
-            "href": "/cookies"
+          position: "bottom-right",
+          type: "opt-in",
+          revokable: true,
+          content: {
+            message:
+              "This website uses cookies to track your session. We use Google Analytics and our own tools to understand how you use the site. This is for research purposes and to provide a better experience.",
+            dismiss: "Deny cookies",
+            href: "/cookies"
           },
-          onStatusChange: function (status) {
-            var event = new CustomEvent('consent-updated', {})
-            window.dispatchEvent(event)
+          onStatusChange: function(status) {
+            var event = new CustomEvent("consent-updated", {});
+            window.dispatchEvent(event);
           }
-        })
-      })
+        });
+      });
     </script>
   </head>
   <body>
@@ -54,9 +65,22 @@
     <!-- built files will be auto injected -->
     <script type="text/javascript">
       function googleTranslateElementInit() {
-        new google.translate.TranslateElement({ pageLanguage: 'en', includedLanguages: 'it,nl', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: true, multilanguagePage: false }, 'google_translate_element');
+        new google.translate.TranslateElement(
+          {
+            pageLanguage: "en",
+            includedLanguages: "it,nl",
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: true,
+            multilanguagePage: false
+          },
+          "google_translate_element"
+        );
       }
     </script>
-    <script defer type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script
+      defer
+      type="text/javascript"
+      src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+    ></script>
   </body>
 </html>

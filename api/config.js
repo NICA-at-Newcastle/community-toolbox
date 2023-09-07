@@ -30,6 +30,36 @@ module.exports = {
         { tag: "other", name: "Other" },
       ],
       tasks: [
+        // {
+        //   type: "poll",
+        //   title: "Deployment dates",
+        //   description:
+        //     "Propose the best time for the deployment. Maximum time for the loan is one month at a time. Also check the deployment calendar at https://sensemystreet.co.uk/calendar",
+        // }, 
+        // {
+        //   type: "whiteboard",
+        //   title: "Locations",
+        //   description:
+        //     "Use the whiteboard to indicate desired locations for the deployment (e.g. lamp post near school).",
+        // },        
+        {
+          type: "media",
+          title: "Additional information",
+          description:
+            "Upload any additional media you think would be useful for the discussion.",
+        },
+        {
+          type: "data",
+          title: "Data Upload",
+          description:
+            "Upload any data that you think would be useful for the discussion.",
+        },
+        {
+          type: "sensor",
+          title: "Lend Sensors",
+          description:
+            "See types of monitors - https://sensemystreet.co.uk/sensors and the whole list of available resources available - https://goo.gl/Ecy7Jy.",
+        },
         {
           type: "richtext",
           title: "Desire for data",
@@ -41,30 +71,6 @@ module.exports = {
           description:
             "Describe what are the main priorities of the community and areas to focus on.",
         },
-        {
-          type: "discussion",
-          title: "Resources needed",
-          description:
-            "Please indicate what environmental monitors are you interested and locations you would like to place them. See types of monitors - https://sensemystreet.co.uk/sensors and the whole list of available resources available - https://goo.gl/Ecy7Jy. Give as much detail as you can.",
-        },
-        {
-          type: "poll",
-          title: "Deployment dates",
-          description:
-            "Propose the best time for the deployment. Maximum time for the loan is one month at a time. Also check the deployment calendar at https://sensemystreet.co.uk/calendar",
-        },
-        {
-          type: "whiteboard",
-          title: "Locations",
-          description:
-            "Use the whiteboard to indicate desired locations for the deployment (e.g. lamp post near school).",
-        },
-        {
-          type: "media",
-          title: "Additional information",
-          description:
-            "Upload any additional media you think would be useful for the discussion.",
-        }
       ]
     },
     // myto: {
