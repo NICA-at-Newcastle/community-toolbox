@@ -55,13 +55,6 @@ module.exports = {
             "Upload any data that you think would be useful for the discussion.",
         },
         {
-          type: "sensor",
-          title: "Lend Sensors",
-          description:
-            "Use the form below to borrow sensors and do environmental monitoring in your neighbourhood.",
-          pinned: true,
-        },
-        {
           type: "richtext",
           title: "Desire for data",
           description: "Please give some idea what use would you have for this data. Where and how are you planning to use it?",
@@ -72,6 +65,19 @@ module.exports = {
           description:
             "Describe what are the main priorities of the community and areas to focus on.",
         },
+        {
+          type: "map",
+          title: "Map Locations",
+          description:
+            "Identify an issue in this location.",
+        },
+        {
+          type: "sensor",
+          title: "Lend Sensors",
+          description:
+            "Use the form below to borrow sensors and do environmental monitoring in your neighbourhood.",
+          pinned: true,
+        }
       ]
     },
     // myto: {
