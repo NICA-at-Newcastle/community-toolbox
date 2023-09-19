@@ -58,7 +58,8 @@ module.exports = {
           type: "sensor",
           title: "Lend Sensors",
           description:
-            "See types of monitors - https://sensemystreet.co.uk/sensors and the whole list of available resources available - https://goo.gl/Ecy7Jy.",
+            "Use the form below to borrow sensors and do environmental monitoring in your neighbourhood.",
+          pinned: true,
         },
         {
           type: "richtext",

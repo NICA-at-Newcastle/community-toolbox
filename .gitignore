@@ -4,3 +4,4 @@
 db/
 api/uploads
 *.log
+.DS_Store

@@ -122,6 +122,7 @@ async function init(req, res, next) {
   require("./app/routes/user.js")(app, passport);
   require("./app/routes/idea.js")(app, passport);
   require("./app/routes/category.js")(app, passport);
+  require("./app/routes/sensor.js")(app, passport);
   require("./app/routes/comment.js")(app, passport);
   require("./app/routes/task.js")(app, passport);
   require("./app/routes/update.js")(app, passport);

@@ -4,9 +4,9 @@
 
 <script>
 export default {
-  name: 'start-button',
-  props: ['action', 'backgroundColor', 'buttonTextColor']
-}
+  name: "start-button",
+  props: ["action", "backgroundColor", "buttonTextColor"]
+};
 </script>
 
 <style lang="stylus" scoped>
@@ -28,5 +28,4 @@ export default {
   &:hover
     cursor pointer
     background-color darken($color-success, 10%) !important
-
 </style>

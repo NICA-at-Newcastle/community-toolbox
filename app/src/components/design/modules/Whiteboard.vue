@@ -1,6 +1,6 @@
 <template lang="pug">
 .design-task--whiteboard
-  p.design-task--description(v-if="task.description") {{ task.description }}
+  p.design-task--description(v-if="task && task.description") {{ task.description }}
 
   splash-messages(v-if="!isAuthenticated" v-bind:messages="[{type:'success',text:'Please login to participate!'}]")
 
@@ -10,17 +10,17 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
 
-import DesignTask from '@/mixins/DesignTask'
+import DesignTask from "@/mixins/DesignTask";
 
 export default {
-  name: 'whiteboard',
+  name: "whiteboard",
   mixins: [DesignTask],
   computed: {
-    ...mapGetters(['isAuthenticated'])
+    ...mapGetters(["isAuthenticated"])
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>

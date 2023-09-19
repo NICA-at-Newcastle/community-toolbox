@@ -10,7 +10,6 @@ volumes:
   redis-data:
   mongo-data:
 
-
 services:
   app:
     platform: linux/amd64
@@ -21,6 +20,7 @@ services:
         - DEPLOYMENT
         - FB_AUTH_ENABLED
         - INSTITUTION
+        - APP_NAME
         - LEGAL
         - GTAG
     restart: always
@@ -33,17 +33,17 @@ services:
       - web
     # Traefik labels
     labels:
-      - 'traefik.enable=true'
-      - 'traefik.docker.network=web'
-      - 'traefik.http.routers.ideaboard-web.rule=Host(`${SUBDOMAIN}.${DEPLOYMENT}`)'
-      - 'traefik.http.routers.ideaboard-web.entrypoints=websecure'
-      - 'traefik.http.routers.ideaboard-web.tls=true'
-      - 'traefik.http.routers.ideaboard-web.tls.certresolver=myresolver'
+      - "traefik.enable=true"
+      - "traefik.docker.network=web"
+      - "traefik.http.routers.ideaboard-web.rule=Host(`${SUBDOMAIN}.${DEPLOYMENT}`)"
+      - "traefik.http.routers.ideaboard-web.entrypoints=websecure"
+      - "traefik.http.routers.ideaboard-web.tls=true"
+      - "traefik.http.routers.ideaboard-web.tls.certresolver=myresolver"
     logging:
-      driver: 'json-file'
+      driver: "json-file"
       options:
-        max-size: '1024k'
-        max-file: '10'
+        max-size: "1024k"
+        max-file: "10"
 
   api:
     build: ./api
@@ -80,10 +80,10 @@ services:
       - redis
       - mongo
     logging:
-      driver: 'json-file'
+      driver: "json-file"
       options:
-        max-size: '1024k'
-        max-file: '10'
+        max-size: "1024k"
+        max-file: "10"
 
   mongo:
     image: mongo
@@ -105,10 +105,10 @@ services:
     networks:
       - backend
     logging:
-      driver: 'json-file'
+      driver: "json-file"
       options:
-        max-size: '1024k'
-        max-file: '10'
+        max-size: "1024k"
+        max-file: "10"
 
   # only accessible locally
   # mongo-express:
@@ -163,7 +163,7 @@ services:
   redis:
     image: redis:4.0.5-alpine
     restart: always
-    command: [ "redis-server", "--appendonly", "yes" ]
+    command: ["redis-server", "--appendonly", "yes"]
     volumes:
       - redis-data:/data
     expose:
@@ -174,7 +174,7 @@ services:
     networks:
       - backend
     logging:
-      driver: 'json-file'
+      driver: "json-file"
       options:
-        max-size: '1024k'
-        max-file: '10'
+        max-size: "1024k"
+        max-file: "10"

@@ -30,6 +30,7 @@ const Discussion = () => import('@/components/design/modules/Discussion')
 const Poll = () => import('@/components/design/modules/Poll')
 const Media = () => import('@/components/design/modules/Media')
 const Data = () => import('@/components/design/modules/Data')
+const Map = () => import('@/components/design/modules/Map')
 const RichText = () => import('@/components/design/modules/RichText')
 const Appearin = () => import('@/components/design/modules/Appearin')
 const Whiteboard = () => import('@/components/design/modules/Whiteboard')
@@ -170,6 +171,11 @@ const router = new Router({
               name: 'sensor',
               path: 'sensor/:task_id',
               component: Sensor
+            },
+            {
+              name: 'map',
+              path: 'map/:task_id',
+              component: Map
             },
             {
               name: 'richtext',

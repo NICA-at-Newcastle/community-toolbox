@@ -1,9 +1,9 @@
 <template lang="pug">
 .dicussion-container(v-bind:class="{ 'no-padding': notPadded }")
 
-  p.design-task--description(v-if="task && task.description && task.type !== 'media'") {{ task.description }}
+  p.design-task--description(v-if="task && task.description && task.type !== 'media' && task.type !== 'map'") {{ task.description }}
 
-  //- splash-messages(v-if="!isAuthenticated" v-bind:messages="[{type:'success',text:'Please login to participate!'}]")
+  splash-messages(v-if="!isAuthenticated" v-bind:messages="[{type:'success',text:'Please login to participate!'}]")
 
   .dicussion-wrapper
     // No comments
@@ -62,58 +62,56 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import { mapGetters } from 'vuex'
-import * as types from '@/store/mutation-types'
-import _replace from 'lodash/replace'
+import Vue from "vue";
+import { mapGetters } from "vuex";
+import * as types from "@/store/mutation-types";
+import _replace from "lodash/replace";
 
-import VueTextareaAutosize from 'vue-textarea-autosize'
+import VueTextareaAutosize from "vue-textarea-autosize";
 
-import DesignTask from '@/mixins/DesignTask'
-import Commentable from '@/mixins/Commentable'
-import Reportable from '@/mixins/Reportable'
-import Avatar from '@/components/user/Avatar'
+import DesignTask from "@/mixins/DesignTask";
+import Commentable from "@/mixins/Commentable";
+import Reportable from "@/mixins/Reportable";
+import Avatar from "@/components/user/Avatar";
 
-Vue.use(VueTextareaAutosize)
+Vue.use(VueTextareaAutosize);
 
 export default {
-  name: 'dicussion',
-  props: ['notPadded', 'hideNoComments', 'discussionTarget', 'discussionType'],
-  mixins: [
-    DesignTask,
-    Commentable,
-    Reportable
-  ],
+  name: "dicussion",
+  props: ["notPadded", "hideNoComments", "discussionTarget", "discussionType"],
+  mixins: [DesignTask, Commentable, Reportable],
   components: {
     VueTextareaAutosize,
     Avatar
   },
   computed: {
-    ...mapGetters(['isAuthenticated', 'user']),
-    commentTarget () {
-      if (typeof this.discussionTarget === 'undefined') {
-        return this.$route.params.task_id ? this.$route.params.task_id : this.$route.params.id
+    ...mapGetters(["isAuthenticated", "user"]),
+    commentTarget() {
+      if (typeof this.discussionTarget === "undefined") {
+        return this.$route.params.task_id
+          ? this.$route.params.task_id
+          : this.$route.params.id;
       }
-      return this.discussionTarget
+      return this.discussionTarget;
     },
-    commentType () {
-      if (typeof this.discussionType === 'undefined') {
-        return (this.$route.params.task_id) ? 'task' : 'idea'
+    commentType() {
+      if (typeof this.discussionType === "undefined") {
+        return this.$route.params.task_id ? "task" : "idea";
       }
-      return this.discussionType
+      return this.discussionType;
     }
   },
   methods: {
-    wrap (name) {
-      return _replace(name, ' ', '')
+    wrap(name) {
+      return _replace(name, " ", "");
     },
-    checkAuth () {
+    checkAuth() {
       if (!this.isAuthenticated) {
-        this.$store.commit(types.SHOW_AUTH_MODAL)
+        this.$store.commit(types.SHOW_AUTH_MODAL);
       }
     }
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>
@@ -133,7 +131,7 @@ export default {
     margin 0 0 20px 0
     padding 28px 20px
     text-align center
-  
+
   .comment-composer
     animate()
     margin-top 0

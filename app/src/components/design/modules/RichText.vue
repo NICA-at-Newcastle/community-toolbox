@@ -1,6 +1,6 @@
 <template lang="pug">
 .design-task--richtext
-  p.design-task--description(v-if="task.description") {{ task.description }}
+  p.design-task--description(v-if="task && task.description") {{ task.description }}
 
   splash-messages(v-if="!isAuthenticated" v-bind:messages="[{type:'success',text:'Please login to participate!'}]")
 
@@ -29,97 +29,94 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import API from '@/api'
+import { mapGetters } from "vuex";
+import API from "@/api";
 
-import 'quill/dist/quill.snow.css'
-import { quillEditor } from 'vue-quill-editor'
+import "quill/dist/quill.snow.css";
+import { quillEditor } from "vue-quill-editor";
 
-import DesignTask from '@/mixins/DesignTask'
-import Reportable from '@/mixins/Reportable'
+import DesignTask from "@/mixins/DesignTask";
+import Reportable from "@/mixins/Reportable";
 
-import Avatar from '@/components/user/Avatar'
+import Avatar from "@/components/user/Avatar";
 
 export default {
-  name: 'richtext',
-  mixins: [
-    DesignTask,
-    Reportable
-  ],
+  name: "richtext",
+  mixins: [DesignTask, Reportable],
   components: {
     quillEditor,
     Avatar
   },
-  mounted () {
-    this.fetchResponses()
+  mounted() {
+    this.fetchResponses();
   },
-  data () {
+  data() {
     return {
       editing: false,
       newResponse: undefined,
       responses: []
-    }
+    };
   },
   computed: {
-    ...mapGetters(['isAuthenticated']),
-    editorOption () {
+    ...mapGetters(["isAuthenticated"]),
+    editorOption() {
       return {
-        placeholder: 'Write something here...',
+        placeholder: "Write something here...",
         readOnly: false,
         scrollingContainer: false,
         modules: {
           toolbar: [
-            [{'header': [1, 2, 3, 4, 5, 6, false]}],
-            ['bold', 'italic', 'underline'],
-            [{'list': 'ordered'}, {'list': 'bullet'}]
+            [{ header: [1, 2, 3, 4, 5, 6, false] }],
+            ["bold", "italic", "underline"],
+            [{ list: "ordered" }, { list: "bullet" }]
           ]
         }
-      }
+      };
     }
   },
   methods: {
-    contentChanged () {
-      this.fetchResponses()
+    contentChanged() {
+      this.fetchResponses();
     },
-    fetchResponses () {
+    fetchResponses() {
       API.task.fetchResponses(
-        'richtext',
+        "richtext",
         this.$route.params.task_id,
-        (response) => {
-          this.$log(response)
-          this.responses = response.data
+        response => {
+          this.$log(response);
+          this.responses = response.data;
           if (this.responses.length === 0) {
-            this.editing = true
+            this.editing = true;
           }
         },
-        (error) => {
-          this.$log(error)
+        error => {
+          this.$log(error);
         }
-      )
+      );
     },
-    submitResponse () {
-      if (!this.isAuthenticated) return
+    submitResponse() {
+      if (!this.isAuthenticated) return;
       if (!this.newResponse || this.newResponse.length === 0) {
-        alert('Please write something!')
-        return
+        alert("Please write something!");
+        return;
       }
       API.task.submitResponse(
-        'richtext',
+        "richtext",
         this.$route.params.task_id,
         { response: this.newResponse },
-        (response) => {
-          this.$log(response)
-          this.responses.push(response.data)
-          this.newResponse = undefined
-          this.editing = false
+        response => {
+          this.$log(response);
+          this.responses.push(response.data);
+          this.newResponse = undefined;
+          this.editing = false;
         },
-        (error) => {
-          this.$log(error)
+        error => {
+          this.$log(error);
         }
-      )
+      );
     }
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>
@@ -134,7 +131,7 @@ export default {
     .quill-editor
       border $color-border 1px solid
       padding 0
-  
+
   .responses
     .response-wrapper
       margin-bottom 20px
@@ -142,7 +139,7 @@ export default {
         margin-top 20px
       .response-footer
         padding 10px
-        
+
         ul.response--actions
           cleanlist()
           margin 0 -10px 0 -10px
@@ -174,5 +171,4 @@ export default {
         border none
         border-left $color-primary 3px solid
         padding 10px
-
 </style>

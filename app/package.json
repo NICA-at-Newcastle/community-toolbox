@@ -16,6 +16,8 @@
   "dependencies": {
     "axios": "^0.16.2",
     "bp-vuejs-dropdown": "^2.1.1",
+    "leaflet": "^1.9.4",
+    "leaflet-defaulticon-compatibility": "^0.1.2",
     "mobile-detect": "^1.4.1",
     "moment-mini": "^2.19.4",
     "pug": "^2.0.0-rc.3",
@@ -34,6 +36,8 @@
     "vue-session": "^0.9.5",
     "vue-social-sharing": "^2.2.3",
     "vue-textarea-autosize": "^1.0.4",
+    "vue2-leaflet": "^2.7.1",
+    "vue2-leaflet-fullscreen": "^1.0.1",
     "vuex": "^2.3.1",
     "vuex-router-sync": "^4.2.0"
   },

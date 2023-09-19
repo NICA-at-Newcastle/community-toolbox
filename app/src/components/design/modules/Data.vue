@@ -1,6 +1,6 @@
 <template lang="pug">
 .design-task--data
-  p.design-task--description(v-if="task.description") {{ task.description }}
+  p.design-task--description(v-if="task && task.description") {{ task.description }}
 
   splash-messages(v-if="!isAuthenticated" v-bind:messages="[{type:'success',text:'Please login to participate!'}]")
 
@@ -25,6 +25,7 @@
           input(v-bind:disabled="!isAuthenticated" type="text" v-model="newResponse.text" placeholder="Describe your upload.." v-on:keyup.enter="submitResponse")
           .btn.btn-primary(@click="submitResponse") Submit
         
+        
 </template>
 
 <script>
@@ -39,7 +40,7 @@ import Avatar from "@/components/user/Avatar";
 import MediaResponse from "@/components/design/components/MediaResponse";
 
 export default {
-  name: "data",
+  name: "datasource",
   mixins: [DesignTask],
   created() {
     this.fetchResponses();

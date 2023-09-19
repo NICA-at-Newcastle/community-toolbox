@@ -1,6 +1,6 @@
 <template lang="pug">
 .design-task--media
-  p.design-task--description(v-if="task.description") {{ task.description }}
+  p.design-task--description(v-if="task && task.description") {{ task.description }}
 
   splash-messages(v-if="!isAuthenticated" v-bind:messages="[{type:'success',text:'Please login to participate!'}]")
 
@@ -32,22 +32,23 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import API from '@/api'
+import { mapGetters } from "vuex";
+import * as L from "leaflet";
+import API from "@/api";
 
-import DesignTask from '@/mixins/DesignTask'
+import DesignTask from "@/mixins/DesignTask";
 
-import FileUpload from '@/components/FileUpload'
-import WebcamCapture from '@/components/WebcamCapture'
+import FileUpload from "@/components/FileUpload";
+import WebcamCapture from "@/components/WebcamCapture";
 
-import Avatar from '@/components/user/Avatar'
-import MediaResponse from '@/components/design/components/MediaResponse'
+import Avatar from "@/components/user/Avatar";
+import MediaResponse from "@/components/design/components/MediaResponse";
 
 export default {
-  name: 'media',
+  name: "media",
   mixins: [DesignTask],
-  created () {
-    this.fetchResponses()
+  created() {
+    this.fetchResponses();
   },
   components: {
     FileUpload,
@@ -55,55 +56,55 @@ export default {
     Avatar,
     MediaResponse
   },
-  data () {
+  data() {
     return {
       newResponse: undefined,
       responses: [],
       webcamActive: false
-    }
+    };
   },
   computed: {
-    ...mapGetters(['isAuthenticated'])
+    ...mapGetters(["isAuthenticated"])
   },
   methods: {
-    toggleWebcam () {
-      this.webcamActive = !this.webcamActive
+    toggleWebcam() {
+      this.webcamActive = !this.webcamActive;
     },
-    fetchResponses () {
+    fetchResponses() {
       API.task.fetchResponses(
-        'media',
+        "media",
         this.$route.params.task_id,
-        (response) => {
-          this.$log(response)
-          this.responses = response.data
+        response => {
+          this.$log(response);
+          this.responses = response.data;
         },
-        (error) => {
-          this.$log(error)
+        error => {
+          this.$log(error);
         }
-      )
+      );
     },
-    submitResponse () {
-      if (!this.isAuthenticated) return
+    submitResponse() {
+      if (!this.isAuthenticated) return;
       API.task.submitResponse(
-        'media',
+        "media",
         this.$route.params.task_id,
         { response: this.newResponse },
-        (response) => {
-          this.$log(response)
+        response => {
+          this.$log(response);
           // this.responses.push(response.data)
-          this.newResponse = undefined
-          this.webcamActive = false
-          this.fetchResponses()
+          this.newResponse = undefined;
+          this.webcamActive = false;
+          this.fetchResponses();
         },
-        (error) => {
-          this.$log(error)
-          this.newResponse = undefined
-          this.webcamActive = false
+        error => {
+          this.$log(error);
+          this.newResponse = undefined;
+          this.webcamActive = false;
         }
-      )
+      );
     }
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>
@@ -122,7 +123,7 @@ export default {
     ul.media-items
       cleanlist()
       margin 0 -10px 20px -10px
-  
+
   // .media-submission
   //   max-width 600px
 

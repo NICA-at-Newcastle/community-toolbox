@@ -16,48 +16,58 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
 
-import Hamburger from '@/components/navigation/Hamburger'
+import Hamburger from "@/components/navigation/Hamburger";
 
 export default {
-  name: 'navbar',
+  name: "navbar",
   components: {
     Hamburger
   },
-  mounted () {
-    window.addEventListener('scroll', this.updateScroll)
+  mounted() {
+    window.addEventListener("scroll", this.updateScroll);
   },
-  data () {
+  data() {
     return {
       hasScrolled: false,
       active: false,
       authState: undefined
-    }
+    };
   },
   computed: {
-    ...mapGetters(['isAuthenticated', 'instanceBackground', 'notifications', 'instanceLogoTitle', 'instanceLogoColor']),
-    hasNotifications () {
-      return this.notifications && this.notifications.unread && (this.notifications.unread.length > 0)
+    ...mapGetters([
+      "isAuthenticated",
+      "instanceBackground",
+      "notifications",
+      "instanceLogoTitle",
+      "instanceLogoColor"
+    ]),
+    hasNotifications() {
+      return (
+        this.notifications &&
+        this.notifications.unread &&
+        this.notifications.unread.length > 0
+      );
     }
   },
   watch: {
-    isAuthenticated (nV) {
-      this.authState = nV ? 'authenticating' : 'unauthenticating'
+    isAuthenticated(nV) {
+      this.authState = nV ? "authenticating" : "unauthenticating";
       if (!nV) {
-        this.$router.push('/auth')
+        this.$router.push("/auth");
       }
       setTimeout(() => {
-        this.authState = nV ? 'authenticated' : 'unauthenticated'
-      }, 1000)
+        this.authState = nV ? "authenticated" : "unauthenticated";
+      }, 1000);
     }
   },
   methods: {
-    updateScroll () {
-      this.hasScrolled = (window.scrollY > 10)
+    updateScroll() {
+      this.hasScrolled = window.scrollY > 10;
     }
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>
@@ -71,7 +81,7 @@ export default {
   bottom auto
   min-height $navigation-height
   position fixed
-  z-index 2
+  z-index 9999
   &.scrolled
     nav-shadow()
   @media(max-width: 568px)
@@ -166,7 +176,7 @@ export default {
           font-weight bold
           height 26px
           line-height 26px
-          position absolute 
+          position absolute
           right 7px
           top 7px
           text-align center

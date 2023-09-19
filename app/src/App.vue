@@ -8,15 +8,15 @@
 </template>
 
 <script>
-import Navbar from '@/components/navigation/Navbar'
-import SiteFooter from '@/components/navigation/SiteFooter'
-import AuthModal from '@/components/auth/AuthModal'
-import ConsentModal from '@/components/auth/ConsentModal'
+import Navbar from "@/components/navigation/Navbar";
+import SiteFooter from "@/components/navigation/SiteFooter";
+import AuthModal from "@/components/auth/AuthModal";
+import ConsentModal from "@/components/auth/ConsentModal";
 
 export default {
-  name: 'app',
+  name: "app",
   metaInfo: {
-    titleTemplate: 'Ideaboard - %s'
+    titleTemplate: "Ideaboard - %s"
   },
   components: {
     Navbar,
@@ -24,19 +24,23 @@ export default {
     AuthModal,
     ConsentModal
   },
-  created () {
-    this.$store.dispatch('checkAuthStatus')
-    this.$store.dispatch('getNotifications')
+  created() {
+    this.$store.dispatch("checkAuthStatus");
+    this.$store.dispatch("getNotifications");
     // Check if authenticated every 10 seconds
-    setInterval(() => { this.$store.dispatch('checkAuthStatus') }, 10000)
+    setInterval(() => {
+      this.$store.dispatch("checkAuthStatus");
+    }, 10000);
     // Check for notifcations every 5 seconds
-    setInterval(() => { this.$store.dispatch('getNotifications') }, 10000)
+    setInterval(() => {
+      this.$store.dispatch("getNotifications");
+    }, 10000);
 
     // Load drift
-    let driftScript = document.createElement('script')
-    driftScript.setAttribute('src', 'scripts/drift.js')
+    let driftScript = document.createElement("script");
+    driftScript.setAttribute("src", "scripts/drift.js");
   }
-}
+};
 </script>
 
 <style lang="stylus">

@@ -5,3 +5,4 @@ export const ADMIN_EMAIL = process.env.ADMIN_EMAIL
 export const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD
 export const FB_AUTH_ENABLED = process.env.FB_AUTH_ENABLED
 export const INSTITUTION = process.env.INSTITUTION
+export const APP_NAME = process.env.APP_NAME

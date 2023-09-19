@@ -3,7 +3,7 @@ var utils = require('./utils')
 var config = require('../config')
 var vueLoaderConfig = require('./vue-loader.conf')
 
-function resolve (dir) {
+function resolve(dir) {
   return path.join(__dirname, '..', dir)
 }
 
@@ -49,7 +49,7 @@ module.exports = {
       {
         test: /\.styl$/,
         loader: 'style-loader!css-loader!stylus-loader',
-        include: [resolve('src'),require('nib')()],
+        include: [resolve('src'), require('nib')()]
         // import: ['~nib/lib/nib/index.styl'],
       },
       {
@@ -59,11 +59,21 @@ module.exports = {
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-        loader: 'url-loader',
-        query: {
-          limit: 10000,
-          name: utils.assetsPath('img/[name].[hash:7].[ext]')
-        }
+        // loader: 'url-loader',
+        // query: {
+        //   limit: 10000,
+        //   name: utils.assetsPath('img/[name].[hash:7].[ext]')
+        // }
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              esModule: false,
+              limit: 10000,
+              name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
+            }
+          }
+        ]
       },
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,

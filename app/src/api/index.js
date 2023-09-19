@@ -4,6 +4,7 @@ import upload from './upload'
 import user from './user'
 import idea from './idea'
 import category from './category'
+import sensor from './sensor'
 import invitation from './invitation'
 import document from './document'
 import moderate from './moderate'
@@ -20,6 +21,7 @@ export default {
   user,
   idea,
   category,
+  sensor,
   invitation,
   document,
   moderate,

@@ -1,6 +1,11 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
+import 'leaflet/dist/leaflet.css'
+import 'leaflet-fullscreen/dist/leaflet.fullscreen.css'
+import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css' // Re-uses images from ~leaflet package
+import * as L from 'leaflet'
+import 'leaflet-defaulticon-compatibility'
 import Vuex from 'vuex'
 import VueResource from 'vue-resource'
 import vueLogger from 'vue-logger'

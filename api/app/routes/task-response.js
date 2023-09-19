@@ -32,6 +32,10 @@ module.exports = function (app, passport) {
           response.response_meta = req.body.response
           response.response = req.body.response.location
         }
+        if (req.params.type === 'map') {
+          response.response_meta = req.body.response
+          response.response = req.body.response.marker
+        }
         const taskResponse = new TaskResponse(response)
 
         taskResponse.save((err, taskResponse) => {

@@ -100,6 +100,8 @@ export default {
           return "fa-database";
         case "sensor":
           return "fa-walkie-talkie";
+        case "map":
+          return "fa-map-location-dot";
         default:
           break;
       }

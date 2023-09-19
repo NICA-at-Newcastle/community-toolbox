@@ -15,50 +15,46 @@
 </template>
 
 <script>
-import * as types from '@/store/mutation-types'
-import { mapGetters } from 'vuex'
+import * as types from "@/store/mutation-types";
+import { mapGetters } from "vuex";
 
-import AuthMixin from '@/mixins/AuthMixin'
+import AuthMixin from "@/mixins/AuthMixin";
 
 export default {
-  name: 'auth-modal',
-  mixins: [
-    AuthMixin
-  ],
-  data () {
+  name: "auth-modal",
+  mixins: [AuthMixin],
+  data() {
     return {
       state: undefined
-    }
+    };
   },
   computed: {
-    ...mapGetters([
-      'isAuthenticated', 'authModalVisible'
-    ])
+    ...mapGetters(["isAuthenticated", "authModalVisible"])
   },
   watch: {
-    isAuthenticated (nV) {
+    isAuthenticated(nV) {
       if (nV) {
-        this.$store.commit(types.HIDE_AUTH_MODAL)
+        this.$store.commit(types.HIDE_AUTH_MODAL);
       }
     },
-    authModalVisible (nV) {
+    authModalVisible(nV) {
       if (nV) {
         // Store current url in cookie for redirect after auth
-        this.$session.start()
-        this.$session.set('auth-redirect', window.location.href)
+        this.$session.start();
+        this.$session.set("auth-redirect", window.location.href);
       }
     }
   },
   methods: {
-    redirectToJoin () {
-      this.$store.commit(types.HIDE_AUTH_MODAL)
-      this.$router.push('/auth')
+    redirectToJoin() {
+      this.$store.commit(types.HIDE_AUTH_MODAL);
+      this.$router.push("/auth");
     },
-    closeAuthModal () {
-      this.$store.commit(types.HIDE_AUTH_MODAL)
+    closeAuthModal() {
+      this.$store.commit(types.HIDE_AUTH_MODAL);
     }
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>

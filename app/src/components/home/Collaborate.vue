@@ -14,14 +14,14 @@
           h2(v-bind:class="{ dark: theme === 'dark' }") {{ title }}
           p(v-bind:class="{ dark: theme === 'dark' }") {{ subtitle }}
           router-link.collaborate--action(
-            v-if="!clickaction",
+            v-if="!clickaction && link",
             v-bind:to="link",
             v-bind:class="{ dark: theme === 'dark' }"
           ) {{ action }}
           a.collaborate--action(
-            v-if="clickaction",
+            v-if="clickaction && link",
             v-bind:class="{ dark: theme === 'dark' }",
-            v-on:click="clickaction"
+            :href="link"
           ) {{ action }}
 </template>
 
@@ -43,11 +43,11 @@ export default {
     "align",
     "theme",
     "clickaction",
-    "imageSrc",
+    "imageSrc"
   ],
   computed: {
-    ...mapGetters(["instanceBackground"]),
-  },
+    ...mapGetters(["instanceBackground"])
+  }
 };
 </script>
 

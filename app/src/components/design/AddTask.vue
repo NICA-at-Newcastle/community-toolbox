@@ -22,6 +22,7 @@
           .clearfix
 
         p.type-tip(v-if="task.type") {{ types[task.type].description }}
+        
 
       .input-wrapper(v-show="task.title.length > 3")
         label.clickable(@click="showAdvancedOptions = !showAdvancedOptions")
@@ -77,6 +78,12 @@ export default {
           name: "Upload Data",
           icon: "fa-database",
           description: "A place to upload and share data with your community."
+        },
+        map: {
+          name: "Mapping",
+          icon: "fa-map-location-dot",
+          description:
+            "Use mapping to identify the areas to focus on or map the issues in those places."
         },
         sensor: {
           name: "Lend Sensors",
