@@ -84,11 +84,13 @@ export default {
       this.currentResponse = this.responses[index];
       this.modalOpen = true;
       this.map.scrollWheelZoom.disable();
+      this.map.dragging.disable();
     },
     closeModal(index) {
       this.currentResponse = undefined;
       this.modalOpen = false;
       this.map.scrollWheelZoom.enable();
+      this.map.dragging.enable();
     },
     addMarker(event) {
       if (this.addingMarkers && !this.modalOpen) {
