@@ -2,8 +2,8 @@
 .tab-content--categories
 
   h1.tab--header.no-parent
-    .tab--header--title Manage
-    .tab--header--action(@click="viewCategories")
+    .tab--header--title(@click="viewCategories") Manage
+    .tab--header--action
       span(v-show="viewingCategories") #[i.fas.fa-angle-up]
       span(v-show="!viewingCategories") #[i.fas.fa-angle-down]
 
@@ -17,8 +17,8 @@
         .category-tag Tag: {{ category.tag }}
 
   h1.tab--header.no-parent
-    .tab--header--title Add new
-    .tab--header--action(@click="addCategory")
+    .tab--header--title(@click="addCategory") Add new
+    .tab--header--action
       span(v-show="addingCategory") #[i.fas.fa-angle-up]
       span(v-show="!addingCategory") #[i.fas.fa-angle-down]
 
@@ -29,52 +29,53 @@
 </template>
 
 <script>
-import API from '@/api'
+import API from "@/api";
 
-import CreateCategory from '@/components/categories/CreateCategory'
+import CreateCategory from "@/components/categories/CreateCategory";
 
 export default {
-  name: 'categories-tab',
-  props: ['currentUser'],
+  name: "categories-tab",
+  props: ["currentUser"],
   components: {
     CreateCategory
   },
-  created () {
-    this.fetchCategories()
+  created() {
+    this.fetchCategories();
   },
-  data () {
+  data() {
     return {
       categories: [],
       addingCategory: true,
       viewingCategories: false
-    }
+    };
   },
   methods: {
-    categoryCreated () {
-      this.viewingCategories = true
-      this.addingCategory = false
-      this.fetchCategories()
+    categoryCreated() {
+      this.viewingCategories = true;
+      this.addingCategory = false;
+      this.fetchCategories();
     },
-    viewCategories () {
-      this.viewingCategories = !this.viewingCategories
+    viewCategories() {
+      this.viewingCategories = !this.viewingCategories;
     },
-    addCategory () {
-      this.addingCategory = !this.addingCategory
+    addCategory() {
+      this.addingCategory = !this.addingCategory;
     },
-    fetchCategories () {
+    fetchCategories() {
       API.category.fetchCategories(
-        (response) => {
+        response => {
           // Idea success
-          this.$log(response)
-          this.categories = response.data
+          this.$log(response);
+          this.categories = response.data;
         },
-        (error) => {
+        error => {
           // Idea fail
-          this.$log(error)
-        })
+          this.$log(error);
+        }
+      );
     }
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>
@@ -83,8 +84,10 @@ export default {
 
 .tab-content--categories
   text-align left
+  .tab--header--title
+    cursor pointer
   .tab--content
-    padding 25px  
+    padding 25px
     p
       reset()
     .categories-wrapper
@@ -104,5 +107,4 @@ export default {
         &:hover
           background-color darken($color-lightest-grey, 5%)
           cursor pointer
-
 </style>

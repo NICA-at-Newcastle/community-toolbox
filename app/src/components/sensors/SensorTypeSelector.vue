@@ -1,13 +1,13 @@
 <template lang="pug">
   .sensor-selector
     dropdown(ref="dropdown" v-bind:class-name="'custom'")
-      template(slot="btn") {{ sensor_name || 'No Sensor' }}
-      //- Select Sensor
+      template(slot="btn") {{ type_name || 'New Type' }}
+      //- Select Sensor type
       template(slot="body")
-        .sensor(@click="selectSensor(undefined)")
-          label No Sensor
-        .sensor(slot="body" v-for="(sensor, index) in categories" @click="selectSensor(sensor)")
-          label {{ sensor.name }}
+        .sensor-type(@click="selectSensorType(undefined)")
+          label New Type
+        .sensor-type(slot="body" v-for="(type, index) in types" @click="selectSensorType(type)")
+          label {{ type.name }}
 
 </template>
 
@@ -15,20 +15,17 @@
 import Dropdown from "bp-vuejs-dropdown";
 
 export default {
-  name: "sensor-selector",
-  props: ["sensor", "sensor_name", "categories"],
+  name: "sensor-type-selector",
+  props: ["type", "type_name", "types"],
   components: {
     Dropdown
   },
   methods: {
-    selectSensor(sensor) {
+    selectSensorType(type) {
+      this.$emit("update:type", typeof type === "undefined" ? undefined : type);
       this.$emit(
-        "update:sensor",
-        typeof sensor === "undefined" ? undefined : sensor._id
-      );
-      this.$emit(
-        "update:sensor_name",
-        typeof sensor === "undefined" ? "No Sensor" : sensor.name
+        "update:type_name",
+        typeof type === "undefined" ? undefined : type.name
       );
       this.$refs.dropdown.isHidden = true;
     }
@@ -46,7 +43,7 @@ export default {
 
 .custom-bp__body
   padding 0 !important
-  .sensor label
+  .sensor-type label
     padding 8px 15px
     &:hover
       background-color $color-lightest-grey

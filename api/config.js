@@ -70,13 +70,6 @@ module.exports = {
           title: "Map Locations",
           description:
             "Identify an issue in this location.",
-        },
-        {
-          type: "sensor",
-          title: "Lend Sensors",
-          description:
-            "Use the form below to borrow sensors and do environmental monitoring in your neighbourhood.",
-          pinned: true,
         }
       ]
     },

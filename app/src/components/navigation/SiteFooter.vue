@@ -13,24 +13,24 @@
 </template>
 
 <script>
-import * as config from '@/api/config'
+import * as config from "@/api/config";
 
 export default {
-  name: 'site-footer',
-  data () {
+  name: "site-footer",
+  data() {
     return {
       isAuthenticating: false,
       userExists: false,
-      state: 'join',
-      institution: config.INSTITUTION || 'Open Lab',
-    }
+      state: "join",
+      institution: config.INSTITUTION || "Open Lab"
+    };
   },
   computed: {
-    isHome () {
-      return this.$route.name === 'home'
+    isHome() {
+      return this.$route.name === "home";
     }
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>
@@ -38,7 +38,7 @@ export default {
 
 #site-footer
   min-height $footer-height
-  padding 20px 0
+  padding 40px 0
   &.light
     background-color white
     border-top $color-lightest-grey 1px solid
@@ -68,5 +68,4 @@ export default {
     .skiptranslate.goog-te-gadget
       display inline-block !important
       white-space normal !important
-
 </style>

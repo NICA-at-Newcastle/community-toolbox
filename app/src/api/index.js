@@ -13,6 +13,7 @@ import permission from './permission'
 import update from './update'
 import comment from './comment'
 import task from './task'
+import loan from './loan'
 
 export default {
   auth,
@@ -29,5 +30,6 @@ export default {
   permission,
   task,
   comment,
-  update
+  update,
+  loan
 }

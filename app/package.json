@@ -36,6 +36,7 @@
     "vue-session": "^0.9.5",
     "vue-social-sharing": "^2.2.3",
     "vue-textarea-autosize": "^1.0.4",
+    "vue2-daterange-picker": "^0.6.8",
     "vue2-leaflet": "^2.7.1",
     "vue2-leaflet-fullscreen": "^1.0.1",
     "vuex": "^2.3.1",

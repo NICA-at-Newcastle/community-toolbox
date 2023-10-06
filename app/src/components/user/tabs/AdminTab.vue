@@ -5,7 +5,7 @@
   
   invitations(v-if="isAdmin")
 
-  manage-sensors(v-if="isAdmin")
+  manage-loans(v-if="isAdmin")
 
   manage-permissions(v-if="isAdmin")
 
@@ -17,7 +17,7 @@
 import { mapGetters } from "vuex";
 
 import YourPermissions from "@/components/user/admin/YourPermissions";
-import ManageSensors from "@/components/user/admin/ManageSensors";
+import ManageLoans from "@/components/user/admin/ManageLoans";
 import ManagePermissions from "@/components/user/admin/ManagePermissions";
 import Invitations from "@/components/user/admin/Invitations";
 
@@ -28,7 +28,7 @@ export default {
     YourPermissions,
     ManagePermissions,
     Invitations,
-    ManageSensors
+    ManageLoans
   },
   computed: {
     ...mapGetters(["user", "isAdmin"])
@@ -42,6 +42,8 @@ export default {
 
 .tab-content--admin
   text-align left
+  .tab--header
+    cursor pointer
   .tab--content
     padding 25px
     p

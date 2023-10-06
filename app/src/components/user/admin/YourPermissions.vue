@@ -1,8 +1,8 @@
 <template lang="pug">
   .your-permissions
-    h1.tab--header.no-parent
+    h1.tab--header.no-parent(@click="expanded = !expanded")
       .tab--header--title Your Permissions
-      .tab--header--action(@click="expanded = !expanded")
+      .tab--header--action
         span(v-show="expanded") #[i.fas.fa-angle-up]
         span(v-show="!expanded") #[i.fas.fa-angle-down]
     
@@ -13,21 +13,21 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
 
 export default {
-  name: 'your-permissions',
-  data () {
+  name: "your-permissions",
+  data() {
     return {
       expanded: false
-    }
+    };
   },
   computed: {
-    ...mapGetters(['user'])
+    ...mapGetters(["user"])
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>
-  @import '~stylus/shared'
+@import '~stylus/shared'
 </style>

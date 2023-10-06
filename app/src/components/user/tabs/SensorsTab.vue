@@ -1,9 +1,8 @@
 <template lang="pug">
 .tab-content--sensors
-
-  h1.tab--header.no-parent
+  h1.tab--header.no-parent(@click="viewSensors")
     .tab--header--title Manage
-    .tab--header--action(@click="viewSensors")
+    .tab--header--action
       span(v-show="viewingSensors") #[i.fas.fa-angle-up]
       span(v-show="!viewingSensors") #[i.fas.fa-angle-down]
 
@@ -12,13 +11,21 @@
     p(v-if="sensors.length === 0") No sensors created
 
     .sensors-wrapper(v-else)
-      router-link.sensor-tile(tag="div" v-for="(sensor, index) in sensors" v-bind:key="index" v-bind:to="{ name: 'explore', params: { sensor: sensor.tag } }")
-        .sensor-name Name: {{ sensor.name }}
-        .sensor-tag Tag: {{ sensor.tag }}
 
-  h1.tab--header.no-parent
+      router-link.sensor-tile(tag="div" v-for="(sensor, index) in sensors" v-bind:key="index" v-bind:to="{ name: 'toolbox', params: { typeId: sensor._type._id} }")
+        .delete-button(@click="removeSensor($event, sensor._id)")
+          i.fas.fa-trash
+        .sensor-name Name: {{ sensor.name }}
+        .sensor-type Sensor type: {{ sensor._type.name }}
+        .sensor-tag Tag: {{ sensor.tag }}
+        .sensor-loan Loaned out: {{sensor.loaned ? 'yes' : 'no' }}   
+        .sensor-description Description: {{ sensor.description }}             
+        .image-wrapper
+          sensor-image(v-bind:sensor="sensor")
+
+  h1.tab--header.no-parent(@click="addSensor")
     .tab--header--title Add new
-    .tab--header--action(@click="addSensor")
+    .tab--header--action
       span(v-show="addingSensor") #[i.fas.fa-angle-up]
       span(v-show="!addingSensor") #[i.fas.fa-angle-down]
 
@@ -32,12 +39,14 @@
 import API from "@/api";
 
 import CreateSensor from "@/components/sensors/CreateSensor";
+import SensorImage from "@/components/sensors/SensorImage";
 
 export default {
   name: "sensors-tab",
   props: ["currentUser"],
   components: {
-    CreateSensor
+    CreateSensor,
+    SensorImage
   },
   created() {
     this.fetchSensors();
@@ -60,6 +69,19 @@ export default {
     },
     addSensor() {
       this.addingSensor = !this.addingSensor;
+    },
+    removeSensor(e, sensor_id) {
+      e.stopPropagation();
+      API.sensor.destroy(
+        { id: sensor_id },
+        response => {
+          this.$log(response);
+          this.fetchSensors();
+        },
+        error => {
+          this.$log(error);
+        }
+      );
     },
     fetchSensors() {
       API.sensor.fetchSensors(
@@ -84,11 +106,23 @@ export default {
 
 .tab-content--sensors
   text-align left
+  .tab--header
+    cursor pointer
   .tab--content
     padding 25px
     p
       reset()
     .sensors-wrapper
+      .delete-button
+        float right
+        animate()
+        color $color-text-light-grey
+        font-size 0.8em
+        svg
+          height 25px
+        &:hover
+          cursor pointer
+          color $color-danger
       .sensor-tile
         animate()
         background-color $color-lightest-grey
@@ -104,5 +138,11 @@ export default {
           text-decoration none
         &:hover
           background-color darken($color-lightest-grey, 5%)
+          cursor pointer
+      .image-wrapper
+        margin 0 auto
+        padding 10px 40px 20px 40px
+        max-width 120px
+        &:hover
           cursor pointer
 </style>

@@ -16,7 +16,9 @@ const Profile = () => import('@/components/pages/Profile')
 // Ideas
 const Start = () => import('@/components/ideas/Start')
 const Explore = () => import('@/components/ideas/Explore')
+const Toolbox = () => import('@/components/sensors/Toolbox')
 const Idea = () => import('@/components/ideas/Idea')
+const Sensor = () => import('@/components/sensors/Sensor')
 
 // Idea Tabs
 const InfoTab = () => import('@/components/ideas/tabs/InfoTab')
@@ -34,7 +36,7 @@ const Map = () => import('@/components/design/modules/Map')
 const RichText = () => import('@/components/design/modules/RichText')
 const Appearin = () => import('@/components/design/modules/Appearin')
 const Whiteboard = () => import('@/components/design/modules/Whiteboard')
-const Sensor = () => import('@/components/design/modules/Sensor')
+// const Sensor = () => import('@/components/design/modules/Sensor')
 const Webcam = () => import('@/components/design/modules/Webcam')
 
 // Idea Outcome Tab
@@ -123,6 +125,17 @@ const router = new Router({
       component: Explore
     },
     {
+      path: '/toolbox/:type?',
+      name: 'toolbox',
+      component: Toolbox
+    },
+    {
+      path: '/sensor/:id',
+      name: 'sensor',
+      component: Sensor,
+      props: true
+    },
+    {
       path: '/idea/:id',
       component: Idea,
       props: true,
@@ -167,11 +180,11 @@ const router = new Router({
               path: 'data/:task_id',
               component: Data
             },
-            {
-              name: 'sensor',
-              path: 'sensor/:task_id',
-              component: Sensor
-            },
+            // {
+            //   name: 'sensor',
+            //   path: 'sensor/:task_id',
+            //   component: Sensor
+            // },
             {
               name: 'map',
               path: 'map/:task_id',

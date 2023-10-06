@@ -46,7 +46,7 @@ import IdeaTile from "@/components/ideas/IdeaTile";
 
 export default {
   name: "info-tab",
-  props: ["idea"],
+  props: ["sensor"],
   components: {
     quillEditor,
     SubscribeButton,

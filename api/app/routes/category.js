@@ -29,6 +29,7 @@ module.exports = function (app, passport) {
   // Create category
   app.post('/category',
     (req, res) => {
+      console.log("AUTH", req.isAuthenticated())
       if (req.isAuthenticated()) {
 
         let data = req.body

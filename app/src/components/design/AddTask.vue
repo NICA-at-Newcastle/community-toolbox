@@ -85,11 +85,6 @@ export default {
           description:
             "Use mapping to identify the areas to focus on or map the issues in those places."
         },
-        sensor: {
-          name: "Lend Sensors",
-          icon: "fa-walkie-talkie",
-          description: "Loan sensors from the toolkit."
-        },
         poll: {
           name: "Poll",
           icon: "fa-list-ul",

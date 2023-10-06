@@ -42,59 +42,64 @@
 </template>
 
 <script>
-import Home from '@/mixins/Home'
+import Home from "@/mixins/Home";
 
 export default {
-  name: 'demvr',
+  name: "demvr",
   metaInfo: {
-    title: 'DemVR'
+    title: "DemVR"
   },
   mixins: [Home],
   methods: {
-    scrollToSection (element) {
+    scrollToSection(element) {
       return () => {
         // document.getElementById(element).scrollIntoView()
-        this.scrollToElement(element)
-      }
+        this.scrollToElement(element);
+      };
     },
-    scrollToElement (element, scrollDuration = 500) {
-      var doc = document.documentElement
-      var frameDuration = 15
-      const left = (window.pageXOffset || doc.scrollLeft) - (doc.clientLeft || 0)
-      const startingPosition = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0)
-      const endingPosition = document.querySelector('#' + element).offsetTop
-      const scrollDistance = endingPosition - startingPosition
-      const totalFrames = scrollDuration / frameDuration
-      var currentFrame = 0
-      var scrollMargin
+    scrollToElement(element, scrollDuration = 500) {
+      var doc = document.documentElement;
+      var frameDuration = 15;
+      const left =
+        (window.pageXOffset || doc.scrollLeft) - (doc.clientLeft || 0);
+      const startingPosition =
+        (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
+      const endingPosition = document.querySelector("#" + element).offsetTop;
+      const scrollDistance = endingPosition - startingPosition;
+      const totalFrames = scrollDuration / frameDuration;
+      var currentFrame = 0;
+      var scrollMargin;
       var scrollInterval = setInterval(() => {
-        var normalizedDistance = currentFrame / totalFrames
+        var normalizedDistance = currentFrame / totalFrames;
         if (normalizedDistance < 0.5) {
-          scrollMargin = this.easing(normalizedDistance * 2) * scrollDistance / 2
+          scrollMargin =
+            (this.easing(normalizedDistance * 2) * scrollDistance) / 2;
         } else {
-          scrollMargin = scrollDistance - this.easing((1 - normalizedDistance) * 2) * scrollDistance / 2
+          scrollMargin =
+            scrollDistance -
+            (this.easing((1 - normalizedDistance) * 2) * scrollDistance) / 2;
         }
-        window.scrollTo(left, (startingPosition + scrollMargin))
+        window.scrollTo(left, startingPosition + scrollMargin);
         if (currentFrame >= totalFrames) {
           // document.getElementById(element).scrollIntoView()
-          clearInterval(scrollInterval)
-          return
+          clearInterval(scrollInterval);
+          return;
         }
-        currentFrame = currentFrame + 1
-      }, frameDuration)
+        currentFrame = currentFrame + 1;
+      }, frameDuration);
     },
-    easing (x) {
-      return 1.0 - Math.sin(Math.PI * 0.5 * (1 - x))
+    easing(x) {
+      return 1.0 - Math.sin(Math.PI * 0.5 * (1 - x));
     }
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>
 @import '~stylus/home'
 #welcome.row-wrapper
   padding-bottom: 80px;
-#welcome .demvr-welcome 
+#welcome .demvr-welcome
   color: #363636 !important
   h1
     color: #363636 !important
@@ -152,7 +157,7 @@ export default {
       // radius(20px)
       margin 0 auto
       //margin-top -170px
-      padding 10px 0 30px 0  
+      padding 10px 0 30px 0
       max-width 800px
       h1, p
         reset()
@@ -188,12 +193,8 @@ export default {
         color: #8b96a1;
         text-decoration: underline;
         text-decoration-color: #ffe261;
-      h2 
+      h2
         font-size 2em
       h2, h3, h4
         margin 15px
-
-
-
-
 </style>

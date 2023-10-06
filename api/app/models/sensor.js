@@ -4,11 +4,14 @@ const sensorSchema = mongoose.Schema({
 
   _user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   _ideas: { type: mongoose.Schema.Types.ObjectId, ref: 'Idea' },
+  _type: { type: mongoose.Schema.Types.ObjectId, ref: 'SensorType' },
   instance: String,
   name: String,
   tag: String,
   description: String,
+  image: String,
   passcode: String,
+  destroyed: Date,
   archived: Boolean,
   created: Date
 
@@ -20,12 +23,14 @@ sensorSchema.pre('save', function (next) {
 })
 
 sensorSchema.pre('findOne', function (next) {
-  this.populate('_user', 'profile')
+  this.where({ destroyed: null })
+  this.populate('_type')
   next()
 })
 
 sensorSchema.pre('find', function (next) {
-  this.populate('_user', 'profile')
+  this.where({ destroyed: null })
+  this.populate('_type')
   next()
 })
 

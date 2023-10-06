@@ -1,8 +1,8 @@
 <template lang="pug">
   .invitations
-    h1.tab--header.no-parent
+    h1.tab--header.no-parent(@click="expanded = !expanded")
       .tab--header--title Invitations
-      .tab--header--action(@click="expanded = !expanded")
+      .tab--header--action
         span(v-show="expanded") #[i.fas.fa-angle-up]
         span(v-show="!expanded") #[i.fas.fa-angle-down]
 
@@ -37,84 +37,87 @@
 </template>
 
 <script>
-import API from '@/api'
-import ActionTextField from '@/components/shared/ActionTextField'
+import API from "@/api";
+import ActionTextField from "@/components/shared/ActionTextField";
 
-import SplashMessages from '@/components/shared/SplashMessages'
+import SplashMessages from "@/components/shared/SplashMessages";
 
 export default {
-  name: 'invitations',
+  name: "invitations",
   components: {
     ActionTextField,
     SplashMessages
   },
-  mounted () {
-    this.fetchInvitations()
+  mounted() {
+    this.fetchInvitations();
   },
-  data () {
+  data() {
     return {
       expanded: false,
       invitations: [],
       recipient: undefined,
       type: undefined,
       splashMessages: []
-    }
+    };
   },
   methods: {
-    toggle (identifier) {
-      this.toggles[identifier] = !this.toggles[identifier]
+    toggle(identifier) {
+      this.toggles[identifier] = !this.toggles[identifier];
     },
-    sendInvitation () {
+    sendInvitation() {
       API.invitation.send(
         this.recipient,
-        (response) => {
+        response => {
           // Invitations fetched
-          this.$log(response)
-          this.fetchInvitations()
-          this.$store.dispatch('getNotifications')
+          this.$log(response);
+          this.fetchInvitations();
+          this.$store.dispatch("getNotifications");
           if (response.data.errors) {
-            this.splashMessages = response.data.errors
+            this.splashMessages = response.data.errors;
           } else {
-            this.splashMessages = [ { text: 'Invite sent!', type: 'success' } ]
+            this.splashMessages = [{ text: "Invite sent!", type: "success" }];
           }
         },
-        (error) => {
+        error => {
           // Failed to fetch invitations
-          this.$log(error)
-        })
+          this.$log(error);
+        }
+      );
     },
-    fetchInvitations () {
+    fetchInvitations() {
       API.invitation.fetchInvitations(
-        (response) => {
+        response => {
           // Invitations fetched
-          this.$log(response)
-          this.invitations = response.data
+          this.$log(response);
+          this.invitations = response.data;
         },
-        (error) => {
+        error => {
           // Failed to fetch invitations
-          this.$log(error)
-        })
+          this.$log(error);
+        }
+      );
     },
-    updateInvitationStatus (invitation, action) {
+    updateInvitationStatus(invitation, action) {
       API.invitation.updateInvitationStatus(
         {
           action: action,
           _id: invitation._id
         },
-        (response) => {
+        response => {
           // Invitations fetched
-          this.$log(response)
-          this.fetchInvitations()
+          this.$log(response);
+          this.fetchInvitations();
         },
-        (error) => {
+        error => {
           // Failed to fetch invitations
-          this.$log(error)
-        })
+          this.$log(error);
+        }
+      );
     }
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>
-  @import '~stylus/shared'
+@import '~stylus/shared'
 </style>

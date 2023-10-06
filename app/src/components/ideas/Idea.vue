@@ -26,89 +26,110 @@
 </template>
 
 <script>
-import API from '@/api'
-import { mapGetters } from 'vuex'
-import _get from 'lodash/get'
+import API from "@/api";
+import { mapGetters } from "vuex";
+import _get from "lodash/get";
 
-import IdeaActions from '@/components/admin/IdeaActions'
-import PageHeader from '@/components/PageHeader'
-import UserCard from '@/components/user/UserCard'
-import SubscribeButton from '@/components/ideas/actions/SubscribeButton'
+import IdeaActions from "@/components/admin/IdeaActions";
+import PageHeader from "@/components/PageHeader";
+import UserCard from "@/components/user/UserCard";
+import SubscribeButton from "@/components/ideas/actions/SubscribeButton";
 
 export default {
-  name: 'idea',
-  metaInfo () {
+  name: "idea",
+  metaInfo() {
     return {
-      title: (this.idea && this.idea.title) ? this.idea.title : 'Idea',
+      title: this.idea && this.idea.title ? this.idea.title : "Idea",
       meta: [
-        { p: 'og:title', c: (this.idea && this.idea.title) ? this.idea.title : 'Idea' },
-        { p: 'og:image', c: (this.idea && this.idea.banner) ? this.idea.banner : '' }
+        {
+          p: "og:title",
+          c: this.idea && this.idea.title ? this.idea.title : "Idea"
+        },
+        {
+          p: "og:image",
+          c: this.idea && this.idea.banner ? this.idea.banner : ""
+        }
       ]
-    }
+    };
   },
-  props: ['id'],
+  props: ["id"],
   components: {
     IdeaActions,
     PageHeader,
     UserCard,
     SubscribeButton
   },
-  created () {
-    this.loadIdea()
+  created() {
+    this.loadIdea();
   },
-  data () {
+  data() {
     return {
       maximisedView: false,
       idea: undefined,
       tabs: {
         items: [
-          { title: 'About', route: 'idea', component: 'info-tab' },
-          { title: 'Workspace', route: 'designdashboard', component: 'design-tab' },
-          { title: 'Outcome', route: 'outcomedashboard', component: 'outcome-tab' }
+          { title: "About", route: "idea", component: "info-tab" },
+          {
+            title: "Workspace",
+            route: "designdashboard",
+            component: "design-tab"
+          },
+          {
+            title: "Outcome",
+            route: "outcomedashboard",
+            component: "outcome-tab"
+          }
         ]
       }
-    }
+    };
   },
   computed: {
-    ...mapGetters(['isAdmin']),
-    maximised () {
-      const maximisedViews = ['outcomedocument']
-      return (maximisedViews.indexOf(this.$route.name) !== -1)
+    ...mapGetters(["isAdmin"]),
+    maximised() {
+      const maximisedViews = ["outcomedocument"];
+      return maximisedViews.indexOf(this.$route.name) !== -1;
     },
-    ownIdea () {
-      return _get(this.idea, 'user._id') === _get(this.user, '_id', 'anonymous')
+    ownIdea() {
+      return (
+        _get(this.idea, "user._id") === _get(this.user, "_id", "anonymous")
+      );
     }
   },
   methods: {
-    loadIdea () {
-      API.idea.view(this.$route.params.id,
-        (response) => {
+    loadIdea() {
+      API.idea.view(
+        this.$route.params.id,
+        response => {
           // Idea success
-          this.$log(response.data.idea)
-          this.idea = response.data.idea
+          this.$log(response.data.idea);
+          this.idea = response.data.idea;
         },
-        (error) => {
+        error => {
           // Idea fail
-          this.$log(error)
-        })
+          this.$log(error);
+        }
+      );
     },
-    showDesign (delay) {
+    showDesign(delay) {
       // Set active tab to design
       setTimeout(() => {
-        this.$router.push({ name: 'designdashboard', params: { id: this.idea._id } })
-      }, delay)
+        this.$router.push({
+          name: "designdashboard",
+          params: { id: this.idea._id }
+        });
+      }, delay);
     },
-    getNotificationCount (route) {
+    getNotificationCount(route) {
       switch (route) {
-        case 'design':
+        case "design":
           // Return the total number of tasks
-          return this.idea._tasks.length
+          return this.idea._tasks.length;
         default:
-          return 0
+          return 0;
       }
     }
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>
@@ -120,7 +141,7 @@ export default {
   h1, h2
     reset()
     color $color-text-grey
-    font-weight normal 
+    font-weight normal
   .content-block--side
     animate()
     position absolute
@@ -151,5 +172,4 @@ export default {
       width 100%
       .content-block--banner
         height 0
-
 </style>

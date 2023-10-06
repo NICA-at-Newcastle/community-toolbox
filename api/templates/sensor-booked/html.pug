@@ -1,0 +1,11 @@
+extends ../main
+
+block content
+
+  h1(style="margin-bottom: 30px") Sensor Loan Booked
+
+  p Hey SenseMyStreet Admin
+
+  p New sensor loan has been scheduled by #{ user.profile.name } from #{ loan.start } to #{ loan.end }.
+  
+  p Head to the admin page to contact #{ user.profile.name } and organise the pickup of the sensor - <a style="color: #0B9BD0" href="#{ url }/profile">Admin</a>.

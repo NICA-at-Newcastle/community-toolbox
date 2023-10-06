@@ -33,7 +33,7 @@ import UserCard from "@/components/user/UserCard";
 import BioTab from "@/components/user/tabs/BioTab";
 import IdeasTab from "@/components/user/tabs/IdeasTab";
 import CategoriesTab from "@/components/user/tabs/CategoriesTab";
-// import SensorsTab from "@/components/user/tabs/SensorsTab";
+import SensorsTab from "@/components/user/tabs/SensorsTab";
 import AdminTab from "@/components/user/tabs/AdminTab";
 import NotificationsList from "@/components/user/NotificationsList";
 
@@ -48,7 +48,7 @@ export default {
     BioTab,
     IdeasTab,
     CategoriesTab,
-    // SensorsTab,
+    SensorsTab,
     AdminTab,
     NotificationsList
   },
@@ -100,11 +100,11 @@ export default {
             component: "categories-tab",
             permission: "organiser"
           },
-          // {
-          //   title: "Sensors",
-          //   component: "sensors-tab",
-          //   permission: "moderator"
-          // },
+          {
+            title: "Sensors",
+            component: "sensors-tab",
+            permission: "moderator"
+          },
           { title: "Admin", component: "admin-tab", permission: "admin" }
         ]
       }

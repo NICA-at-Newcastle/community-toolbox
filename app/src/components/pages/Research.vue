@@ -9,40 +9,40 @@
 </template>
 
 <script>
-import config from '@/config'
+import config from "@/config";
 
-import VueMarkdown from 'vue-markdown'
+import VueMarkdown from "vue-markdown";
 
-import PageHeader from '@/components/PageHeader'
+import PageHeader from "@/components/PageHeader";
 
 export default {
-  name: 'research',
+  name: "research",
   metaInfo: {
-    title: 'Research Policy',
-    meta: [
-      { name: 'description', content: 'Read our research policy.' } 
-    ]
+    title: "Research Policy",
+    meta: [{ name: "description", content: "Read our research policy." }]
   },
   components: {
     VueMarkdown,
     PageHeader
   },
-  data () {
+  data() {
     return {
       markdown: undefined
-    }
+    };
   },
-  mounted () {
-    this.$log(config.legal)
-    const url = `${config.legal}/research.md`
-    this.$http.get(url).then(response => {
-      this.markdown = response.body
-    }, response => {
-      // error callback
-      this.markdown = url
-    })
+  mounted() {
+    const url = `${config.legal}/research.md`;
+    this.$http.get(url).then(
+      response => {
+        this.markdown = response.body;
+      },
+      response => {
+        // error callback
+        this.markdown = url;
+      }
+    );
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>

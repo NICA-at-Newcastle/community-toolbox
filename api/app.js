@@ -123,6 +123,8 @@ async function init(req, res, next) {
   require("./app/routes/idea.js")(app, passport);
   require("./app/routes/category.js")(app, passport);
   require("./app/routes/sensor.js")(app, passport);
+  require("./app/routes/sensor-type.js")(app, passport);
+  require("./app/routes/loan.js")(app, passport);
   require("./app/routes/comment.js")(app, passport);
   require("./app/routes/task.js")(app, passport);
   require("./app/routes/update.js")(app, passport);
@@ -132,6 +134,7 @@ async function init(req, res, next) {
   require("./app/routes/notification.js")(app, passport);
   require("./app/routes/document.js")(app, passport);
   require("./app/routes/moderate.js")(app, passport);
+
 
   app.listen(port, () => {
     console.log(`Listening on port ${port}!`);

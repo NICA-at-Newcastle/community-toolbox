@@ -1,8 +1,8 @@
 <template lang="pug">
   .manage-permissions
-    h1.tab--header.no-parent
+    h1.tab--header.no-parent(@click="expanded = !expanded")
       .tab--header--title Manage Permissions
-      .tab--header--action(@click="expanded = !expanded")
+      .tab--header--action
         span(v-show="expanded") #[i.fas.fa-angle-up]
         span(v-show="!expanded") #[i.fas.fa-angle-down]
 
@@ -42,69 +42,69 @@
 </template>
 
 <script>
-import API from '@/api'
+import API from "@/api";
 
 export default {
-  name: 'manage-permissions',
-  data () {
+  name: "manage-permissions",
+  data() {
     return {
       expanded: true,
       permissions: [],
       users: [],
       newPermissions: {},
       search: {
-        query: '',
+        query: "",
         result: undefined
       }
-    }
+    };
   },
-  mounted () {
-    this.fetchPermissions()
+  mounted() {
+    this.fetchPermissions();
   },
   methods: {
-    updatePermissions (userId) {
+    updatePermissions(userId) {
       API.permission.update(
         userId,
         this.newPermissions,
-        (response) => {
-          this.fetchPermissions()
-          this.search.query = ''
-          this.search.result = undefined
+        response => {
+          this.fetchPermissions();
+          this.search.query = "";
+          this.search.result = undefined;
         },
-        (response) => {
-          alert('ooops')
-          this.fetchPermissions()
+        response => {
+          alert("ooops");
+          this.fetchPermissions();
         }
-      )
+      );
     },
-    searchUsers () {
+    searchUsers() {
       API.user.search(
         this.search.query,
-        (response) => {
-          this.search.result = response.data
+        response => {
+          this.search.result = response.data;
         },
-        (response) => {
-          this.search.result = undefined
+        response => {
+          this.search.result = undefined;
         }
-      )
+      );
     },
-    fetchPermissions () {
+    fetchPermissions() {
       API.permission.fetch(
-        (response) => {
-          this.permissions = response.data.permissions
-          this.users = response.data.users
+        response => {
+          this.permissions = response.data.permissions;
+          this.users = response.data.users;
         },
-        (response) => {
-          this.permissions = []
-          this.users = []
+        response => {
+          this.permissions = [];
+          this.users = [];
         }
-      )
+      );
     },
-    hasPermission (user, permission) {
-      return user._permissions.indexOf(permission._id) !== -1
+    hasPermission(user, permission) {
+      return user._permissions.indexOf(permission._id) !== -1;
     }
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>
