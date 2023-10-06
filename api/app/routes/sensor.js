@@ -12,9 +12,10 @@ module.exports = function (app, passport) {
   // Get sensors
   app.get('/sensors/:typeId?',
     (req, res) => {
-      const query = (req.params.typeId === 'undefined') ? { instance: req.instance } : { instance: req.instance, _type: req.params.typeId }
+      const query = (req.params.typeId === 'undefined' || typeof req.params.typeId === 'undefined') ? { instance: req.instance } : { instance: req.instance, _type: req.params.typeId }
       Sensor.find(query).exec((err, sensors) => {
         if (err) { return console.error(err) }
+        console.log(sensors)
         res.json(sensors)
       })
     })

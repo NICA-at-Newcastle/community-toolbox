@@ -32,7 +32,8 @@
   .tab--content(v-if="addingSensor")
     .tab-section--body
       create-sensor(v-on:createdSensor="sensorCreated")
-    
+  
+  manage-loans
 </template>
 
 <script>
@@ -40,13 +41,15 @@ import API from "@/api";
 
 import CreateSensor from "@/components/sensors/CreateSensor";
 import SensorImage from "@/components/sensors/SensorImage";
+import ManageLoans from "@/components/user/admin/ManageLoans";
 
 export default {
   name: "sensors-tab",
   props: ["currentUser"],
   components: {
     CreateSensor,
-    SensorImage
+    SensorImage,
+    ManageLoans
   },
   created() {
     this.fetchSensors();
@@ -54,7 +57,8 @@ export default {
   data() {
     return {
       sensors: [],
-      addingSensor: true,
+      managingLoans: true,
+      addingSensor: false,
       viewingSensors: false
     };
   },

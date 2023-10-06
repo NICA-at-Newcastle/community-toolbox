@@ -5,7 +5,7 @@
   
   invitations(v-if="isAdmin")
 
-  manage-loans(v-if="isAdmin")
+  //- manage-loans(v-if="isAdmin")
 
   manage-permissions(v-if="isAdmin")
 
@@ -17,7 +17,6 @@
 import { mapGetters } from "vuex";
 
 import YourPermissions from "@/components/user/admin/YourPermissions";
-import ManageLoans from "@/components/user/admin/ManageLoans";
 import ManagePermissions from "@/components/user/admin/ManagePermissions";
 import Invitations from "@/components/user/admin/Invitations";
 
@@ -27,8 +26,7 @@ export default {
   components: {
     YourPermissions,
     ManagePermissions,
-    Invitations,
-    ManageLoans
+    Invitations
   },
   computed: {
     ...mapGetters(["user", "isAdmin"])

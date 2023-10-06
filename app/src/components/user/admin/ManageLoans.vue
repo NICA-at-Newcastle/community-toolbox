@@ -1,13 +1,15 @@
 <template lang="pug">
   .manage-loans
-    h1.tab--header.no-parent(@click="expanded = !expanded")
+    h1.tab--header.no-parent(@click="toggle")
       .tab--header--title Manage Sensor Loans
       .tab--header--action
         span(v-show="expanded") #[i.fas.fa-angle-up]
         span(v-show="!expanded") #[i.fas.fa-angle-down]
 
     .tab--content(v-if="expanded")
-      table(border="0")
+      p(v-if="loans.length === 0") No loans scheduled
+      
+      table(v-else border="0")
         tr(v-if="loans.length > 0")
           td 
             strong Sensor
@@ -76,7 +78,7 @@ export default {
   },
   data() {
     return {
-      expanded: false,
+      expanded: true,
       loans: [],
       sensors: [],
       edit: {
@@ -104,6 +106,9 @@ export default {
           this.search.result = undefined;
         }
       );
+    },
+    toggle() {
+      this.expanded = !this.expanded;
     },
     fetchLoans() {
       API.loan.manage(
@@ -189,6 +194,7 @@ export default {
 
 .manage-loans
   .tab--content
+    padding 25px
     table
       width 100%
       .btn

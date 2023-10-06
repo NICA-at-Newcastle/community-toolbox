@@ -30,11 +30,12 @@ export default {
       // const sensorLoans = this.loans.filter(loan => {
       //   return loan._target === id;
       // });
-      const today = new Date();
+      let tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
       const available = this.loans.reduce(function(available, loan) {
         if (loan._target !== id) return available;
-        return today.getTime() >= new Date(loan.start).getTime() &&
-          today.getTime() <= new Date(loan.end).getTime()
+        return tomorrow.getTime() >= new Date(loan.start).getTime() &&
+          tomorrow.getTime() <= new Date(loan.end).getTime()
           ? false
           : available;
         return available;
