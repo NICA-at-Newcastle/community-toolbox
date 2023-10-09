@@ -18,7 +18,7 @@
         .sensor-name Name: {{ sensor.name }}
         .sensor-type Sensor type: {{ sensor._type.name }}
         .sensor-tag Tag: {{ sensor.tag }}
-        .sensor-loan Loaned out: {{sensor.loaned ? 'yes' : 'no' }}   
+        //- .sensor-loan Loaned out: {{sensor.loaned ? 'yes' : 'no' }}   
         .sensor-description Description: {{ sensor.description }}             
         .image-wrapper
           sensor-image(v-bind:sensor="sensor")
@@ -63,6 +63,23 @@ export default {
     };
   },
   methods: {
+    // available(id) {
+    //   // const sensorLoans = this.loans.filter(loan => {
+    //   //   return loan._target === id;
+    //   // });
+    //   let tomorrow = new Date();
+    //   tomorrow.setDate(tomorrow.getDate() + 1);
+    //   const available = this.loans.reduce(function(available, loan) {
+    //     if (loan._target !== id) return available;
+    //     return tomorrow.getTime() >= new Date(loan.start).getTime() &&
+    //       tomorrow.getTime() <= new Date(loan.end).getTime()
+    //       ? false
+    //       : available;
+    //     return available;
+    //   }, true);
+    //   this.sensor.loaned = !available;
+    //   return available;
+    // },
     sensorCreated() {
       this.viewingSensors = true;
       this.addingSensor = false;
@@ -138,7 +155,7 @@ export default {
           color $color-text-darkest-grey
           text-decoration none
         .sensor-tag
-          color $color-text-grey
+          color $color-danger
           text-decoration none
         &:hover
           background-color darken($color-lightest-grey, 5%)

@@ -4,7 +4,7 @@
     .sensor-tile--body
       .sensor-tile--title(v-bind:class="{ 'is-placeholder': !sensor.name }") {{ sensor.name || 'Example Sensor' }}
       //- .sensor-tile--author(v-if="sensor._user") {{ sensor._user.profile.name }}
-      .sensor-tile--tagline(v-bind:class="{ 'is-placeholder': !sensor.type }") {{ sensor.type || 'This is an example sensor type' }}
+      .sensor-tile--tagline(v-bind:class="{ 'is-placeholder': !sensor._type }") {{ sensor._type.name || 'This is an example sensor type' }}
     .sensor-tile--footer(v-bind:class="{ 'loaned-out': sensor.loaned }") {{ available(sensor._id) ? `Available` : 'Currently On Loan' }} 
 </template>
 
