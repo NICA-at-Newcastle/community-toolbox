@@ -57,11 +57,7 @@ export default {
       this.dateRange = { startDate: null, endDate: null };
     }
   },
-  computed: {
-    accountType() {
-      return "Standard Account";
-    }
-  },
+  computed: {},
   methods: {
     reset() {
       // this.dateRange = { startDate: null, endDate: null };
@@ -108,7 +104,6 @@ export default {
       );
     },
     finishSelect($event) {
-      console.log($event);
       // this.selectedStartDate = $event;
       // this.maxLoanEndDate = new Date($event);
       // this.minLoanStartDate = new Date($event);

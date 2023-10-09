@@ -117,7 +117,7 @@ export default {
           this.sensors = response.data.sensors;
         },
         error => {
-          console.log(error);
+          this.$error(error);
           this.loans = [];
           this.sensors = [];
         }
@@ -147,7 +147,7 @@ export default {
           )} to ${this.getDate(loan.end)} from the Community Toolbox.`;
         },
         error => {
-          console.log(error);
+          this.$error(error);
         }
       );
     },
@@ -159,7 +159,7 @@ export default {
           this.fetchLoans();
         },
         error => {
-          this.$log(error);
+          this.$error(error);
         }
       );
     },

@@ -105,7 +105,7 @@ export default {
           this.$emit("update:idea", response.data.idea);
         },
         error => {
-          this.$log(error);
+          this.$error(error);
         }
       );
     }

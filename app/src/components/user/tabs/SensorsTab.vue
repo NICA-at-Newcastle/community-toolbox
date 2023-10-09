@@ -83,7 +83,7 @@ export default {
           this.fetchSensors();
         },
         error => {
-          this.$log(error);
+          this.$error(error);
         }
       );
     },

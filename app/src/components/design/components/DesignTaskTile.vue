@@ -73,7 +73,7 @@ export default {
           this.discussionCount = response.data.length;
         },
         error => {
-          this.$log(error);
+          this.$error(error);
         }
       );
     },

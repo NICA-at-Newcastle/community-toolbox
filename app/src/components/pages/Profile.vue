@@ -125,9 +125,9 @@ export default {
           case "admin":
             return this.isAdmin && this.ownProfile;
           case "organiser":
-            return this.isOrganiser && this.ownProfile;
+            return (this.isOrganiser || this.isAdmin) && this.ownProfile;
           case "moderator":
-            return this.isModerator && this.ownProfile;
+            return (this.isModerator || this.isAdmin) && this.ownProfile;
           default:
             return true;
         }

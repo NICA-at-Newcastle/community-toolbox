@@ -9,6 +9,7 @@ const categorySchema = mongoose.Schema({
   tag: String,
   description: String,
   passcode: String,
+  destroyed: Date,
   archived: Boolean,
   created: Date
 
@@ -20,11 +21,13 @@ categorySchema.pre('save', function (next) {
 })
 
 categorySchema.pre('findOne', function (next) {
+  this.where({ destroyed: null })
   this.populate('_user', 'profile')
   next()
 })
 
 categorySchema.pre('find', function (next) {
+  this.where({ destroyed: null })
   this.populate('_user', 'profile')
   next()
 })

@@ -1,5 +1,8 @@
 const async = require('async')
 
+const _get = require('lodash/get')
+const _find = require('lodash/find')
+
 const Category = require('../../app/models/category')
 
 const utilities = require('../../app/utilities')
@@ -49,6 +52,27 @@ module.exports = function (app, passport) {
         res.status(401)
       }
     })
+
+  // destory category
+  app.post('/category/destroy',
+    async (req, res) => {
+
+      if (!req.isAuthenticated()) return res.status(401)
+
+      const isOrganiser = _find(_get(req.user, '_permissions'), { type: 'organiser', instance: req.instance })
+
+      if (!isOrganiser) return res.status(401)
+
+      Category.findOneAndUpdate(
+        { _id: req.body.id },
+        { destroyed: new Date() },
+        { upsert: true },
+        (err, category) => {
+          if (err) console.error(err)
+          res.json({ category: category })
+        })
+    })
+
   // Update category
   app.put('/category',
     (req, res) => {

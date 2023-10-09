@@ -79,7 +79,7 @@ export default {
           this.responses = response.data;
         },
         error => {
-          this.$log(error);
+          this.$error(error);
         }
       );
     },
@@ -97,7 +97,7 @@ export default {
           this.fetchResponses();
         },
         error => {
-          this.$log(error);
+          this.$error(error);
           this.newResponse = undefined;
           this.webcamActive = false;
         }

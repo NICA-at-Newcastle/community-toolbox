@@ -203,13 +203,12 @@ export default {
         },
         response => {
           this.$log(response);
-          console.log(response.data.sensor);
           this.sensor = response.data.sensor;
           this.editing = false;
           // this.$emit("update:sensor", response.data.sensor);
         },
         error => {
-          this.$log(error);
+          this.$error(error);
         }
       );
     }

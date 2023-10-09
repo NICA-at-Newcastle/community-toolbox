@@ -145,7 +145,7 @@ export default {
           }
         },
         error => {
-          this.$log(error);
+          this.$error(error);
           this.addingTask = false;
           alert("There was a problem");
         }

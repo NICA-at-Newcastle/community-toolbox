@@ -115,7 +115,7 @@ export default {
           this.map.fitBounds(markergroup.getBounds());
         },
         error => {
-          this.$log(error);
+          this.$error(error);
         }
       );
     },
@@ -134,7 +134,7 @@ export default {
           this.fetchResponses();
         },
         error => {
-          this.$log(error);
+          this.$error(error);
           this.currentResponse = undefined;
           this.newMarker = undefined;
         }

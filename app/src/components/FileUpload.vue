@@ -71,7 +71,7 @@ export default {
     },
     accept() {
       return this.uploadType === "data"
-        ? ".csv,.tsv,.txt.,.xlsx"
+        ? ".csv,.tsv,.txt,.xlsx"
         : ".rtf,.doc,.docx,.pdf,image/*,video/*";
     }
   },
@@ -94,7 +94,7 @@ export default {
           this.$emit("update:uploadedFile", response.data.upload);
         },
         error => {
-          this.$log(error);
+          this.$error(error);
           this.uploadError = error.response;
           this.currentStatus = STATUS_FAILED;
         }

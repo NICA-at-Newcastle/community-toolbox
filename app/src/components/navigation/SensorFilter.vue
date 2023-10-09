@@ -73,7 +73,7 @@ export default {
       });
       return typeof type !== "undefined"
         ? type
-        : { name: "All Categories", tag: undefined };
+        : { name: "All Types", tag: undefined };
     }
   },
   methods: {

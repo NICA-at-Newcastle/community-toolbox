@@ -2,7 +2,7 @@ import axios from 'axios'
 import * as config from '@/api/config'
 
 export default {
-  addCategory (category, cb, errorCb) {
+  addCategory(category, cb, errorCb) {
     axios.post(`${config.API_ADDRESS}/category`, { category: category }, { withCredentials: true }).then((response) => {
       cb(response)
     })
@@ -10,8 +10,16 @@ export default {
         errorCb(error)
       })
   },
-  fetchCategories (cb, errorCb) {
+  fetchCategories(cb, errorCb) {
     axios.get(`${config.API_ADDRESS}/categories`, { withCredentials: true }).then((response) => {
+      cb(response)
+    })
+      .catch((error) => {
+        errorCb(error)
+      })
+  },
+  destroy(postData, cb, errorCb) {
+    axios.post(`${config.API_ADDRESS}/category/destroy`, postData, { withCredentials: true }).then((response) => {
       cb(response)
     })
       .catch((error) => {

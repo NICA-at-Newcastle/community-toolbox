@@ -7,20 +7,35 @@
 </template>
 
 <script>
-import Avatar from '@/components/user/Avatar'
+import Avatar from "@/components/user/Avatar";
+import { mapGetters } from "vuex";
 
 export default {
-  name: 'user-card',
-  props: ['profile', 'id'],
+  name: "user-card",
+  props: ["profile", "id"],
   components: {
     Avatar
   },
   computed: {
-    accountType () {
-      return 'Standard Account'
+    ...mapGetters([
+      "isAuthenticated",
+      "user",
+      "notifications",
+      "isAdmin",
+      "isOrganiser",
+      "isModerator"
+    ]),
+    accountType() {
+      return this.isAdmin
+        ? "Administrator"
+        : this.isModerator
+        ? "Moderator"
+        : this.isOrganiser
+        ? "Community Organiser"
+        : "Standard Account";
     }
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>

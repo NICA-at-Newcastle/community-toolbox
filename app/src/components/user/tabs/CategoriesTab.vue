@@ -13,6 +13,8 @@
 
     .categories-wrapper(v-else)
       router-link.category-tile(tag="div" v-for="(category, index) in categories" v-bind:key="index" v-bind:to="{ name: 'explore', params: { category: category.tag } }")
+        .delete-button(@click="removeCategory($event, category._id)")
+          i.fas.fa-trash
         .category-name Name: {{ category.name }}
         .category-tag Tag: {{ category.tag }}
 
@@ -61,6 +63,19 @@ export default {
     addCategory() {
       this.addingCategory = !this.addingCategory;
     },
+    removeCategory(e, id) {
+      e.stopPropagation();
+      API.category.destroy(
+        { id },
+        response => {
+          this.$log(response);
+          this.fetchCategories();
+        },
+        error => {
+          this.$error(error);
+        }
+      );
+    },
     fetchCategories() {
       API.category.fetchCategories(
         response => {
@@ -91,6 +106,16 @@ export default {
     p
       reset()
     .categories-wrapper
+      .delete-button
+          float right
+          animate()
+          color $color-text-light-grey
+          font-size 0.8em
+          svg
+            height 25px
+          &:hover
+            cursor pointer
+            color $color-danger
       .category-tile
         animate()
         background-color $color-lightest-grey

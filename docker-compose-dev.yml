@@ -10,7 +10,6 @@ volumes:
   redis-data:
   mongo-data:
 
-
 services:
   # for testing, run via npm locally
   # app:
@@ -60,10 +59,10 @@ services:
       - redis
       - mongo
     logging:
-      driver: 'json-file'
+      driver: "json-file"
       options:
-        max-size: '1024k'
-        max-file: '10'
+        max-size: "1024k"
+        max-file: "10"
 
   mongo:
     image: mongo
@@ -85,10 +84,10 @@ services:
     networks:
       - backend
     logging:
-      driver: 'json-file'
+      driver: "json-file"
       options:
-        max-size: '1024k'
-        max-file: '10'
+        max-size: "1024k"
+        max-file: "10"
 
   # only accessible locally
   mongo-express:
@@ -110,10 +109,10 @@ services:
     networks:
       - backend
     logging:
-      driver: 'json-file'
+      driver: "json-file"
       options:
-        max-size: '1024k'
-        max-file: '10'
+        max-size: "1024k"
+        max-file: "10"
 
   # mongobackup:
   #   build: ./utilities/backup
@@ -140,10 +139,32 @@ services:
   #       max-size: '1024k'
   #       max-file: '10'
 
+  processor:
+    build: ./utilities/processor
+    restart: always
+    expose:
+      - 8000
+    # dev only
+    ports:
+      - 127.0.0.1:4000:8000
+    environment:
+      - S3_REGION
+      - S3_BUCKET
+      - S3_ACCESS_KEY_ID
+      - S3_SECRET_ACCESS_KEY
+      - S3_DIR
+    networks:
+      - backend
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1024k"
+        max-file: "10"
+
   redis:
     image: redis:4.0.5-alpine
     restart: always
-    command: [ "redis-server", "--appendonly", "yes" ]
+    command: ["redis-server", "--appendonly", "yes"]
     volumes:
       - redis-data:/data
     expose:
@@ -154,7 +175,7 @@ services:
     networks:
       - backend
     logging:
-      driver: 'json-file'
+      driver: "json-file"
       options:
-        max-size: '1024k'
-        max-file: '10'
+        max-size: "1024k"
+        max-file: "10"

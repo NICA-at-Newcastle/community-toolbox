@@ -28,7 +28,8 @@ module.exports = function (app, passport) {
           type: req.params.type,
           _task: req.params.task_id
         }
-        if (req.params.type === 'media') {
+        console.log(req.params.type)
+        if (req.params.type === 'media' || req.params.type === 'data') {
           response.response_meta = req.body.response
           response.response = req.body.response.location
         }

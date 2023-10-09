@@ -64,7 +64,7 @@ export default {
         ? sensors
         : sensors.filter(sensor => {
             return (
-              sensor.title
+              sensor.name
                 .toLowerCase()
                 .indexOf(this.searchQuery.toLowerCase()) > -1
             );
@@ -102,7 +102,7 @@ export default {
           this.loading = false;
         },
         error => {
-          this.$log(error);
+          this.$error(error);
           this.loading = false;
         }
       );

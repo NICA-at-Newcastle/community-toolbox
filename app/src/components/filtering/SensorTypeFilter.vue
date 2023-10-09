@@ -25,9 +25,7 @@ export default {
       API.sensor.types(
         response => {
           // Idea success
-          this.$log(response);
           this.categories = response.data;
-          console.log(this.categories);
           this.$emit("update:categories", this.categories);
         },
         error => {

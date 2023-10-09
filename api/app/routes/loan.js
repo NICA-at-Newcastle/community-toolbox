@@ -95,9 +95,13 @@ module.exports = function (app, passport) {
 
         loan.save((err) => {
           if (err) console.error(err)
+          // Notify admin about new loan scheduled
           const instance = config.instances[loan.instance]
           const adminEmail = _get(instance, 'admin.email', process.env.ADMIN_EMAIL)
-          mail.sendMail(adminEmail, 'Sensor Loan Booked', 'sensor-booked', { user: req.user, loan: loan, url: utilities.redirectUri(utilities.redirectUri), instance: req.instance })
+          mail.sendMail(adminEmail, 'New Sensor Booking', 'new-booking', { user: req.user, loan: loan, url: utilities.redirectUri(utilities.redirectUri), instance: req.instance })
+
+          // send booking confirmation to user
+          mail.sendMail(req.user.local.email, 'Sensor Loan Scheduled', 'loan-created', { user: req.user, loan: loan, url: utilities.redirectUri(utilities.redirectUri), instance: req.instance })
           res.json({ loan })
         })
       } else {
@@ -140,14 +144,14 @@ module.exports = function (app, passport) {
 
       // TODO - send email to loan initiator
       // Create notification
-      // const notificationObj = new Notification({
-      //   _user: req.body.userId,
-      //   type: 'permissions',
-      //   text: 'Your permissions have been updated by ' + req.user.profile.name,
-      //   instance: req.instance
-      // })
+      const notificationObj = new Notification({
+        _user: req.body.userId,
+        type: 'loan',
+        text: `Your loan dates for ${req.body.id} have been updated by ${req.user.profile.name}`,
+        instance: req.instance
+      })
 
-      // const notification = await notificationObj.save()
+      const notification = await notificationObj.save()
 
       // mail.sendMail(user.local.email, 'Permissions Updated', 'permissions', { user: req.user, recipient: user, url: utilities.redirectUri(utilities.redirectUri), instance: req.instance })
       res.json({ msg: 'done' })

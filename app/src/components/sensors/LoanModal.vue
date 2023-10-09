@@ -94,7 +94,7 @@ export default {
           }, 500);
         },
         error => {
-          this.$log(error);
+          this.$error(error);
           setTimeout(() => {
             this.isBooking = false;
           }, 500);
@@ -146,7 +146,7 @@ export default {
     width 70%
     height: 90%
     box-sizing border-box
-    margin 0 auto
+    margin 60px auto
     padding 40px 20px
     text-align center
     .text-right

@@ -90,7 +90,7 @@ export default {
           }
         },
         error => {
-          this.$log(error);
+          this.$error(error);
         }
       );
     },
@@ -111,7 +111,7 @@ export default {
           this.editing = false;
         },
         error => {
-          this.$log(error);
+          this.$error(error);
         }
       );
     }
