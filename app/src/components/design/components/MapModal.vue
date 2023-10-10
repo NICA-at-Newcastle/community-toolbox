@@ -1,5 +1,5 @@
 <template lang="pug">
-  #modal(v-if="isAuthenticated")
+  #modal
     .modal-panel
       #close-button(@click="closeModal")
         i.fas.fa-times

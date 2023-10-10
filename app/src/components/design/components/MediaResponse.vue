@@ -18,25 +18,25 @@ li.media-item(v-bind:class="{ 'comments-visible': commentsVisible }")
       .clearfix
   .thumbnail-wrapper
     component(v-bind:is="responseComponent(response)" v-bind:file="response.response_meta")
-  .discusstion-wrapper
+  .discussion-wrapper
     discussion(v-show="commentsVisible" v-bind:idea="idea" v-bind:hide-no-comments="true" discussion-type="response" v-bind:discussion-target="response._id" not-padded)
   
 </template>
 
 <script>
-import _get from 'lodash/get'
+import _get from "lodash/get";
 
-import Avatar from '@/components/user/Avatar'
-import Discussion from '@/components/design/modules/Discussion'
+import Avatar from "@/components/user/Avatar";
+import Discussion from "@/components/design/modules/Discussion";
 
-import ImageThumbnail from '@/components/thumbnails/ImageThumbnail'
-import VideoThumbnail from '@/components/thumbnails/VideoThumbnail'
-import FileThumbnail from '@/components/thumbnails/FileThumbnail'
-import UnknownThumbnail from '@/components/thumbnails/UnknownThumbnail'
+import ImageThumbnail from "@/components/thumbnails/ImageThumbnail";
+import VideoThumbnail from "@/components/thumbnails/VideoThumbnail";
+import FileThumbnail from "@/components/thumbnails/FileThumbnail";
+import UnknownThumbnail from "@/components/thumbnails/UnknownThumbnail";
 
 export default {
-  name: 'media-response',
-  props: ['idea', 'response'],
+  name: "media-response",
+  props: ["idea", "response"],
   components: {
     Avatar,
     Discussion,
@@ -45,31 +45,31 @@ export default {
     FileThumbnail,
     UnknownThumbnail
   },
-  data () {
+  data() {
     return {
       commentsVisible: true
-    }
+    };
   },
   methods: {
-    responseComponent (response) {
-      const contentType = _get(response, 'response_meta.mimetype', 'unknown')
+    responseComponent(response) {
+      const contentType = _get(response, "response_meta.mimetype", "unknown");
 
-      if (contentType.startsWith('image')) {
-        return 'ImageThumbnail'
+      if (contentType.startsWith("image")) {
+        return "ImageThumbnail";
       }
-      if (contentType.startsWith('video')) {
-        return 'VideoThumbnail'
+      if (contentType.startsWith("video")) {
+        return "VideoThumbnail";
       }
-      if (contentType.startsWith('file')) {
-        return 'FileThumbnail'
+      if (contentType.startsWith("file")) {
+        return "FileThumbnail";
       }
-      return 'UnknownThumbnail'
+      return "UnknownThumbnail";
     },
-    toggleComments () {
-      this.commentsVisible = !this.commentsVisible
+    toggleComments() {
+      this.commentsVisible = !this.commentsVisible;
     }
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>
@@ -105,9 +105,9 @@ li.media-item
       padding 0 10px
   // &.comments-visible .details
   //   border-bottom $color-border 1px solid
-  .thumbnail-wrapper, .discusstion-wrapper
+  .thumbnail-wrapper, .discussion-wrapper
     margin-left 60px
-  .discusstion-wrapper
+  .discussion-wrapper
     margin-top 20px
   ul.action-wrapper
     cleanlist()

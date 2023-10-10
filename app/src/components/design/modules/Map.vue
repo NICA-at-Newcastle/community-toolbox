@@ -4,7 +4,7 @@
 
   splash-messages(v-if="!isAuthenticated" v-bind:messages="[{type:'success',text:'Please login to participate!'}]")
 
-  .map-wrapper(v-bind:class="{ authenticated: isAuthenticated }")
+  .map-wrapper
     
     l-map(style="height: 100%" :zoom="zoom" :center="center" ref="mymap" @click="addMarker" v-bind:style="[ addingMarkers  ? {cursor: 'crosshair'} : {cursor: 'grab'}]")      
       l-tile-layer(:url="url" :attribution="attribution")

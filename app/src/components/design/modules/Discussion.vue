@@ -1,7 +1,7 @@
 <template lang="pug">
 .dicussion-container(v-bind:class="{ 'no-padding': notPadded }")
 
-  p.design-task--description(v-if="task && task.description && task.type !== 'media' && task.type !== 'map'") {{ task.description }}
+  p.design-task--description(v-if="task && task.description && task.type !== 'media' && task.type !== 'map' && task.type !== 'data'") {{ task.description }}
 
   splash-messages(v-if="!isAuthenticated" v-bind:messages="[{type:'success',text:'Please login to participate!'}]")
 

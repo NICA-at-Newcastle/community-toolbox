@@ -11,7 +11,7 @@
       .input-wrapper
         quill-editor(v-if="editing" v-model="editedIdea.description" ref="myQuillEditor" v-bind:options="editorOption")
 
-    .info-actions
+    .info-actions(v-if="isAuthenticated")
       .btn-fab(@click="toggleEditing" v-bind:class="[editing ? 'btn-danger' : 'btn-grey']")
         span(v-show="!editing")
           i.fas.fa-pencil-alt
