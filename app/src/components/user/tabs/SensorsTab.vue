@@ -19,7 +19,7 @@
         .sensor-type Sensor type: {{ sensor._type.name }}
         .sensor-tag Tag: {{ sensor.tag }}
         //- .sensor-loan Loaned out: {{sensor.loaned ? 'yes' : 'no' }}   
-        .sensor-description Description: {{ sensor.description }}             
+        .sensor-description(v-html="sensor.description")         
         .image-wrapper
           sensor-image(v-bind:sensor="sensor")
 
@@ -157,6 +157,11 @@ export default {
         .sensor-tag
           color $color-danger
           text-decoration none
+        .sensor-description
+          white-space nowrap
+          overflow hidden
+          max-height 50px
+          max-width 500px
         &:hover
           background-color darken($color-lightest-grey, 5%)
           cursor pointer

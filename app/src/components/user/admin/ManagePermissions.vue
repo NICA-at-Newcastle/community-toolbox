@@ -113,6 +113,7 @@ export default {
 
 .manage-permissions
   .tab--content
+    overflow-x auto
     table
       width 100%
       .btn

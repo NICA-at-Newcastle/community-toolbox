@@ -195,7 +195,9 @@ export default {
 .manage-loans
   .tab--content
     padding 25px
+    overflow-x auto
     table
+      border-spacing 0
       width 100%
       .btn
         reset()

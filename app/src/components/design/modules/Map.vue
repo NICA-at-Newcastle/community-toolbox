@@ -83,20 +83,27 @@ export default {
       if (this.addingMarkers) return;
       this.currentResponse = this.responses[index];
       this.modalOpen = true;
-      this.map.scrollWheelZoom.disable();
-      this.map.dragging.disable();
+      this.disableMapControls();
     },
     closeModal(index) {
       this.currentResponse = undefined;
       this.modalOpen = false;
-      this.map.scrollWheelZoom.enable();
-      this.map.dragging.enable();
+      this.enableMapControls();
     },
     addMarker(event) {
       if (this.addingMarkers && !this.modalOpen) {
         this.modalOpen = true;
         this.newMarker = event.latlng;
+        this.disableMapControls();
       }
+    },
+    disableMapControls() {
+      this.map.scrollWheelZoom.disable();
+      this.map.dragging.disable();
+    },
+    enableMapControls() {
+      this.map.scrollWheelZoom.enable();
+      this.map.dragging.enable();
     },
     fetchResponses() {
       API.task.fetchResponses(
