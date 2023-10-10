@@ -3,15 +3,14 @@
     page-header(v-if="sensor" v-bind:title.sync="sensor.name" v-bind:subtitle="`${sensor._type.name} sensor`")
     page-header(v-else title="Loading" subtitle="Please wait just a moment...")
     .row(v-if="sensor")
-
+      loan-modal(v-if="isBooking", v-bind:sensor="sensor" v-bind:loan="loan" v-on:booked="resetLoan" v-on:close="isBooking=false")
       .content-block.content-block--side.pull-up.pull-right.white-block
         .content-block--body   
           calendar-card(v-bind:loan.sync="loan" v-bind:loans.sync="loans")
         .content-block--footer                    
           //- loan-booking(v-bind:sensor="sensor" v-bind:loan="loan" v-on:booked="resetLoan" v-on:reset="resetLoan")
           .booking-button.btn(@click="bookLoan" :class="{ active: loan}")      
-            span {{ isBooking ? 'One moment..' : 'Book' }}
-          loan-modal(v-if="isBooking", v-bind:sensor="sensor" v-bind:loan="loan" v-on:booked="resetLoan" v-on:close="isBooking=false")
+            span {{ isBooking ? 'One moment..' : 'Book' }}          
           //- sensor-actions(v-if="isAdmin" v-bind:sensor="sensor")          
           
 
@@ -44,6 +43,8 @@
             .tab--footer
               calendar-card(v-bind:loan.sync="loan" v-bind:loans.sync="loans")
               //- loan-booking(v-bind:sensor="sensor" v-bind:loan="loan" v-on:booked="resetLoan" v-on:reset="resetLoan")          
+              .booking-button.btn(@click="bookLoan" :class="{ active: loan}")      
+                span {{ isBooking ? 'One moment..' : 'Book' }}              
       .clearfix
 </template>
 
@@ -98,13 +99,15 @@ export default {
         description: undefined
       },
       editorOption: {
-        theme: "bubble",
+        // theme: "bubble",
         placeholder: "Describe the sensor in more detail",
+        readOnly: false,
+        scrollingContainer: false,
         modules: {
           toolbar: [
-            [{ size: ["small", false, "large"] }],
-            ["bold", "italic"],
-            ["link"]
+            [{ header: [1, 2, 3, 4, 5, 6, false] }],
+            ["bold", "italic", "underline"],
+            [{ list: "ordered" }, { list: "bullet" }, "link", "t"]
           ]
         }
       },
@@ -286,6 +289,7 @@ export default {
       display block
   .booking-button
     radius(30px)
+    margin-top 5px
     pointer-events none
     background-color $color-lighter-grey
     position relative
