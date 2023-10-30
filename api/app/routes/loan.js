@@ -10,6 +10,7 @@ const config = require('../../config.js')
 const Loan = require('../../app/models/loan')
 const Sensor = require('../../app/models/sensor')
 const User = require('../../app/models/user')
+const Notification = require('../../app/models/notification')
 
 module.exports = function (app, passport) {
   app.get('/loans',
