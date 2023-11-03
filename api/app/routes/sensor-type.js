@@ -41,7 +41,7 @@ module.exports = function (app, passport) {
 
         sensorType.save((err) => {
           if (err) console.error(err)
-          // mail.sendMail(req.user.local.email, 'SensorType Created', 'category-created', { user: req.user, category: category, url: utilities.redirectUri(utilities.redirectUri) })
+          // mail.sendMail(req.user.local.email, 'SensorType Created', 'category-created', { user: req.user, category: category, url: utilities.redirectUri(req.subdomain) })
           res.json({ sensorType })
         })
       } else {

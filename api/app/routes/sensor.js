@@ -59,7 +59,7 @@ module.exports = function (app, passport) {
 
             sensor.save((err) => {
               if (err) console.error(err)
-              // mail.sendMail(req.user.local.email, 'Sensor Created', 'sensor-created', { user: req.user, sensor: sensor, url: utilities.redirectUri(utilities.redirectUri) })
+              // mail.sendMail(req.user.local.email, 'Sensor Created', 'sensor-created', { user: req.user, sensor: sensor, url: utilities.redirectUri(req.subdomain) })
               res.json({ sensor })
             })
           })
@@ -67,7 +67,7 @@ module.exports = function (app, passport) {
           const sensor = new Sensor(data.sensor)
           sensor.save((err) => {
             if (err) console.error(err)
-            // mail.sendMail(req.user.local.email, 'Sensor Created', 'sensor-created', { user: req.user, sensor: sensor, url: utilities.redirectUri(utilities.redirectUri) })
+            // mail.sendMail(req.user.local.email, 'Sensor Created', 'sensor-created', { user: req.user, sensor: sensor, url: utilities.redirectUri(req.subdomain) })
             res.json({ sensor })
           })
         }

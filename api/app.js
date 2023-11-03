@@ -79,7 +79,7 @@ async function init(req, res, next) {
       instance = !subdomain ? "localhost" : subdomain;
     }
     // TODO: using different subdomain name from instance name
-    req.subdomain = instance;
+    req.subdomain = (subdomain === config.domain.split('.')[0]) ? config.instances.default : instance;
     // NOTE: Checking if subdomain shouldn't exist.
     req.instance =
       instance.indexOf("localhost") !== -1 || (subdomain === config.domain.split('.')[0]) ? config.instances.default : getInstance(instance);

@@ -45,7 +45,7 @@ module.exports = function (app, passport) {
 
         category.save((err) => {
           if (err) console.error(err)
-          // mail.sendMail(req.user.local.email, 'Category Created', 'category-created', { user: req.user, category: category, url: utilities.redirectUri(utilities.redirectUri) })
+          // mail.sendMail(req.user.local.email, 'Category Created', 'category-created', { user: req.user, category: category, url: utilities.redirectUri(req.subdomain) })
           res.json({ category })
         })
       } else {

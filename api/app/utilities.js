@@ -9,7 +9,7 @@ module.exports = {
     switch (subdomain) {
       case 'default':
         return DEV_URL
-      case 'sensemystreet':
+      case 'ctb':
         return PROD_URL.replace('*.', '')
       case 'main':
         return PROD_URL.replace('*.', '')
