@@ -1,0 +1,11 @@
+extends ../main
+
+block content
+
+  h1(style="margin-bottom: 30px") New #{ instance.toUpperCase() } Application Submitted
+
+  p Hey #{ instance.toUpperCase() } Admin
+
+  p A new  application as submitted for #{ instance.toUpperCase() } has been submitted by #{ user.profile.name } from #{ loan.start } to #{ loan.end }.
+  
+  p Head to the admin page to contact #{ user.profile.name } and organise the pickup of the tool - <a style="color: #0B9BD0" href="#{ url }/profile">Admin</a>.

@@ -51,7 +51,7 @@ export default {
     };
   },
   mounted() {
-    const url = `${config.legal}/about.md`;
+    const url = `${config.content}/about.md`;
     this.$http.get(url).then(
       response => {
         this.markdown = response.body;

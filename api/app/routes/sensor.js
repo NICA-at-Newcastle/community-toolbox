@@ -12,7 +12,10 @@ module.exports = function (app, passport) {
   // Get sensors
   app.get('/sensors/:typeId?',
     (req, res) => {
-      const query = (req.params.typeId === 'undefined' || typeof req.params.typeId === 'undefined') ? { instance: req.instance } : { instance: req.instance, _type: req.params.typeId }
+      let query = (req.params.typeId === 'undefined' || typeof req.params.typeId === 'undefined') ? { instance: req.instance } : { instance: req.instance, _type: req.params.typeId }
+      const isAdmin = _find(_get(req.user, '_permissions'), { type: 'admin', instance: req.instance })
+      const isModerator = _find(_get(req.user, '_permissions'), { type: 'moderator', instance: req.instance })
+      if (!isAdmin && !isModerator) query = { ...query, enabled: true }
       Sensor.find(query).exec((err, sensors) => {
         if (err) { return console.error(err) }
         console.log(sensors)
@@ -83,7 +86,7 @@ module.exports = function (app, passport) {
       if (!isAdmin) return res.status(401)
 
       let sensor = await Sensor.findOneAndUpdate({ _id: req.body._id, instance: req.instance }, req.body)
-      console.log(Sensor)
+      // console.log(Sensor)
       sensor = await Sensor.findOne({ _id: req.body._id })
       res.json({ sensor })
     })

@@ -4,18 +4,18 @@
       .row
         .content-block
           .content-block--body
-            img(src="/static/images/logos/sms/logo-white.svg")            
-            h1 Community Toolbox
+            img(src="/static/images/logos/ctb/logo-ctb.svg")            
+            h1 Community Tool Box
             h3
               a(href="https://ioct.uknica.co.uk/") The Internet of Caring Things (IoCT)
-    .row-wrapper#sms-info
+    .row-wrapper#ctb-info
       .color
       .row
         .content-block
           vue-markdown(v-if="info_markdown") {{ info_markdown }}
           .fallback(v-else) 
             p #[strong SenseMyStreet] is part of the community toolbox in #[a(href="https://ioct.uknica.co.uk/") The Internet of Caring Things (IoCT)] programme at #[a(href="https://uknica.co.uk/") The National Innovation Centre for Ageing (NICA)]. It enables communities to commission sensors from the #[a(href="http://www.urbanobservatory.ac.uk/") Urban Observatory] and locate them on their streets, collecting evidence to inform or even change their communities. For the first time, the public has access to precision sensing equipment to enable them to gather data that is relevant to their local issues.    
-    collaborate(align="right" title="Use tools" subtitle="Sign Up to borrow tools from the community toolbox." action="Learn More" v-bind:styles="{ 'background-color': '#fff'}" theme="dark" imageSrc="/static/images/illustrations/sms/sensor.svg" link="/toolbox")    
+    collaborate(align="right" title="Use tools" subtitle="Sign Up to borrow tools from the community toolbox." action="Learn More" v-bind:styles="{ 'background-color': '#fff'}" theme="dark" imageSrc="/static/images/illustrations/ctb/sensor.svg" link="/toolbox")    
     collaborate(align="left" id="w-propose-idea" title="Propose a new community idea" subtitle="Write a short description of your proposed idea and post it on the site." imageSrc="/static/images/illustrations/comtech/idea2.svg")
     collaborate(align="right" id="w-collaborate" title="Collaborate" subtitle="Share your idea with the wider community and invite others to help you shape the idea." imageSrc="/static/images/illustrations/comtech/share2.svg" theme="dark" v-bind:styles="{ 'background-color': '#fff'}")
     collaborate(align="left" id="w-design" title="Design together" subtitle="Use the online space to form thoughts, ask questions and make decisions about the idea." imageSrc="/static/images/illustrations/comtech/design2.svg" action="Learn More" link="/learn")
@@ -33,9 +33,9 @@ import config from "@/config";
 import VueMarkdown from "vue-markdown";
 
 export default {
-  name: "SenseMyStreet",
+  name: "Community Tool Box",
   metaInfo: {
-    title: "SenseMyStreet"
+    title: "Community Tool Box"
   },
   mixins: [Home],
   components: {
@@ -49,7 +49,7 @@ export default {
   },
   async mounted() {
     // get info
-    this.$http.get(`${config.legal}/info.md`).then(
+    this.$http.get(`${config.content}/info.md`).then(
       response => {
         this.info_markdown = response.body;
       },
@@ -59,7 +59,7 @@ export default {
       }
     );
     // get events
-    this.$http.get(`${config.legal}/events.md`).then(
+    this.$http.get(`${config.content}/events.md`).then(
       response => {
         this.events_markdown = response.body;
       },
@@ -90,7 +90,7 @@ export default {
 @import '~stylus/home'
 #welcome.row-wrapper
   padding-bottom: 80px;
-#sms-info.row-wrapper
+#ctb-info.row-wrapper
   reset()
   padding 10px 0
   // margin-top -80px

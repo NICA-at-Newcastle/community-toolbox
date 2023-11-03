@@ -65,52 +65,57 @@
 </template>
 
 <script>
-import Home from '@/mixins/Home'
+import Home from "@/mixins/Home";
 
 export default {
-  name: 'comtech',
+  name: "comtech",
   metaInfo: {
-    title: 'Communities and Technologies'
+    title: "Communities and Technologies"
   },
   mixins: [Home],
   methods: {
-    scrollToSection (element) {
+    scrollToSection(element) {
       return () => {
         // document.getElementById(element).scrollIntoView()
-        this.scrollToElement(element)
-      }
+        this.scrollToElement(element);
+      };
     },
-    scrollToElement (element, scrollDuration = 500) {
-      var doc = document.documentElement
-      var frameDuration = 15
-      const left = (window.pageXOffset || doc.scrollLeft) - (doc.clientLeft || 0)
-      const startingPosition = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0)
-      const endingPosition = document.querySelector('#' + element).offsetTop
-      const scrollDistance = endingPosition - startingPosition
-      const totalFrames = scrollDuration / frameDuration
-      var currentFrame = 0
-      var scrollMargin
+    scrollToElement(element, scrollDuration = 500) {
+      var doc = document.documentElement;
+      var frameDuration = 15;
+      const left =
+        (window.pageXOffset || doc.scrollLeft) - (doc.clientLeft || 0);
+      const startingPosition =
+        (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
+      const endingPosition = document.querySelector("#" + element).offsetTop;
+      const scrollDistance = endingPosition - startingPosition;
+      const totalFrames = scrollDuration / frameDuration;
+      var currentFrame = 0;
+      var scrollMargin;
       var scrollInterval = setInterval(() => {
-        var normalizedDistance = currentFrame / totalFrames
+        var normalizedDistance = currentFrame / totalFrames;
         if (normalizedDistance < 0.5) {
-          scrollMargin = this.easing(normalizedDistance * 2) * scrollDistance / 2
+          scrollMargin =
+            (this.easing(normalizedDistance * 2) * scrollDistance) / 2;
         } else {
-          scrollMargin = scrollDistance - this.easing((1 - normalizedDistance) * 2) * scrollDistance / 2
+          scrollMargin =
+            scrollDistance -
+            (this.easing((1 - normalizedDistance) * 2) * scrollDistance) / 2;
         }
-        window.scrollTo(left, (startingPosition + scrollMargin))
+        window.scrollTo(left, startingPosition + scrollMargin);
         if (currentFrame >= totalFrames) {
           // document.getElementById(element).scrollIntoView()
-          clearInterval(scrollInterval)
-          return
+          clearInterval(scrollInterval);
+          return;
         }
-        currentFrame = currentFrame + 1
-      }, frameDuration)
+        currentFrame = currentFrame + 1;
+      }, frameDuration);
     },
-    easing (x) {
-      return 1.0 - Math.sin(Math.PI * 0.5 * (1 - x))
+    easing(x) {
+      return 1.0 - Math.sin(Math.PI * 0.5 * (1 - x));
     }
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>
@@ -166,7 +171,7 @@ export default {
       // radius(20px)
       margin 0 auto
       //margin-top -170px
-      padding 10px 0  
+      padding 10px 0
       h1, p
         reset()
         color #333
@@ -194,12 +199,8 @@ export default {
             color #c84345
           h3
             font-size 1em
-          h4 
+          h4
             font-size 0.9em
           h2, h3, h4
             margin 15px
-
-
-
-
 </style>

@@ -4,23 +4,26 @@
       #close-button(@click="closeModal")
         i.fas.fa-times
       .modal-content
-        h1 Equipment Loan Agreement
+        h1 Expression of Interest
       
           splash-messages(v-bind:messages="splashmessages")
 
-        h3 In consideration of the mutual covenants and promise set forth herein, the parties agree as follows:
+        h3 Thank you for your interest in the community toolbox. This form will allow us to understand your needs and get to know you better.
         .loan-form.text-right
-          vue-markdown(v-if="markdown") {{ markdown }}          
-        .text-right
-          p.loan-notice #[input(v-model="termsLoan" type="checkbox")] I accept the terms of the loan agreement
-        .btn.btn-rounded.full-width.btn-success(@click="confirmLoan" :class="{ active: termsLoan}") {{ isBooking ? 'Please wait..' : 'Confirm' }}
+          vue-markdown(v-if="markdown") {{ markdown }}
+        .input-wrapper.text-right
+          textarea-autosize(name="motivation-textarea" ref="textarea" rows="3" v-bind:min-height="10" v-model="motivationText" v-bind:max-height="200")
+        //- .text-right
+        //-   p.loan-notice #[input(v-model="termsLoan" type="checkbox")] I accept the terms of the loan agreement
+        .btn.btn-rounded.full-width.btn-success(@click="submitLoan" :class="{ active: termsLoan}") {{ isBooking ? 'Please wait..' : 'Submit' }}
         .clearfix
-
 </template>
 
 <script>
+import Vue from "vue";
 import * as types from "@/store/mutation-types";
 import { mapGetters } from "vuex";
+import VueTextareaAutosize from "vue-textarea-autosize";
 import API from "@/api";
 
 import SplashMessages from "@/components/shared/SplashMessages";
@@ -29,6 +32,8 @@ import VueMarkdown from "vue-markdown";
 import AuthMixin from "@/mixins/AuthMixin";
 import * as apiconfig from "@/api/config";
 import config from "@/config";
+
+Vue.use(VueTextareaAutosize);
 
 export default {
   name: "loan-modal",
@@ -42,7 +47,8 @@ export default {
     return {
       splashmessages: [],
       isBooking: false,
-      termsLoan: false,
+      termsLoan: true,
+      motivationText: "",
       institution: apiconfig.INSTITUTION || "Open Lab",
       markdown: undefined
     };
@@ -58,7 +64,7 @@ export default {
     }
   },
   mounted() {
-    const url = `${config.legal}/agreement.md`;
+    const url = `${config.content}/expression.md`;
     this.$http.get(url).then(
       response => {
         this.markdown = response.body;
@@ -74,12 +80,13 @@ export default {
       e.stopPropagation();
       this.$emit("close");
     },
-    confirmLoan() {
+    submitLoan() {
       if (this.isBooking) return;
       this.isBooking = true;
       API.loan.book(
         {
           _target: this.sensor._id,
+          motivation: this.motivationText,
           start: this.loan.startDate,
           end: this.loan.endDate
         },
@@ -160,4 +167,18 @@ export default {
       reset()
       color $text-grey
       padding 10px
+  .input-wrapper
+      border $color-border 1px solid
+      margin-bottom 2em
+      input, textarea
+        border-box()
+        background-color transparent
+        border none
+        display block
+        overflow hidden
+        line-height 20px
+        outline 0
+        margin 0
+        padding 10px
+        width calc(100% - 40px)
 </style>

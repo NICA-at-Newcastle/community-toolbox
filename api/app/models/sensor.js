@@ -13,6 +13,7 @@ const sensorSchema = mongoose.Schema({
   passcode: String,
   destroyed: Date,
   archived: Boolean,
+  enabled: Boolean,
   created: Date
 
 })

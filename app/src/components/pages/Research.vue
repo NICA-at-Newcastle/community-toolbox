@@ -31,7 +31,7 @@ export default {
     };
   },
   mounted() {
-    const url = `${config.legal}/research.md`;
+    const url = `${config.content}/research.md`;
     this.$http.get(url).then(
       response => {
         this.markdown = response.body;

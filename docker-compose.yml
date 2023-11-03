@@ -21,7 +21,7 @@ services:
         - FB_AUTH_ENABLED
         - INSTITUTION
         - APP_NAME
-        - LEGAL
+        - CONTENT
         - GTAG
     restart: always
     expose:

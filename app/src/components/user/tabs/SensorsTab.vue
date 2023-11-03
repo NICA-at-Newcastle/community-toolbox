@@ -12,16 +12,19 @@
 
     .sensors-wrapper(v-else)
 
-      router-link.sensor-tile(tag="div" v-for="(sensor, index) in sensors" v-bind:key="index" v-bind:to="{ name: 'toolbox', params: { typeId: sensor._type._id} }")
+      .sensor-tile(tag="div" v-for="(sensor, index) in sensors" v-bind:key="index")
         .delete-button(@click="removeSensor($event, sensor._id)")
-          i.fas.fa-trash
+          i.fas.fa-trash                
         .sensor-name Name: {{ sensor.name }}
         .sensor-type Sensor type: {{ sensor._type.name }}
         .sensor-tag Tag: {{ sensor.tag }}
         //- .sensor-loan Loaned out: {{sensor.loaned ? 'yes' : 'no' }}   
+        .sensor-enabled #[input(type="checkbox" name="enabled" v-model="sensor.enabled" @change="updateSensor($event, sensor)")]
+          label(for="enabled") Enabled
         .sensor-description(v-html="sensor.description")         
         .image-wrapper
-          sensor-image(v-bind:sensor="sensor")
+          router-link(v-bind:to="{ name: 'sensor', params: { id: sensor._id} }")
+            sensor-image(v-bind:sensor="sensor")        
 
   h1.tab--header.no-parent(@click="addSensor")
     .tab--header--title Add new
@@ -104,6 +107,20 @@ export default {
         }
       );
     },
+    updateSensor(e, sensor) {
+      e.stopPropagation();
+      console.log(sensor.enabled);
+      API.sensor.update(
+        sensor,
+        response => {
+          this.$log(response);
+          this.fetchSensors();
+        },
+        error => {
+          this.$error(error);
+        }
+      );
+    },
     fetchSensors() {
       API.sensor.fetchSensors(
         response => {
@@ -142,7 +159,6 @@ export default {
         svg
           height 25px
         &:hover
-          cursor pointer
           color $color-danger
       .sensor-tile
         animate()
@@ -164,11 +180,13 @@ export default {
           max-width 500px
         &:hover
           background-color darken($color-lightest-grey, 5%)
-          cursor pointer
       .image-wrapper
         margin 0 auto
         padding 10px 40px 20px 40px
         max-width 120px
+        &:hover
+          cursor pointer
+      .sensor-enabled
         &:hover
           cursor pointer
 </style>

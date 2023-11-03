@@ -8,39 +8,40 @@
 </template>
 
 <script>
-import config from '@/config'
+import config from "@/config";
 
-import VueMarkdown from 'vue-markdown'
+import VueMarkdown from "vue-markdown";
 
-import PageHeader from '@/components/PageHeader'
+import PageHeader from "@/components/PageHeader";
 
 export default {
-  name: 'privacy',
+  name: "privacy",
   metaInfo: {
-    title: 'Privacy Policy',
-    meta: [
-      { name: 'description', content: 'Read our privacy policy.' } 
-    ]
+    title: "Privacy Policy",
+    meta: [{ name: "description", content: "Read our privacy policy." }]
   },
   components: {
     VueMarkdown,
     PageHeader
   },
-  data () {
+  data() {
     return {
       markdown: undefined
-    }
+    };
   },
-  mounted () {
-    const url = `${config.legal}/privacy.md`
-    this.$http.get(url).then(response => {
-      this.markdown = response.body
-    }, response => {
-      // error callback
-      this.markdown = url
-    })
+  mounted() {
+    const url = `${config.content}/privacy.md`;
+    this.$http.get(url).then(
+      response => {
+        this.markdown = response.body;
+      },
+      response => {
+        // error callback
+        this.markdown = url;
+      }
+    );
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>

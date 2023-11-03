@@ -9,7 +9,10 @@
         input.type-input(v-if="!newSensor.type_name" placeholder="E.g. Air Quality, Traffic" type="text" name="type" v-model="newSensor._type")   
     .input-wrapper
       label Sensor Tag
-      input(placeholder="E.g. Asset tag or unique identifier" type="text" name="tag" v-model="newSensor.tag")   
+      input(placeholder="E.g. Asset tag or unique identifier" type="text" name="tag" v-model="newSensor.tag")
+    .input-wrapper
+      label Enabled
+      input.checkbox(type="checkbox" name="enabled" v-model="newSensor.enabled")
     .input-wrapper
       label Sensor description
       input(placeholder="E.g. A sensor for measuring air quality" type="text" name="description" v-model="newSensor.description")    

@@ -27,6 +27,7 @@ module.exports = {
         { tag: "proposal", name: "Proposal for monitoring" },
         { tag: "showcase", name: "Showcasing community work" },
         { tag: "idea", name: "General idea" },
+        { tag: "challenge", name: "Community challenge" },
         { tag: "other", name: "Other" },
       ],
       tasks: [

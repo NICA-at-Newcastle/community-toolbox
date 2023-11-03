@@ -8,39 +8,41 @@
 </template>
 
 <script>
-import config from '@/config'
+import config from "@/config";
 
-import VueMarkdown from 'vue-markdown'
+import VueMarkdown from "vue-markdown";
 
-import PageHeader from '@/components/PageHeader'
+import PageHeader from "@/components/PageHeader";
 
 export default {
-  name: 'cookies',
+  name: "cookies",
   metaInfo: {
-    title: 'Cookie Policy',
-    meta: [
-      { name: 'description', content: 'Read our cookies policy.' } 
-    ]    
+    title: "Cookie Policy",
+    meta: [{ name: "description", content: "Read our cookies policy." }]
   },
   components: {
     VueMarkdown,
     PageHeader
   },
-  data () {
+  data() {
     return {
       markdown: undefined
-    }
+    };
   },
-  mounted () {
-    const url = `${config.legal}/cookies.md`
-    this.$http.get(url).then(response => {
-      this.markdown = response.body
-    }, response => {
-      // error callback
-      this.markdown = url
-    })
+  mounted() {
+    console.log(config);
+    const url = `${config.content}/cookies.md`;
+    this.$http.get(url).then(
+      response => {
+        this.markdown = response.body;
+      },
+      response => {
+        // error callback
+        this.markdown = url;
+      }
+    );
   }
-}
+};
 </script>
 
 <style lang="stylus" scoped>

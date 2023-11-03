@@ -10,7 +10,7 @@
         .content-block--footer                    
           //- loan-booking(v-bind:sensor="sensor" v-bind:loan="loan" v-on:booked="resetLoan" v-on:reset="resetLoan")
           .booking-button.btn(@click="bookLoan" :class="{ active: loan}")      
-            span {{ isBooking ? 'One moment..' : 'Book' }}          
+            span {{ isBooking ? 'One moment..' : 'Apply' }}          
           //- sensor-actions(v-if="isAdmin" v-bind:sensor="sensor")          
           
 

@@ -19,9 +19,14 @@
             strong Start
           td
             strong End
-          td Contact
-          td Edit
-          td Delete
+          td 
+           strong Motivation
+          td 
+            strong Contact
+          td 
+            strong Edit
+          td 
+            strong Delete
                 
           tr(v-for="(loan, index) in loans")
             td
@@ -29,6 +34,7 @@
             td {{ getSensor(loan._target).tag }}
             td {{ getDate(loan.start) }}
             td {{ getDate(loan.end) }}
+            td {{ loan.motivation }}
             
             td(align="center")
               span.contact-btn(@click="contact(loan)") #[i.fas.fa-envelope]
@@ -43,7 +49,7 @@
             strong {{ getSensor(edit.loan._target).name }}
           td {{ getSensor(edit.loan._target).tag }}
           
-          td(colspan="2")
+          td(colspan="3")
             date-range-picker(ref="datepicker"
               :opens="'center'"
               :locale-data="{ firstDay: 1, format: 'mediumDate' }"            

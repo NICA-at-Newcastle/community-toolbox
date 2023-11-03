@@ -99,10 +99,10 @@ module.exports = function (app, passport) {
           // Notify admin about new loan scheduled
           const instance = config.instances[loan.instance]
           const adminEmail = _get(instance, 'admin.email', process.env.ADMIN_EMAIL)
-          mail.sendMail(adminEmail, 'New Sensor Booking', 'new-booking', { user: req.user, loan: loan, url: utilities.redirectUri(utilities.redirectUri), instance: req.instance })
+          mail.sendMail(adminEmail, 'New Application Submitted', 'new-application', { user: req.user, loan: loan, url: utilities.redirectUri(utilities.redirectUri), instance: req.instance })
 
           // send booking confirmation to user
-          mail.sendMail(req.user.local.email, 'Sensor Loan Scheduled', 'loan-created', { user: req.user, loan: loan, url: utilities.redirectUri(utilities.redirectUri), instance: req.instance })
+          mail.sendMail(req.user.local.email, 'Community Tool Box Application', 'application-created', { user: req.user, loan: loan, url: utilities.redirectUri(utilities.redirectUri), instance: req.instance })
           res.json({ loan })
         })
       } else {

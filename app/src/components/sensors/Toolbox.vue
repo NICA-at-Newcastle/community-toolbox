@@ -24,8 +24,8 @@ import SensorTile from "@/components/sensors/SensorTile";
 export default {
   name: "toolbox",
   metaInfo: {
-    title: "Community Toolbox",
-    meta: [{ name: "description", content: "Explore the community toolbox." }]
+    title: "Toolbox",
+    meta: [{ name: "description", content: "Explore the community tool box." }]
   },
   components: {
     PageHeader,

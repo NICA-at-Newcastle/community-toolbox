@@ -5,6 +5,7 @@ const loanSchema = mongoose.Schema({
   _user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   _target: mongoose.Schema.Types.ObjectId,
   instance: String,
+  motivation: String,
   start: Date,
   end: Date,
   created: Date,

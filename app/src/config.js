@@ -5,11 +5,11 @@ export default {
   driftkey: "msffsx6pi5gb",
   cdn1: `https://cdn.${process.env.DEPLOYMENT}`,
   cdn2: `https://cdn2.${process.env.DEPLOYMENT}`,
-  legal: process.env.LEGAL,
+  content: `${process.env.CONTENT}`,
   gtag: `${process.env.GTAG}`,
   // TODO: Google UA END of life - https://support.google.com/analytics/answer/11583528?hl=en
   instances: {
-    default: "sensemystreet",
+    default: "ctb",
     master: {
       color: "#0099D0",
     },
@@ -29,30 +29,30 @@ export default {
       color: "#0099D0",
       subdomain: "openlab",
     },
-    sensemystreet: {
+    ctb: {
       color: "#00AAB2",
       subdomain: "ideaboard",
       logoColor: "#ffff",
-      logoTitle: "SenseMyStreet",
+      logoTitle: "Community Tool Box",
       outcome: {
-        ideaDocument: { title: "Proposal submission" },
-        followIdea: { title: "Start follow on Proposal" },
+        ideaDocument: { title: "Idea submission" },
+        followIdea: { title: "Start follow on Idea" },
       },
       createIdea: {
-        title: "Create a proposal",
-        subtitle: 'This is where it begins, start a Proposal, invite your community and begin having the discussion!',
+        title: "Create an idea",
+        subtitle: 'This is where it begins, start an Idea, invite your community and begin having the discussion!',
         inputFields: {
           title: {
             name: "Title",
-            placeholder: "Give your proposal a title",
+            placeholder: "Give your idea a title",
           },
           tagline: {
             name: "Tagline",
-            placeholder: "A snappy one-liner about your proposal",
+            placeholder: "A snappy one-liner about your idea",
           },
           description: {
             name: "Background",
-            placeholder: "Describe your proposal in more detail",
+            placeholder: "Describe your idea in more detail",
           },
         },
       },

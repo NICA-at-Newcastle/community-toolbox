@@ -21,7 +21,7 @@ services:
   #       - DEPLOYMENT
   #       - FB_AUTH_ENABLED
   #       - INSTITUTION
-  #       - LEGAL
+  #       - CONTENT
   #       - GTAG
   #   restart: always
   #   expose:
