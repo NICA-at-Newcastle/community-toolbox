@@ -46,7 +46,7 @@ async function init(req, res, next) {
         `https://${process.env.SUBDOMAIN || 'ideaboard'}.${config.domain}`,
         // TODO: needs testing
         domainRegex,
-        config.domain,
+        `https://.${config.domain}`,
       ],
       methods: ["GET", "PUT", "POST", "DELETE", "OPTIONS"],
       headers: [
@@ -68,6 +68,7 @@ async function init(req, res, next) {
     }
     // TODO: using different subdomain name from instance name
     req.subdomain = instance;
+    // NOTE: Checking if subdomain shouldn't exist.
     req.instance =
       instance.indexOf("localhost") !== -1 || (subdomain === config.domain.split('.')[0]) ? config.instances.default : getInstance(instance);
 
