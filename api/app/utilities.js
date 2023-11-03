@@ -4,8 +4,8 @@ const PROD_URL = `https://*.${process.env.DEPLOYMENT}`
 
 module.exports = {
   redirectUri: function (subdomain) {
-    console.log("instance: ", instance)
-    console.log("Redirect URL: ", PROD_URL.replace('*', instance))
+    console.log("instance: ", subdomain)
+    console.log("Redirect URL: ", PROD_URL.replace('*', subdomain))
     switch (subdomain) {
       case 'default':
         return DEV_URL
@@ -16,7 +16,7 @@ module.exports = {
       case 'ideaboard':
         return PROD_URL.replace('*.', '')
       default:
-        return PROD_URL.replace('*', instance)
+        return PROD_URL.replace('*', subdomain)
     }
   }
 }
