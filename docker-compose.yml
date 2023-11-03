@@ -35,7 +35,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=web"
-      - "traefik.http.routers.ideaboard-web.rule=Host(`${SUBDOMAIN}.${DEPLOYMENT}`)"
+      - "traefik.http.routers.ideaboard-web.rule=Host(`${DEPLOYMENT}`)"
       - "traefik.http.routers.ideaboard-web.entrypoints=websecure"
       - "traefik.http.routers.ideaboard-web.tls=true"
       - "traefik.http.routers.ideaboard-web.tls.certresolver=myresolver"

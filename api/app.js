@@ -46,7 +46,7 @@ async function init(req, res, next) {
         `https://${process.env.SUBDOMAIN || 'ideaboard'}.${config.domain}`,
         // TODO: needs testing
         domainRegex,
-
+        config.domain,
       ],
       methods: ["GET", "PUT", "POST", "DELETE", "OPTIONS"],
       headers: [

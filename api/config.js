@@ -2,7 +2,7 @@ module.exports = {
   domain: process.env.DEPLOYMENT,
   instances: {
     default: "sensemystreet",
-    // master: {
+    // main: {
     // },
     // citylit: {
     //   subdomain: "citylit",
@@ -17,7 +17,7 @@ module.exports = {
     //   subdomain: "openlab",
     // },
     sensemystreet: {
-      subdomain: "ideaboard",
+      // subdomain: "ideaboard",
       admin: {
         name: "SenseMyStreet Admin",
         bio: "Admin of this site. Please get in touch if you have any issues.",
