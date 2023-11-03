@@ -22,6 +22,18 @@ const configDB = require("./config/database.js");
 const seed = require("./config/seed.js");
 // const demo = require('./config/demo.js')
 
+process.on('uncaughtException', function (err) {
+  console.log(err);
+  //Send some notification about the error  
+  process.exit(1);
+});
+
+process.on('unhandledRejection', function (err) {
+  console.log(err);
+  //Send some notification about the error  
+  process.exit(99);
+});
+
 async function init(req, res, next) {
   const app = express();
 
