@@ -4,6 +4,8 @@ const PROD_URL = `https://*.${process.env.DEPLOYMENT}`
 
 module.exports = {
   redirectUri: function (subdomain) {
+    console.log("instance: ", instance)
+    console.log("Redirect URL: ", PROD_URL.replace('*', instance))
     switch (subdomain) {
       case 'default':
         return DEV_URL

@@ -34,7 +34,7 @@ async function init(req, res, next) {
   const domainRegex = new RegExp(`/^https?:\/\/([\w\d]+\.)?${firstPart}\.${secondPart.join('.')}$/`);
 
   // TODO: using different subdomain name from instance name
-  const getInstance = (subdomain) => { return Object.keys(config.instances).reduce((a, i) => (config.instances[i].subdomain === subdomain) ? i : a, {}) }
+  const getInstance = (subdomain) => { return Object.keys(config.instances).reduce((a, i) => (config.instances[i].subdomain === subdomain) ? i : a, undefined) }
 
   app.use(
     cors({

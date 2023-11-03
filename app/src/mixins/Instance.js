@@ -1,7 +1,7 @@
 import config from '@/config'
 
 // TODO: using different subdomain name from instance name
-const getInstance = (subdomain) => { return Object.keys(config.instances).reduce((a, i) => (config.instances[i].subdomain === subdomain) ? i : a, {}) }
+const getInstance = (subdomain) => { return Object.keys(config.instances).reduce((a, i) => (config.instances[i].subdomain === subdomain) ? i : a, undefined) }
 
 export const instance = () => {
   const url = window.location.origin
