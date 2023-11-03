@@ -109,7 +109,6 @@ export default {
     },
     updateSensor(e, sensor) {
       e.stopPropagation();
-      console.log(sensor.enabled);
       API.sensor.update(
         sensor,
         response => {
