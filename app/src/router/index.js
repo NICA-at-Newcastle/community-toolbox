@@ -51,7 +51,7 @@ import config from '@/config'
 Vue.use(Router)
 
 // TODO: using different subdomain name from instance name
-const getInstance = (subdomain) => { return Object.keys(config.instances).reduce((a, i) => (config.instances[i].subdomain === subdomain) ? i : a, {}) }
+const getInstance = (subdomain) => { return Object.keys(config.instances).reduce((a, i) => (config.instances[i].subdomain === subdomain) ? i : a, undefined) }
 
 const router = new Router({
   mode: 'history',

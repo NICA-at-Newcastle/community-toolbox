@@ -59,16 +59,17 @@ async function init(req, res, next) {
   app.use(function (req, res, next) {
     const url = req.get("Referrer");
     let instance = "ideaboard";
+    let subdomain = undefined
     if (url) {
       const matches = url.match(/^https?:\/\/([^/?#]+)(?:[/?#]|$)/i);
       const domain = matches[1];
-      const subdomain = domain.split(".")[0];
+      subdomain = domain.split(".")[0];
       instance = !subdomain ? "localhost" : subdomain;
     }
     // TODO: using different subdomain name from instance name
     req.subdomain = instance;
     req.instance =
-      instance.indexOf("localhost") !== -1 ? config.instances.default : getInstance(instance);
+      instance.indexOf("localhost") !== -1 || (subdomain === config.domain.split('.')[0]) ? config.instances.default : getInstance(instance);
 
 
     next();
