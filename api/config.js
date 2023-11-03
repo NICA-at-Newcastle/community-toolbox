@@ -1,7 +1,7 @@
 module.exports = {
   domain: process.env.DEPLOYMENT,
   instances: {
-    default: "sensemystreet",
+    default: "ctb",
     // main: {
     // },
     // citylit: {
@@ -16,10 +16,10 @@ module.exports = {
     // openlab: {
     //   subdomain: "openlab",
     // },
-    sensemystreet: {
+    ctb: {
       // subdomain: "ideaboard",
       admin: {
-        name: "SenseMyStreet Admin",
+        name: "Community Tool Box Admin",
         bio: "Admin of this site. Please get in touch if you have any issues.",
         email: "sensemystreet@gmail.com",
       },
