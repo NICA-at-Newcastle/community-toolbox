@@ -35,7 +35,7 @@ export default {
     meta: [
       {
         name: "description",
-        content: "Learn about Ideaboard and the service it provides."
+        content: "Learn about this website and the service it provides."
       }
     ]
   },
