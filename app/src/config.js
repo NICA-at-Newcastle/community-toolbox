@@ -31,7 +31,6 @@ export default {
     },
     ctb: {
       color: "#00AAB2",
-      subdomain: "ideaboard",
       logoColor: "#ffff",
       logoTitle: "Community Tool Box",
       outcome: {
