@@ -20,7 +20,7 @@
     collaborate(align="right" id="w-collaborate" title="Collaborate" subtitle="Share your idea with the wider community and invite others to help you shape the idea." imageSrc="/static/images/illustrations/comtech/share2.svg" theme="dark" v-bind:styles="{ 'background-color': '#fff'}")
     collaborate(align="left" id="w-design" title="Design together" subtitle="Use the online space to form thoughts, ask questions and make decisions about the idea." imageSrc="/static/images/illustrations/comtech/design2.svg" action="Learn More" link="/learn")
     featured-ideas    
-    ready(title="Ready?" subtitle="When you've had a good look around and you're ready to start your own idea just click the button below." action="Start a Proposal" theme="dark" link="/start")
+    ready(title="Ready?" subtitle="When you've had a good look around and you're ready to start your own idea just click the button below." action="Start an Idea" theme="dark" link="/start")
     //- site-footer(v-bind:style="{ 'background-color': 'white' }")
 </template>
 
