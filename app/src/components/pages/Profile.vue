@@ -1,10 +1,10 @@
 <template lang="pug">
-  #profile(v-if="editedProfile && currentUser")
+  .profile(v-if="editedProfile && currentUser")
     page-header(v-bind:title="title" v-bind:subtitle="subtitle")
     .row
       .content-block.content-block--side.pull-up.pull-left.white-block
         .content-block--body
-          user-card(v-bind:profile="currentUser.profile")
+          user-card(v-bind:profile="currentUser.profile" v-bind:id="currentUser.profile._id" :isProfile="true")
         .content-block--footer(v-if="ownProfile")
           .btn.btn-danger-subtle(@click="logout") Logout
       .content-block.content-block--main.pull-up.pull-right.white-block
@@ -65,6 +65,7 @@ export default {
   watch: {
     "$route.params.id": {
       handler: function(nV, oV) {
+        console.log(nV, oV);
         if (nV === oV) return;
         this.loadProfile();
       },
@@ -194,7 +195,7 @@ export default {
 
 $side-block-width = 260px
 
-#profile
+.profile
   text-align center
   .content-block--main
     margin-bottom 30px

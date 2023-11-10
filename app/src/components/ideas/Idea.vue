@@ -6,7 +6,7 @@
 
       .content-block.content-block--side.pull-up.pull-right.white-block
         .content-block--body
-          user-card(v-bind:profile="idea._user.profile" v-bind:id="idea._user._id")
+          user-card(v-bind:profile="idea._user.profile" v-bind:id="idea._user._id" :isProfile="false")
         .content-block--footer
           idea-actions(v-if="isAdmin" v-bind:idea="idea")
           subscribe-button(v-bind:idea="idea" v-on:subscribed="showDesign(2000)")

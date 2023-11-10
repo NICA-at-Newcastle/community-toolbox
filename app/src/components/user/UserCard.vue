@@ -1,7 +1,9 @@
 <template lang="pug">
 .user-card
-  router-link.avatar-wrapper(tag="div" v-bind:to="{ name: 'profile', params: { id: this.id } }")
+  .avatar-wrapper(v-if="isProfile")
     avatar(v-bind:profile="profile")
+  router-link.avatar-wrapper(v-else tag="div" v-bind:to="{ name: 'profile', params: { id: this.id } }")
+    avatar(v-bind:profile="profile")  
   h1.user--name {{ profile.name }}
   h5.user--account {{ accountType }}
 </template>
@@ -12,7 +14,7 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "user-card",
-  props: ["profile", "id"],
+  props: ["profile", "id", "isProfile"],
   components: {
     Avatar
   },
@@ -26,13 +28,14 @@ export default {
       "isModerator"
     ]),
     accountType() {
-      return this.isAdmin
-        ? "Administrator"
-        : this.isModerator
-        ? "Moderator"
-        : this.isOrganiser
-        ? "Community Organiser"
-        : "Standard Account";
+      return "Standard Account";
+      // return this.isAdmin
+      //   ? "Administrator"
+      //   : this.isModerator
+      //   ? "Moderator"
+      //   : this.isOrganiser
+      //   ? "Community Organiser"
+      //   : "Standard Account";
     }
   }
 };
