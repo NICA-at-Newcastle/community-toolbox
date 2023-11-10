@@ -61,13 +61,15 @@ export default {
         description: undefined
       },
       editorOption: {
-        theme: "bubble",
+        // theme: "bubble",
         placeholder: "Describe your idea in more detail",
+        readOnly: false,
+        scrollingContainer: false,
         modules: {
           toolbar: [
-            [{ size: ["small", false, "large"] }],
-            ["bold", "italic"],
-            ["link"]
+            [{ header: [1, 2, 3, 4, 5, 6, false] }],
+            ["bold", "italic", "underline"],
+            [{ list: "ordered" }, { list: "bullet" }, "link", "t"]
           ]
         }
       }
