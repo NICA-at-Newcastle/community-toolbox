@@ -170,12 +170,14 @@ module.exports = function (app, passport) {
   // Update idea
   app.put('/idea',
     async (req, res) => {
+
       if (!req.isAuthenticated()) return res.status(401)
 
-      let idea = await Idea.findOne({ _id: req.body.id })
+      let idea = await Idea.findOne({ _id: req.body._id })
 
       const isModerator = _find(_get(req.user, '_permissions'), { type: 'moderator', instance: req.instance })
-      const canEdit = (isModerator || idea._user._id.toString() === req.user._id.toString())
+      const isAdmin = _find(_get(req.user, '_permissions'), { type: 'admin', instance: req.instance })
+      const canEdit = (isModerator || isAdmin || idea._user._id.toString() === req.user._id.toString())
       if (!canEdit) return res.status(401)
 
       idea = await Idea.findOneAndUpdate({ _id: req.body._id, instance: req.instance }, req.body)
