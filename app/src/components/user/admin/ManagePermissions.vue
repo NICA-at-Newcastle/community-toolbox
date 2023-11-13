@@ -30,7 +30,7 @@
 
 
           td(v-if="search.query.length > 0" v-for="(permission, index) in permissions" align="center")
-            input(type="checkbox" v-model="newPermissions[permission._id]")
+            input(type="checkbox" v-model="newPermissions[permission._id]" :checked="isChecked(permission)")
 
           td(v-if="search.query.length > 0" align="center")
             .btn.btn-success(@click="updatePermissions(search.result._id)") Save
@@ -62,6 +62,14 @@ export default {
     this.fetchPermissions();
   },
   methods: {
+    isChecked(permission) {
+      const hasPermission = this.search.result._permissions.find(
+        p => p.type === permission.type && p._id === permission._id
+      );
+      console.log(permission.type, hasPermission ? true : false);
+      this.newPermissions[permission._id] = hasPermission ? true : false;
+      return hasPermission ? true : false;
+    },
     updatePermissions(userId) {
       API.permission.update(
         userId,
