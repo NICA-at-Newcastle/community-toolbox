@@ -66,7 +66,6 @@ export default {
       const hasPermission = this.search.result._permissions.find(
         p => p.type === permission.type && p._id === permission._id
       );
-      console.log(permission.type, hasPermission ? true : false);
       this.newPermissions[permission._id] = hasPermission ? true : false;
       return hasPermission ? true : false;
     },
