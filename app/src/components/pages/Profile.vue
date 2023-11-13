@@ -65,7 +65,6 @@ export default {
   watch: {
     "$route.params.id": {
       handler: function(nV, oV) {
-        console.log(nV, oV);
         if (nV === oV) return;
         this.loadProfile();
       },

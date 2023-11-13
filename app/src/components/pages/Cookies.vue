@@ -30,7 +30,6 @@ export default {
     };
   },
   mounted() {
-    console.log(config);
     const url = `${config.content}/cookies.md`;
     this.$http.get(url).then(
       response => {
