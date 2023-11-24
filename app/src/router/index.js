@@ -266,7 +266,7 @@ router.beforeEach((to, from, next) => {
         name: 'auth'
       })
     } else {
-      next()
+      next({ params: to.params })
     }
   } else {
     next()

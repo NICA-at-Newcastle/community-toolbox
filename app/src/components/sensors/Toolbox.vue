@@ -25,7 +25,7 @@ export default {
   name: "toolbox",
   metaInfo: {
     title: "Toolbox",
-    meta: [{ name: "description", content: "Explore the community tool box." }]
+    meta: [{ name: "description", content: "Explore the community toolbox." }]
   },
   components: {
     PageHeader,

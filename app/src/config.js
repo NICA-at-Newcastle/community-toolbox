@@ -32,7 +32,7 @@ export default {
     ctb: {
       color: "#00AAB2",
       logoColor: "#ffff",
-      logoTitle: "Community Tool Box",
+      logoTitle: "Community Toolbox",
       outcome: {
         ideaDocument: { title: "Idea submission" },
         followIdea: { title: "Start follow on Idea" },

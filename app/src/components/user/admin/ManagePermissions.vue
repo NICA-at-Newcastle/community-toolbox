@@ -20,7 +20,7 @@
           td(v-for="(permission, index) in permissions" v-bind:class="{ 'has-permission': hasPermission(user, permission) }" align="center")
             span(v-show="hasPermission(user, permission)") #[i.fas.fa-check]
             span(v-show="!hasPermission(user, permission)") #[i.fas.fa-times]
-            
+          
           td(align="center")
             i.fas.fa-ban
         
@@ -45,6 +45,7 @@
 import API from "@/api";
 
 export default {
+  // TODO: add removal of users and disable removal of admin rights from default admin
   name: "manage-permissions",
   data() {
     return {
