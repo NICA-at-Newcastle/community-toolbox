@@ -38,20 +38,20 @@ export default {
         followIdea: { title: "Start follow on Idea" },
       },
       createIdea: {
-        title: "Create an idea",
-        subtitle: 'This is where it begins, start an Idea, invite your community and begin having the discussion!',
+        title: "Create a challenge",
+        subtitle: 'This is where it begins, start an Challenge, invite your community and begin having the discussion!',
         inputFields: {
           title: {
             name: "Title",
-            placeholder: "Give your idea a title",
+            placeholder: "Give your challenge a title",
           },
           tagline: {
             name: "Tagline",
-            placeholder: "A snappy one-liner about your idea",
+            placeholder: "A snappy one-liner about your challenge",
           },
           description: {
             name: "Background",
-            placeholder: "Describe your idea in more detail",
+            placeholder: "Describe your challenge in more detail",
           },
         },
       },

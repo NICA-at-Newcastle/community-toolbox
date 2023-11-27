@@ -11,6 +11,7 @@ const Cookies = () => import('@/components/pages/Cookies')
 const Privacy = () => import('@/components/pages/Privacy')
 const Research = () => import('@/components/pages/Research')
 const Terms = () => import('@/components/pages/Terms')
+const Faq = () => import('@/components/pages/Faq')
 const Profile = () => import('@/components/pages/Profile')
 
 // Ideas
@@ -108,6 +109,11 @@ const router = new Router({
       component: Terms
     },
     {
+      path: '/faq',
+      name: 'faq',
+      component: Faq
+    },
+    {
       path: '/profile/:id?',
       name: 'profile',
       component: Profile,
@@ -117,7 +123,8 @@ const router = new Router({
     {
       path: '/start',
       name: 'start',
-      component: Start
+      component: Start,
+      meta: { requiresAuth: true, requiresAdmin: true }
     },
     {
       path: '/explore/:category?',
@@ -260,11 +267,19 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
+  if (to.matched.some(record => record.meta.requiresAuth || record.meta.requiresAdmin)) {
     if (!Store.getters.isAuthenticated) {
       next({
         name: 'auth'
       })
+    } else if (to.meta.requiresAdmin) {
+      if (!Store.getters.isAdmin || !Store.getters.isModerator) {
+        next({
+          name: 'home'
+        })
+      } else {
+        next({ params: to.params })
+      }
     } else {
       next({ params: to.params })
     }

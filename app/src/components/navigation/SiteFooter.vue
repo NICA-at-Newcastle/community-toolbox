@@ -5,8 +5,9 @@
         router-link.is-link(tag="li" to="/learn") About
         router-link.is-link(tag="li" to="/cookies") Cookies
         router-link.is-link(tag="li" to="/privacy") Privacy
-        router-link.is-link(tag="li" to="/research") Research
+        //- router-link.is-link(tag="li" to="/research") Research
         router-link.is-link(tag="li" to="/terms") Terms
+        router-link.is-link(tag="li" to="/faq") FAQ
         li © {{ institution }}
       .clearfix
       #google_translate_element

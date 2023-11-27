@@ -74,11 +74,11 @@ export default {
             route: "designdashboard",
             component: "design-tab"
           },
-          {
-            title: "Outcome",
-            route: "outcomedashboard",
-            component: "outcome-tab"
-          }
+          // {
+          //   title: "Outcome",
+          //   route: "outcomedashboard",
+          //   component: "outcome-tab"
+          // }
         ]
       }
     };
