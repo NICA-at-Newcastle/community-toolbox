@@ -5,10 +5,10 @@
       hamburger(v-bind:active.sync="active")
       #menu-underlay(v-bind:class="{ active: active }" @click="active = false")
       #menu(v-bind:class="{ active: active }" v-bind:style="[instanceBackground]")
-        router-link(v-bind:to="{ name: 'start' }"  v-if="isAdmin || isModerator" v-bind:style="{color: instanceLogoColor}" ) Create
+        router-link(v-bind:to="{ name: 'start' }"  v-if="isAdmin || isModerator" v-bind:style="{color: instanceLogoColor}" ) Create (admin)
         router-link(v-bind:to="{ name: 'about' }" v-bind:style="{color: instanceLogoColor}") About
-        router-link(v-bind:to="{ name: 'explore' }" v-bind:style="{color: instanceLogoColor}") Challenges 
         router-link(v-bind:to="{ name: 'toolbox' }" v-bind:style="{color: instanceLogoColor}") Borrow
+        router-link(v-bind:to="{ name: 'explore' }" v-bind:style="{color: instanceLogoColor}") Challenges
         router-link(v-bind:to="{ name: 'auth' }" v-if="!isAuthenticated" v-bind:style="{color: instanceLogoColor}") Register
         router-link(v-bind:to="{ name: 'profile' }" v-else v-bind:class="{ 'has-notifications': hasNotifications }" v-bind:style="{color: instanceLogoColor}")
           | Profile
