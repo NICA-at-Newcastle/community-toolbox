@@ -70,7 +70,7 @@ export default {
         items: [
           { title: "About", route: "idea", component: "info-tab" },
           {
-            title: "Workspace",
+            title: "Share your experience",
             route: "designdashboard",
             component: "design-tab"
           },

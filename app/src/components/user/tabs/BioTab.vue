@@ -12,7 +12,7 @@
         label(v-if="isEditing") Bio
         textarea(v-model="editedProfile.bio" v-if="isEditing" rows="6")
       .input-wrapper(v-if="isEditing")
-        label Avatar
+        label Picture or image
         file-upload(v-bind:uploaded-file="editedProfile.avatar" v-bind:uploaded-file.sync="editedAvatar")
       .input-wrapper(v-if="!isEditing && !(ownProfile && !editedProfile.bio)")
         p {{ (editedProfile.bio) ? editedProfile.bio : 'No bio added yet' }}
