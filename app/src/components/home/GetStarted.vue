@@ -3,16 +3,26 @@
     <div class="row">
       <div class="content-block">
         <div class="collaborate">
-          <div class="collaborate--image" v-bind:id="align == 'left' ? 'left' : 'right'"><img
-              v-bind:src="imageSrc || '/static/images/illustrations/design.svg'" /></div>
-          <div class="collaborate--content" v-bind:id="align == 'left' ? 'left' : 'right'"
+          <div class="collaborate--content"
             v-bind:style="!clickaction && !link && !action ? { padding: '80px 30px' } : { padding: '50px 30px' }">
             <h2 v-bind:class="{ dark: theme === 'dark' }">{{ title }}</h2>
             <p v-bind:class="{ dark: theme === 'dark' }">{{ subtitle }}</p>
-            <router-link class="collaborate--action" v-if="!clickaction && link" v-bind:to="link"
+            <!-- <router-link class="collaborate--action" v-if="!clickaction && link" v-bind:to="link"
               v-bind:class="{ dark: theme === 'dark' }">{{ action }}</router-link><a class="collaborate--action"
               v-if="clickaction && link" v-bind:class="{ dark: theme === 'dark' }" :href="link">{{ action
-              }}</a>
+              }}</a> -->
+            <button @click="toggle" class="button-reset">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"
+                v-bind:class="{ rotate: expand }">
+                <path fill-rule="evenodd"
+                  d="M12.53 16.28a.75.75 0 0 1-1.06 0l-7.5-7.5a.75.75 0 0 1 1.06-1.06L12 14.69l6.97-6.97a.75.75 0 1 1 1.06 1.06l-7.5 7.5Z"
+                  clip-rule="evenodd" />
+              </svg>
+
+            </button>
+            <p class="get-started">
+              <vue-markdown v-if="expand">{{ markdownContent }}</vue-markdown>
+            </p>
           </div>
         </div>
       </div>
@@ -26,9 +36,19 @@
 /* eslint-disable semicolon */
 /* eslint-disable semi */
 import { mapGetters } from "vuex";
+import VueMarkdown from "vue-markdown";
+import markdownContent from "@/assets/markdown/getStarted.md"
+import { ref } from 'vue'
 
+// state
+const expand = ref(false)
+
+// actions
+function toggle() {
+  expand.value = !expand.value
+}
 export default {
-  name: "collaborate",
+  name: "GetStarted",
   props: [
     "title",
     "subtitle",
@@ -40,11 +60,24 @@ export default {
     "clickaction",
     "imageSrc"
   ],
+  components: {
+    VueMarkdown,
+  },
   computed: {
     ...mapGetters(["instanceBackground"])
+  },
+  data() {
+    return {
+      markdownContent,
+      expand,
+      toggle
+    }
   }
 };
+
+
 </script>
+
 
 <style lang="stylus" scoped>
 @import '~stylus/home';
@@ -55,33 +88,36 @@ export default {
   position: relative;
 }
 
+.rotate{
+  transform: rotate(180deg)
+}
+
+.button-reset{
+  background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
+
+
+
 .collaborate {
   padding: 80px 0px !important;
   position: relative;
   width: 100%;
 
-  .collaborate--image {
-    position: absolute;
-    text-align: center;
-    width: 50%;
 
-    img {
-      height: 320px;
-      max-width: 100%;
-    }
-
-    &#left {
-      margin-left: 50%;
-    }
-
-    &#right {
-      margin-right: 50%;
-    }
-  }
 
   .collaborate--content {
     padding: 50px 30px;
     text-align: center;
+    .get-started {
+      color: black;
+      text-align: left;
+    }
 
     &#left {
       margin-right: 50%;

@@ -1,32 +1,33 @@
-var path = require('path')
-var utils = require('./utils')
-var config = require('../config')
-var vueLoaderConfig = require('./vue-loader.conf')
+var path = require("path");
+var utils = require("./utils");
+var config = require("../config");
+var vueLoaderConfig = require("./vue-loader.conf");
 
 function resolve(dir) {
-  return path.join(__dirname, '..', dir)
+  return path.join(__dirname, "..", dir);
 }
 
 module.exports = {
   entry: {
-    app: './src/main.js'
+    app: "./src/main.js"
   },
   output: {
     path: config.build.assetsRoot,
     // hashFunction: 'sha512',
-    filename: '[name].js',
-    publicPath: process.env.NODE_ENV === 'production'
-      ? config.build.assetsPublicPath
-      : config.dev.assetsPublicPath
+    filename: "[name].js",
+    publicPath:
+      process.env.NODE_ENV === "production"
+        ? config.build.assetsPublicPath
+        : config.dev.assetsPublicPath
   },
   resolve: {
-    extensions: ['.js', '.vue', '.json', '.styl'],
+    extensions: [".js", ".vue", ".json", ".styl"],
     alias: {
-      'vue$': 'vue/dist/vue.esm.js',
-      '@': resolve('src'),
-      'stylus': resolve('src/assets/stylus'),
-      'images': resolve('src/assets/images'),
-      'scripts': resolve('src/assets/scripts')
+      vue$: "vue/dist/vue.esm.js",
+      "@": resolve("src"),
+      stylus: resolve("src/assets/stylus"),
+      images: resolve("src/assets/images"),
+      scripts: resolve("src/assets/scripts")
     }
   },
   module: {
@@ -43,19 +44,23 @@ module.exports = {
       // },
       {
         test: /\.vue$/,
-        loader: 'vue-loader',
+        loader: "vue-loader",
         options: vueLoaderConfig
       },
       {
         test: /\.styl$/,
-        loader: 'style-loader!css-loader!stylus-loader',
-        include: [resolve('src'), require('nib')()]
+        loader: "style-loader!css-loader!stylus-loader",
+        include: [resolve("src"), require("nib")()]
         // import: ['~nib/lib/nib/index.styl'],
       },
       {
         test: /\.js$/,
-        loader: 'babel-loader',
-        include: [resolve('src'), resolve('test')]
+        loader: "babel-loader",
+        include: [resolve("src"), resolve("test")]
+      },
+      {
+        test: /\.md$/,
+        use: "raw-loader"
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
@@ -66,23 +71,23 @@ module.exports = {
         // }
         use: [
           {
-            loader: 'url-loader',
+            loader: "url-loader",
             options: {
               esModule: false,
               limit: 10000,
-              name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
+              name: utils.assetsPath("fonts/[name].[hash:7].[ext]")
             }
           }
         ]
       },
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-        loader: 'url-loader',
+        loader: "url-loader",
         query: {
           limit: 10000,
-          name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
+          name: utils.assetsPath("fonts/[name].[hash:7].[ext]")
         }
       }
     ]
   }
-}
+};

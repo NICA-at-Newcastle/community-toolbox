@@ -5,6 +5,5 @@ module.exports = {
   FB_AUTH_ENABLED: `'${process.env.FB_AUTH_ENABLED} || "false"}'`,
   APP_NAME: `'${process.env.APP_NAME || "Ideaboard"}'`,
   INSTITUTION: `'${process.env.INSTITUTION || "Open Lab"}'`,
-  CONTENT: `'${process.env.CONTENT || "https://raw.githubusercontent.com/digitalinteraction/legal/master/ideaboard"}'`
-}
-
+  CONTENT: `'${"https://raw.githubusercontent.com/lived-informatics/ctb-content/main/"}'`
+};

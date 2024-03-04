@@ -1,27 +1,41 @@
-<template lang="pug">
-  #home
-    .row-wrapper#welcome(v-bind:style="[instanceBackground]")
-      .row
-        .content-block
-          .content-block--body
-            img(src="/static/images/logos/ctb/logo-ctb.svg")            
-            h1 Community Toolbox
-            h3
-              a(href="https://ioct.uknica.co.uk/") The Internet of Caring Things (IoCT)
-    .row-wrapper#ctb-info
-      .color
-      .row
-        .content-block
-          vue-markdown(v-if="info_markdown") {{ info_markdown }}
-          .fallback(v-else) 
-            p #[strong Community Toolbox] is part of the community toolbox in #[a(href="https://ioct.uknica.co.uk/") The Internet of Caring Things (IoCT)] programme at #[a(href="https://uknica.co.uk/") The National Innovation Centre for Ageing (NICA)]. It enables communities to commission sensors from the #[a(href="http://www.urbanobservatory.ac.uk/") Urban Observatory] and locate them on their streets, collecting evidence to inform or even change their communities. For the first time, the public has access to precision sensing equipment to enable them to gather data that is relevant to their local issues.    
-    collaborate(align="right" title="Borrow tools" subtitle="Sign Up to borrow tools from the Community Toolbox." action="Learn More" v-bind:styles="{ 'background-color': '#fff'}" theme="dark" imageSrc="/static/images/illustrations/ctb/sensor.svg" link="/toolbox")    
-    collaborate(align="left" id="w-participate" title="Take up challenges" subtitle="Check the site for challenges you can participate in." imageSrc="/static/images/illustrations/comtech/idea2.svg")
-    collaborate(align="right" id="w-collaborate" title="Collaborate" subtitle="Share the challenges with the wider community and invite others to join you." imageSrc="/static/images/illustrations/comtech/share2.svg" theme="dark" v-bind:styles="{ 'background-color': '#fff'}")
-    collaborate(align="left" id="w-design" title="Share experiences" subtitle="Use the online space to form thoughts, ask questions and learn from each other's experiences ." imageSrc="/static/images/illustrations/comtech/design2.svg" action="Learn more" link="/learn")
-    featured-ideas    
-    //- ready(title="Ready?" subtitle="When you've had a good look around and you're ready to start your own idea just click the button below." action="Start an Idea" theme="dark" link="/start")
-    //- site-footer(v-bind:style="{ 'background-color': 'white' }")
+<template>
+  <div id="home">
+    <div class="row-wrapper" id="welcome" v-bind:style="[instanceBackground]">
+      <div class="row">
+        <div class="content-block">
+          <div class="content-block--body"><img src="/static/images/logos/ctb/logo-ctb.svg" />
+            <h1>Community Toolbox</h1>
+            <h3><a href="https://ioct.uknica.co.uk/">The Internet of Caring Things (IoCT)</a></h3>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row-wrapper" id="ctb-info">
+      <div class="color"></div>
+      <div class="row">
+        <div class="content-block">
+          <vue-markdown v-if="info_markdown">{{ info_markdown }}</vue-markdown>
+          <div class="fallback" v-else="v-else">
+            <p><strong>Community Toolbox</strong> is part of the community toolbox in <a
+                href="https://ioct.uknica.co.uk/">The Internet of Caring Things (IoCT)</a> programme at <a
+                href="https://uknica.co.uk/">The National Innovation Centre for Ageing (NICA)</a>.
+              It enables communities to commission sensors from the <a href="http://www.urbanobservatory.ac.uk/">Urban
+                Observatory</a> and locate them on their streets, collecting evidence to inform or even change their
+              communities. For the
+              first time, the public has access to precision sensing equipment to enable them to gather data that is
+              relevant to their local issues.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <GetStarted align="right" title="Getting started" subtitle="Sign Up to borrow tools from the Community Toolbox."
+      action="Learn More" v-bind:styles="{ 'background-color': '#fff' }" theme="dark"
+      imageSrc="/static/images/illustrations/ctb/sensor.svg" link="/toolbox"></GetStarted>
+    <collaborate align="left" id="w-participate" title="Take up challenges"
+      subtitle="Check the site for challenges you can participate in."
+      imageSrc="/static/images/illustrations/comtech/idea2.svg"></collaborate>
+    <featured-ideas></featured-ideas>
+  </div>
 </template>
 
 <script>
@@ -31,7 +45,6 @@
 import Home from "@/mixins/Home";
 import config from "@/config";
 import VueMarkdown from "vue-markdown";
-
 export default {
   name: "Community Toolbox",
   metaInfo: {
@@ -39,7 +52,8 @@ export default {
   },
   mixins: [Home],
   components: {
-    VueMarkdown
+    VueMarkdown,
+
   },
   data() {
     return {
@@ -105,23 +119,22 @@ export default {
     gradient()
   .row
     .content-block
-      color #fff
-      gradient()
+      color black
       // radius(20px)
-      background-color rgb(200, 67, 69)
+      background-color #ecfeff
       margin 0 auto
       margin-top -170px
       max-width 800px
       padding 5%
       h1, p
         reset()
-        color #fff
+        color black
       p
         font-size 1.1em
         margin-bottom 10px
       a
         color #041e41 !important
-        text-decoration none !important
+        text-decoration underline !important
 #important-dates.row-wrapper
   reset()
   padding 10px 0
