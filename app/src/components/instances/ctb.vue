@@ -31,9 +31,10 @@
     <GetStarted align="right" title="Getting started" subtitle="Sign Up to borrow tools from the Community Toolbox."
       action="Learn More" v-bind:styles="{ 'background-color': '#fff' }" theme="dark"
       imageSrc="/static/images/illustrations/ctb/sensor.svg" link="/toolbox"></GetStarted>
-    <collaborate align="left" id="w-participate" title="Take up challenges"
-      subtitle="Check the site for challenges you can participate in."
-      imageSrc="/static/images/illustrations/comtech/idea2.svg"></collaborate>
+    <collaborate align="left" id="w-participate" title="Tasks and Challenges"
+      subtitle="We have got some simple tasks and challenges for you to engage in. We encourage you to participate in these challenges to help us in capturing your community data insights and earn rewards. This is your opportunity to be amongst the first users to help build/design the community tools. Design for change/ Design the future."
+      imageSrc="/static/images/illustrations/comtech/idea2.svg"
+      :links="[{ name: 'Go to tasks', link: '/explore' }, { name: 'Get notified', link: '/auth' }]"></collaborate>
     <featured-ideas></featured-ideas>
   </div>
 </template>

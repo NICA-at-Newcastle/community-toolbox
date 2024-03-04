@@ -13,6 +13,13 @@
               v-bind:class="{ dark: theme === 'dark' }">{{ action }}</router-link><a class="collaborate--action"
               v-if="clickaction && link" v-bind:class="{ dark: theme === 'dark' }" :href="link">{{ action
               }}</a>
+            <div class="links-wrapper">
+              <div v-for="item in links">
+                <router-link :to="item.link" class="collaborate--action">
+                  {{ item.name }}
+                </router-link>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -38,7 +45,8 @@ export default {
     "align",
     "theme",
     "clickaction",
-    "imageSrc"
+    "imageSrc",
+    "links"
   ],
   computed: {
     ...mapGetters(["instanceBackground"])
@@ -53,6 +61,11 @@ export default {
   gradient();
   background-color: $color-primary;
   position: relative;
+}
+
+.links-wrapper{
+  display: flex;
+  justify-content: center
 }
 
 .collaborate {
