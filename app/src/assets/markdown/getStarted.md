@@ -9,6 +9,6 @@
 
 **Return your device**
 
-1. **Return the Device:** At the end of the borrowing period simply return the device to our base at the Grainger Market. Our tram will be on hand ot ensure a smooth return process. Don't worry about forgetting - we'll send you a reminder!
+1. **Return the Device:** At the end of the borrowing period simply return the device to our base at the Grainger Market. Our team will be on hand ot ensure a smooth return process. Don't worry about forgetting - we'll send you a reminder!
 2. **Receive Your Data Report:** After you have returned the device will will send you a summary of the data it collected during your borrowing period. We will need a few days to process the information but you should receive this within 7 days.
 3. **Stay Connected:** Let's keep in touch! Stay connected with us through updates and community events at the Grainger Market. Your continued engagement helps us build a vibrant and supportive community.
